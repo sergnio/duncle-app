@@ -1,6 +1,6 @@
 // src/mocks/handlers.js
 import { rest } from "msw";
-import { AllLibrariesResponse } from "../common/queries/queriesUtils";
+import { PouchResponse } from "../common/queries/queriesUtils";
 import { listOfLibrariesResponse } from "../components/storybook-mocks/constants";
 
 const ONE_SECOND = 1000;
@@ -20,7 +20,7 @@ export const handlers = [
   }),
   // todo - might need to do api.sergionajera.com/user
   //  also need one probably for api.sergionajera.com/user_*
-  simpleGet<AllLibrariesResponse>(
+  simpleGet<PouchResponse>(
     "https://api.sergionajera.com/user_dummy",
     listOfLibrariesResponse
   ),

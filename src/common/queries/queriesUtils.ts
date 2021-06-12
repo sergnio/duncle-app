@@ -2,12 +2,12 @@ import { Library } from "../../model";
 import { allLibrariesKey } from "../constants/queryKeys";
 import { QueryClient } from "react-query";
 
-export type AllLibrariesResponse = {
-  rows: PouchRow[];
+export type PouchResponse<T = Library> = {
+  rows: PouchRow<T>[];
 };
 
-export type PouchRow = {
-  doc: Library;
+export type PouchRow<T = Library> = {
+  doc: T;
   id: string;
   key: string;
   value: {
@@ -15,7 +15,7 @@ export type PouchRow = {
     deleted?: boolean;
   };
 };
-export const parseToLibraries = (response: AllLibrariesResponse) =>
+export const parseToLibraries = (response: PouchResponse) =>
   response.rows.map(({ doc }: PouchRow) => doc);
 
 export const updateAllLibrariesQuery = (

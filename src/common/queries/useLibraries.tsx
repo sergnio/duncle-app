@@ -4,7 +4,7 @@ import { useNotification } from "../../components/atoms/Snackbar/Snackbar";
 import useAuth from "../hooks/Auth/useAuth";
 import { allLibrariesKey } from "../constants/queryKeys";
 import Library from "../../model/library";
-import { AllLibrariesResponse, parseToLibraries } from "./queriesUtils";
+import { PouchResponse, parseToLibraries } from "./queriesUtils";
 
 export default () => {
   const { getAuthenticatedUser } = useAuth();
@@ -14,12 +14,11 @@ export default () => {
 
   const localPouch = createDatabaseWithUser(`${USER_DB_PREFIX}${currentUser}`);
 
-  const fetchAllLibraries = (): AllLibrariesResponse =>
+  const fetchAllLibraries = (): PouchResponse =>
     localPouch.allDocs({ include_docs: true });
 
   return useQuery([allLibrariesKey, currentUser], fetchAllLibraries, {
-    select: (response: AllLibrariesResponse): Library[] =>
-      parseToLibraries(response),
+    select: (response: PouchResponse): Library[] => parseToLibraries(response),
     onError: () => {
       setError(`Failed to get list of all libraries. Try again`);
     },

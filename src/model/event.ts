@@ -8,3 +8,10 @@ export default interface event {
   dateCreated: string;
   dateUpdated: string;
 }
+
+export interface TrimmedEvent {
+  id: string;
+  title: string;
+  start: string;
+  end?: string;
+}

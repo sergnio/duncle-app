@@ -7,7 +7,6 @@ import Typography from "@material-ui/core/Typography";
 import { Form } from "react-final-form";
 import { SignUpForm } from "../../elements/SignUp/SignUpForm";
 import AccountCircle from "@material-ui/icons/AccountCircle";
-import LoginService from "../../../services/useLogin";
 import NewUser from "../../../model/newUser";
 import UserDAO from "../../../model/userDAO";
 import { useHistory } from "react-router-dom";
@@ -15,6 +14,7 @@ import { useNotification } from "../../atoms/Snackbar/Snackbar";
 import { isEqual } from "lodash";
 import useAuth from "../../../common/hooks/Auth/useAuth";
 import useLogin from "../../../services/useLogin";
+import { getUsernameFromEmail } from "../../../utils/textFormatUtils";
 
 export default function SignUp() {
   const classes = useStyles();
@@ -32,7 +32,7 @@ export default function SignUp() {
     // @ts-ignore - for now ignore bc new TS doesn't allow modifying an object
     delete newUser.confirmPassword;
     try {
-      newUser.username = getUsername(newUser.email);
+      newUser.username = getUsernameFromEmail(newUser.email);
 
       const response = await loginService.signUpUser(newUser);
       console.log("Response in sign up tsx - should be error", response);
@@ -52,17 +52,6 @@ export default function SignUp() {
       }
     } catch (e) {
       setError(e.message);
-    }
-  }
-
-  function getUsername(email: string): string {
-    const regex = /.+?(?=@)/;
-    const result: RegExpMatchArray | null = email.match(regex);
-    if (result === null) {
-      throw new Error(` Invalid username: Failed to parse out a username from: ${email}.
-            Use a valid email format. i.e. jsmith@example.com`);
-    } else {
-      return result[0];
     }
   }
 

@@ -3,7 +3,7 @@ import { dateNowIso, readableDate } from "../../utils/dateUtil";
 import NoteDAO from "../../model/noteDAO";
 import UserDAO from "../../model/userDAO";
 import event from "../../model/event";
-import { AllLibrariesResponse } from "../../common/queries/queriesUtils";
+import { PouchResponse } from "../../common/queries/queriesUtils";
 
 export const newNotes: NoteDAO[] = [
   {
@@ -172,7 +172,7 @@ function setUserToken(user: UserDAO) {
 
 export const mockToken = setUserToken(dummyUserDAO);
 
-export const listOfLibrariesResponse: AllLibrariesResponse = {
+export const listOfLibrariesResponse: PouchResponse = {
   rows: [
     {
       doc: newLibrary,
