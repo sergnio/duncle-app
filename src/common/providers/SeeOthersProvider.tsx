@@ -1,7 +1,8 @@
 import React, {
   createContext,
   Dispatch,
-  FC,
+  PropsWithChildren,
+  ReactNode,
   SetStateAction,
   useContext,
   useState,
@@ -22,7 +23,7 @@ export const SeeOthersContext = createContext<
   SeeOthersContextState | undefined
 >(undefined);
 
-const SeeOthersProvider: FC = ({ children }) => {
+const SeeOthersProvider = ({ children }: PropsWithChildren<any>) => {
   const [checked, setChecked] = useState<CheckboxesState>({
     checkedTerry: true,
     checkedSam: false,

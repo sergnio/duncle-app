@@ -26,7 +26,7 @@ export const LogInForm = (props: any) => {
         <Grid item>
           <Link to="/signup">
             <Typography variant="body2">
-              Don't have an account? Sign Up
+              Don&apos;t have an account? Sign Up
             </Typography>
           </Link>
         </Grid>

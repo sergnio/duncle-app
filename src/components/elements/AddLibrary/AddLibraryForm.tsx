@@ -36,7 +36,7 @@ export default function (props: any) {
       </Grid>
       <Grid container justify="center">
         {librarianFields.map(({ label, isRequired }) => (
-          <Grid item xs={3} className={paddingRight}>
+          <Grid item xs={3} key={label} className={paddingRight}>
             <CustomTextField key={label} name={label} isRequired={isRequired} />
           </Grid>
         ))}
