@@ -16,7 +16,7 @@ import { useLibraryState } from "../../../common/providers/LibraryProvider";
 
 export default function EditLibraryController() {
   const { setCurrentLibrary } = useLibraryState();
-  let { libraryId } = useParams<{ libraryId: string }>();
+  const { libraryId } = useParams<{ libraryId: string }>();
   const { data: library, isLoading, isSuccess, isError } = useLibraryQuery(
     libraryId
   );

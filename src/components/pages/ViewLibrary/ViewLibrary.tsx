@@ -13,7 +13,7 @@ import PersonalNotes from "../../elements/PersonalNotes/PersonalNotes";
 
 export default () => {
   const { content, alignToDrawer, paddingOne, paddingTopTiny } = useStyles();
-  let { libraryId } = useParams<{ libraryId: string }>();
+  const { libraryId } = useParams<{ libraryId: string }>();
 
   const {
     data: currentLibrary,
@@ -29,7 +29,7 @@ export default () => {
     submitNewEditableNote,
   } = useUpdateLibrary();
 
-  let history = useHistory();
+  const history = useHistory();
 
   if (isLoading) return <h1>Loading...</h1>;
 

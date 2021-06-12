@@ -16,7 +16,7 @@ export default () => {
 
   const history = useHistory();
 
-  let otherLibs: Library[] = [];
+  const otherLibs: Library[] = [];
 
   /** default, Terry libraries */
   if (isSuccess && libraries && checked.checkedTerry) {

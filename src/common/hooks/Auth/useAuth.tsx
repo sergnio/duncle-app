@@ -6,7 +6,7 @@ export type useAuthReturn = {
   isAuthenticated: boolean;
   setIsAuthenticated: Dispatch<SetStateAction<boolean>>;
   getAuthenticatedUser: string | Error;
-  signOut: Function;
+  signOut(): void;
 };
 
 interface localStorageItem {
@@ -17,8 +17,8 @@ interface localStorageItem {
 // tutorial on setting local storage tokens with expiry dates
 // https://www.sohamkamani.com/blog/javascript-localstorage-with-ttl-expiry/
 export default function useAuth() {
-  const TOKEN_ID: string = "authCredentials";
-  let history = useHistory();
+  const TOKEN_ID = "authCredentials";
+  const history = useHistory();
   const [_, setIsLoggedIn] = useState<boolean>(false);
 
   function isValidToken(): boolean {

@@ -5,7 +5,7 @@ import { listOfLibrariesResponse } from "../components/storybook-mocks/constants
 
 const ONE_SECOND = 1000;
 
-const simpleGet = <T>(url: string, mockData: T, statusCode: number = 200) => {
+const simpleGet = <T>(url: string, mockData: T, statusCode = 200) => {
   return rest.get(url, (req, res, ctx) =>
     res(ctx.delay(ONE_SECOND), ctx.status(statusCode), ctx.json(mockData))
   );

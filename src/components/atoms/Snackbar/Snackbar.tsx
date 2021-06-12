@@ -29,7 +29,7 @@ export default function () {
   const { message } = useNotificationState();
   const { clearMessage } = useNotification();
 
-  const isOpen: boolean = !isEqual(
+  const isOpen = !isEqual(
     message.message,
     initialMessageState.message
   );

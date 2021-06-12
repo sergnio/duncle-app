@@ -31,7 +31,7 @@ export default function ({
 
   const cancel = () => setisEditing(false);
 
-  let content = isEditing ? (
+  const content = isEditing ? (
     // todo - make this prettier
     <CardContent>
       <Form

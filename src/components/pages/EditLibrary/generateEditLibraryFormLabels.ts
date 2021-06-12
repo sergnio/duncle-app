@@ -7,7 +7,7 @@ export interface LabelProps {
 }
 
 export default (currentLibrary: Library): LabelProps[] => {
-  const isRequired: boolean = true;
+  const isRequired = true;
   const {
     street,
     city,

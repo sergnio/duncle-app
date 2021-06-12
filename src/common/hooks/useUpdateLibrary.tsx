@@ -46,7 +46,7 @@ export default () => {
      this is the code to set the next contact date
      */
 
-    let editedLibrary: Library = { ...currentLibrary };
+    const editedLibrary: Library = { ...currentLibrary };
     editedLibrary.dateNextContact = nextAppointment;
     editedLibrary.lastContactType = currentLibrary.lastContactType;
     // @ts-ignore
@@ -111,7 +111,7 @@ export default () => {
   function sortLatestComesFirst(notes: NoteDAO[]) {
     console.log("notes being sorted", notes);
     notes.sort(function (a, b) {
-      var keyA = new Date(a.dateCreated),
+      const keyA = new Date(a.dateCreated),
         keyB = new Date(b.dateCreated);
       // Compare the 2 dates
       if (keyA < keyB) return 1;

@@ -81,7 +81,7 @@ export default ({ library, handleScheduleNextAppointment }: drawerProps) => {
 
   const handleClose = () => {
     if (selectedDates) {
-      let calendarApi = selectedDates.view.calendar;
+      const calendarApi = selectedDates.view.calendar;
 
       calendarApi.unselect(); // clear date selection
 

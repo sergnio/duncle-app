@@ -1,5 +1,5 @@
 export const libraryKey = (uuid: string): string[] => ["getLibrary", uuid];
 
-export const allLibrariesKey: string = "getLibraries";
+export const allLibrariesKey = "getLibraries";
 
-export const saveLibraryKey: string = "saveLibrary";
+export const saveLibraryKey = "saveLibrary";

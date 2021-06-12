@@ -7,24 +7,11 @@ import NewLibrary from "../../model/newLibrary";
 import { isEmpty } from "lodash";
 import useAuth from "./Auth/useAuth";
 
-export type PouchReturnProps = {
-  localDB: PouchDB.Database;
-  get: Function;
-  put: Function;
-};
-
 export interface UseUserReturnProps {
   addUser(props: User): Promise<PouchDB.Core.Response | Error>;
   updateUser(props: UserDAO): Promise<PouchDB.Core.Response>;
   localPouch: any;
   fetchUser(props: any): any;
-}
-
-interface AddUserProps {
-  email: string;
-  password: string;
-  firstName: string;
-  lastName: string;
 }
 
 const USER_ID_PREFIX = "org.duncle.";

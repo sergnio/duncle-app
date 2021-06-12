@@ -8,7 +8,7 @@ import FormSubmitButton from "../../atoms/Button/FormSubmitButton";
 export default function (props: any) {
   const { handleSubmit } = props;
   const { paddingRight, form } = useStyles();
-  const isRequired: boolean = true;
+  const isRequired = true;
 
   const librarianFields = [
     { label: "Library Name", isRequired },
