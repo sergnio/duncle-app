@@ -22,7 +22,7 @@ export default () => {
     } else {
       console.log("No events were present");
     }
-  }, []);
+  }, [getAuthenticatedUser]);
 
   return (
     <>

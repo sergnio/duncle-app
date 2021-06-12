@@ -70,7 +70,7 @@ export default function useAuth() {
       setUserToken(user);
       setIsLoggedIn(true);
     }, []),
-    signOut: useCallback(() => signOut(), []),
+    signOut,
   };
 }
 
