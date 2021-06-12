@@ -1,4 +1,3 @@
-// todo - create local / dev / prod env
 import PouchDB from "pouchdb";
 import UserDAO from "../../model/userDAO";
 import Library from "../../model/library";
@@ -61,28 +60,6 @@ export function useUserPouch(): UseUserReturnProps {
   return { localPouch, addUser, fetchUser, updateUser };
 }
 
-export type PouchError = {
-  docId: string;
-  error: boolean;
-  message: string;
-  name: string;
-  reason: string;
-  status: number;
-};
-
-class RecordNotFoundError extends Error {
-  private pouchError: PouchError;
-
-  constructor(message: string, pouchError: PouchError) {
-    const { status, name, message: pouchMessage } = pouchError;
-
-    super(
-      `${message}: status: ${status}, exception: ${name}, message: ${pouchMessage} `
-    );
-    this.pouchError = pouchError;
-  }
-}
-
 class EnvVariableNotSetError extends Error {
   constructor(envVar: string) {
     super(`${envVar} is not properly set. 
@@ -90,9 +67,6 @@ class EnvVariableNotSetError extends Error {
   }
 }
 
-/**
- * Returns
- */
 interface useLibraryPouchReturn {
   getAll(): Promise<PouchDB.Core.AllDocsResponse<Library>>;
   getLibrary(libraryId: string): any;
