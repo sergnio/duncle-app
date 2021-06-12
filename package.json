@@ -1,0 +1,98 @@
+{
+  "name": "duncle-web-app",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@date-io/moment": "1.3.13",
+    "@fullcalendar/daygrid": "^5.5.0",
+    "@fullcalendar/interaction": "^5.5.0",
+    "@fullcalendar/react": "^5.5.0",
+    "@fullcalendar/timegrid": "^5.5.1",
+    "@material-ui/core": "^4.11.3",
+    "@material-ui/icons": "^4.11.2",
+    "@material-ui/lab": "^4.0.0-alpha.57",
+    "@material-ui/pickers": "^3.2.10",
+    "@react-mock/localstorage": "^0.1.2",
+    "axios": "^0.21.1",
+    "bcryptjs": "^2.4.3",
+    "express": "^4.17.1",
+    "express-favicon": "^2.0.1",
+    "final-form": "^4.18.7",
+    "lodash": "^4.17.20",
+    "material-table": "^1.69.2",
+    "moment": "^2.29.1",
+    "path": "^0.12.7",
+    "pouchdb": "^7.2.1",
+    "prettier": "^2.2.1",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
+    "react-final-form": "^6.5.2",
+    "react-number-format": "^4.4.4",
+    "react-query": "^3.13.0",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "^4.0.3",
+    "styled-components": "^5.2.1",
+    "typescript": "^4.1.3",
+    "uuid": "^8.3.2"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "prettier": "npx prettier --write .",
+    "storybook": "start-storybook -p 9009 -s public",
+    "build-storybook": "build-storybook -s public"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@storybook/addon-actions": "^6.2.7",
+    "@storybook/addon-knobs": "^6.2.7",
+    "@storybook/addon-links": "^6.2.7",
+    "@storybook/addons": "^6.2.7",
+    "@storybook/preset-create-react-app": "^3.1.7",
+    "@storybook/react": "^6.2.7",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.5.0",
+    "@testing-library/react-hooks": "^5.1.1",
+    "@testing-library/user-event": "^7.2.1",
+    "@types/bcryptjs": "^2.4.2",
+    "@types/jest": "^24.9.1",
+    "@types/lodash": "^4.14.168",
+    "@types/microsoft-graph": "^1.29.0",
+    "@types/node": "^12.19.16",
+    "@types/pouchdb": "^6.4.0",
+    "@types/react": "^16.14.3",
+    "@types/react-big-calendar": "^0.24.8",
+    "@types/react-dom": "^16.9.10",
+    "@types/react-router-dom": "5.1.3",
+    "@types/reactstrap": "^8.7.2",
+    "@types/styled-components": "^5.1.7",
+    "@types/uuid": "^8.0.0",
+    "@typescript-eslint/eslint-plugin": "^4.26.0",
+    "@typescript-eslint/parser": "^4.26.0",
+    "eslint": "^7.28.0",
+    "eslint-plugin-react": "^7.24.0",
+    "eslint-plugin-react-hooks": "^2.5.1",
+    "msw": "^0.26.1",
+    "react-test-renderer": "^16.14.0",
+    "serve": "^11.3.2"
+  },
+  "engines": {
+    "node": "16.x"
+  }
+}

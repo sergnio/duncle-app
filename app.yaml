@@ -1,0 +1,16 @@
+# yml Courtesy of https://blog.doit-intl.com/deploying-a-react-app-to-googles-app-engine-6efa8f4732c7
+env: standard
+runtime: nodejs10
+# enable this if you want a separate server. i.e. stage-ordinal-brace.com/...
+# service: stage
+handlers:
+  - url: /static
+    static_dir: build/static
+  - url: /(.*\.(json|ico|js))$
+    static_files: build/\1
+    upload: build/.*\.(json|ico|js)$
+  - url: .*
+    static_files: build/index.html
+    upload: build/index.html
+
+# Original guide https://medium.com/better-programming/deploy-a-react-app-to-google-cloud-platform-using-google-app-engine-3f74fbd537ec
