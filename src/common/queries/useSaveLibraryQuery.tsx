@@ -1,6 +1,6 @@
 import { Library } from "../../model";
 import { isEmpty, isEqual } from "lodash";
-import { roundDecimals, usePouch } from "../hooks/UsePouch";
+import { roundDecimals, createDatabaseWithUser } from "../hooks/UsePouch";
 import { useMutation, useQueryClient } from "react-query";
 import { useNotification } from "../../components/atoms/Snackbar/Snackbar";
 import useAuth from "../hooks/Auth/useAuth";
@@ -21,7 +21,7 @@ export default () => {
   const queryClient = useQueryClient();
 
   const USER_DB_PREFIX = "user_";
-  const localPouch = usePouch(
+  const localPouch = createDatabaseWithUser(
     `${USER_DB_PREFIX}${getAuthenticatedUser()?.username}`
   );
 

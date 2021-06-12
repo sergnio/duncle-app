@@ -18,7 +18,7 @@ const USER_ID_PREFIX = "org.duncle.";
 export const USER_DB_PREFIX = "user_";
 
 export function useUserPouch(): UseUserReturnProps {
-  const localPouch = usePouch("user");
+  const localPouch = createDatabaseWithUser("user");
 
   async function fetchUser(inputEmail: string): Promise<UserDAO> {
     console.log(`Finding username: ${inputEmail}`);
@@ -110,7 +110,7 @@ export function useLibraryPouch(): useLibraryPouchReturn {
   const { getAuthenticatedUser } = useAuth();
 
   const USER_DB_PREFIX = "user_";
-  const localPouch = usePouch(
+  const localPouch = createDatabaseWithUser(
     `${USER_DB_PREFIX}${getAuthenticatedUser()?.username}`
   );
 
@@ -161,7 +161,7 @@ export function useLibraryPouch(): useLibraryPouchReturn {
   return { getAll, getLibrary, saveLibrary, addNewLibrary };
 }
 
-export function usePouch(database: string): any {
+export function createDatabaseWithUser(database: string): any {
   const localPouch: PouchDB.Database = new PouchDB(database);
 
   const remoteDb = process.env.REACT_APP_DATABASE_URL;
