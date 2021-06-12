@@ -16,7 +16,7 @@ export const Default = () => (
       try {
         const response = await getAll();
         const doc = response.rows[0].doc;
-        if (!!doc) {
+        if (doc) {
           console.log("before", doc);
           doc.city = "New City 2";
           console.log("after", doc);

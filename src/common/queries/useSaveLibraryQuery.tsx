@@ -12,6 +12,7 @@ import {
 import { useLibraryState } from "../providers/LibraryProvider";
 import { NoLibrary as DEFAULT_LIBRARY } from "../../components/storybook-mocks/constants";
 import { updateAllLibrariesQuery } from "./queriesUtils";
+import PouchDB from "pouchdb";
 
 export default () => {
   const { currentLibrary } = useLibraryState();

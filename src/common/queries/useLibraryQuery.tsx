@@ -4,6 +4,7 @@ import { useNotification } from "../../components/atoms/Snackbar/Snackbar";
 import useAuth from "../hooks/Auth/useAuth";
 import { libraryKey } from "../constants/queryKeys";
 import { useLibraryState } from "../providers/LibraryProvider";
+import PouchDB from "pouchdb";
 
 export default (uuid: string) => {
   const { getAuthenticatedUser } = useAuth();
