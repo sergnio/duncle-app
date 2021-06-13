@@ -6,6 +6,7 @@ import useStyles from "../../../global-styles";
 import FormSubmitButton from "../../atoms/Button/FormSubmitButton";
 
 export default function (props: any) {
+  const { user } = props;
   const { handleSubmit } = props;
   const { paddingRight, form } = useStyles();
   const isRequired = true;
@@ -31,7 +32,7 @@ export default function (props: any) {
     <form className={form} noValidate onSubmit={handleSubmit}>
       <Grid container justify="center">
         <Typography component="h1" variant="h5">
-          Rep: Terry
+          Rep: {user.username}
         </Typography>
       </Grid>
       <Grid container justify="center">
