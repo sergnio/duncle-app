@@ -37,7 +37,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "CI=FALSE react-scripts build",
     "test": "react-scripts test",
     "lint": "eslint 'src/**/*.{ts,tsx}' --fix",
     "eject": "react-scripts eject",
