@@ -6,8 +6,9 @@ import moment from "moment";
 import { getColor } from "../../../utils/colorUtils";
 import TableHeader from "./TableHeader";
 import useTableColumns from "./useTableColumns";
-import Button from "@material-ui/core/Button";
+import IconButton from "@material-ui/core/IconButton";
 import RefreshIcon from "@material-ui/icons/Refresh";
+import Tooltip from "@material-ui/core/Tooltip";
 
 type TableProps = {
   libraries: Library[];
@@ -34,17 +35,19 @@ export default ({
     }
   };
 
-  const RefreshButton = (
-    <Button onClick={onRefresh}>
-      <RefreshIcon />
-    </Button>
+  const RefreshIconButton = (
+    <IconButton onClick={onRefresh}>
+      <Tooltip title="Manually refresh list of libraries" placement="bottom">
+        <RefreshIcon />
+      </Tooltip>
+    </IconButton>
   );
 
   return (
     <>
       <TableHeader />
       <MaterialTable
-        title={RefreshButton}
+        title={RefreshIconButton}
         columns={tableColumns}
         data={libraries}
         // @ts-ignore
