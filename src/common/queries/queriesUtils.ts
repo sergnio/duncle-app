@@ -1,6 +1,8 @@
 import { Library } from "../../model";
 import { allLibrariesKey } from "../constants/queryKeys";
 import { QueryClient } from "react-query";
+import UserDAO from "../../model/userDAO";
+import User from "../../model/user";
 
 export type PouchResponse<T = Library> = {
   rows: PouchRow<T>[];
@@ -32,3 +34,13 @@ export const updateAllLibrariesQuery = (
     });
   }
 };
+
+export const getUserData = (
+  user: "jim" | "sam" | string,
+  userData: PouchResponse<UserDAO>
+): UserDAO => userData.rows.filter((d) => d.doc.username === user)[0].doc;
+
+export const getUserEvents = (
+  user: "jim" | "sam" | string,
+  userData: PouchResponse<UserDAO>
+) => getUserData(user, userData).events;

@@ -3,9 +3,10 @@ import { createDatabaseWithUser } from "../hooks/UsePouch";
 import { useMutation, useQueryClient } from "react-query";
 import { useNotification } from "../../components/atoms/Snackbar/Snackbar";
 import useAuth from "../hooks/Auth/useAuth";
-import { saveUserKey } from "../constants/queryKeys";
+import { allUsersKey, saveUserKey } from "../constants/queryKeys";
 import PouchDB from "pouchdb";
 import UserDAO from "../../model/userDAO";
+import { getUserData, PouchResponse, PouchRow } from "./queriesUtils";
 
 export default () => {
   const { getAuthenticatedUser } = useAuth();
@@ -21,10 +22,8 @@ export default () => {
    * This is to be re-worked once I am smarter :)
    */
   const saveUser = (user: UserDAO): Promise<PouchDB.Core.Response | void> => {
-    const currentUser = getAuthenticatedUser();
-    // this is done just to get the _rev and _id, since our form doesn't store that info
-    user = { ...currentUser, ...user };
-    console.log("calling save user");
+    console.log("editedUser", user._rev);
+    console.log("editedUser", user.events);
 
     if (isEmpty(user._rev) || user._rev === "norev") {
       throw new Error(`Error code: 51. _rev is undefined. Cannot save user`);
@@ -33,37 +32,36 @@ export default () => {
       throw new Error(`Error code: 52. _id is undefined. Cannot save user`);
     }
 
-    if (!isEqual(currentUser, user)) {
-      console.log({ currentUser });
-      console.log({ user });
-      return localPouch.put(user);
-    } else {
-      console.warn("noop");
-      setInfo("User is the same - no updates were made");
-      // no op promise, just so the types don't complain.. probably a better way to do this
-      return Promise.resolve();
-    }
+    console.log({ user });
+    return localPouch.put(user);
   };
 
   return useMutation(saveUserKey, saveUser, {
     onSuccess: (response, user) => {
-      // let updatedLibrary: Library;
-      // console.log("success");
-      //
-      // if (response) {
-      //   // update the query for the single user
-      //   updatedLibrary = {
-      //     ...user,
-      //     _rev: response.rev,
-      //     _id: response.id,
-      //   };
-      //   console.log("id", response.id);
-      //   queryClient.setQueryData(userKey(response.id), updatedLibrary);
-      //
-      //   // update the query for all libraries
-      //   updateAllLibrariesQuery(updatedLibrary, queryClient);
-      setSuccess("Successfully saved user");
-      // }
+      let updatedUser: UserDAO[];
+      console.log("success");
+
+      if (response) {
+        // update the query for the single user
+        updatedUser = [
+          {
+            ...user,
+            _rev: response.rev,
+          },
+        ];
+
+        const oldData: PouchResponse<UserDAO[]> =
+          queryClient.getQueryData<PouchResponse<UserDAO[]>>(allUsersKey);
+        // console.log({ oldData });
+        // console.log({ updatedUser });
+
+        const newData = oldData.rows.map(
+          (obj) => updatedUser.find((o) => o._id === obj.id) || obj
+        );
+        // console.log({ newData });
+
+        queryClient.setQueryData(allUsersKey, newData);
+      }
     },
     onError: (e, user) => {
       console.error("save error user", user);

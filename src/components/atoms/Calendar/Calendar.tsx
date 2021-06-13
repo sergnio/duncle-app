@@ -15,7 +15,6 @@ import "./main.css";
 import event from "../../../model/event";
 import { dateNowIso, readableDate } from "../../../utils/dateUtil";
 import UserDAO from "../../../model/userDAO";
-import { useUserPouch } from "../../../common/hooks/UsePouch";
 import { useNotification } from "../Snackbar/Snackbar";
 import AdminCheckboxes from "../../elements/AdminCheckboxes/AdminCheckboxes";
 
@@ -85,14 +84,9 @@ export default function ({ initialEvents, updateUser, currentUser }: Props) {
 
       const editedUser = { ...currentUser };
       editedUser.events = [...currentUser.events, newEvent];
-
       updateUser(editedUser);
 
       try {
-        // todo - replace this with reactQuery?
-        // currentUser._rev = response.rev;
-        // currentUser.events.push(newEvent);
-        // authenticate(currentUser);
         setSuccess(`Successfully added event for: ${readableDate(startDate)}`);
       } catch (e) {
         setError(`Unable to add appointment: ${e}`);
@@ -156,12 +150,14 @@ export default function ({ initialEvents, updateUser, currentUser }: Props) {
           eventContent={renderEventContent} // custom render function
           eventClick={handleEventClick}
           eventsSet={handleEvents} // called after events are initialized/added/changed/removed
+          /**
           eventChange={function (eventChange) {
             console.log({ eventChange });
           }}
           eventAdd={function (eventAdd) {
             console.log({ eventAdd });
           }}
+          */
           /* you can update a remote database when these fire:
                     eventRemove={function(){}}
                     */
