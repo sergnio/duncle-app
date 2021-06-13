@@ -1,5 +1,5 @@
-import React, { Dispatch, SetStateAction, useCallback, useState } from "react";
-import { useHistory } from "react-router-dom";
+import React, {Dispatch, SetStateAction, useCallback, useState} from "react";
+import {useHistory} from "react-router-dom";
 import UserDAO from "../../../model/userDAO";
 
 export type useAuthReturn = {
