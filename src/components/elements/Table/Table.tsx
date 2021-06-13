@@ -6,19 +6,45 @@ import moment from "moment";
 import { getColor } from "../../../utils/colorUtils";
 import TableHeader from "./TableHeader";
 import useTableColumns from "./useTableColumns";
+import Button from "@material-ui/core/Button";
+import RefreshIcon from "@material-ui/icons/Refresh";
 
 type TableProps = {
   libraries: Library[];
   onEdit?(library: Library): void;
+  refetch(): void;
+  setSuccess(message: string): void;
+  setError(message: string): void;
 };
-export default ({ libraries, onEdit }: TableProps) => {
+export default ({
+  libraries,
+  onEdit,
+  refetch,
+  setSuccess,
+  setError,
+}: TableProps) => {
   const tableColumns = useTableColumns();
+
+  const onRefresh = async () => {
+    try {
+      await refetch();
+      setSuccess("Successfully refreshed libraries");
+    } catch (e) {
+      setError(`Failed to refresh libraries: ${e}`);
+    }
+  };
+
+  const RefreshButton = (
+    <Button onClick={onRefresh}>
+      <RefreshIcon />
+    </Button>
+  );
 
   return (
     <>
       <TableHeader />
       <MaterialTable
-        title=" "
+        title={RefreshButton}
         columns={tableColumns}
         data={libraries}
         // @ts-ignore

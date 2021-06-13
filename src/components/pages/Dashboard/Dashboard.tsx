@@ -1,18 +1,28 @@
 import Library from "../../../model/library";
 import React from "react";
-import { Card } from "@material-ui/core";
+import Card from "@material-ui/core/Card";
 import Grid from "@material-ui/core/Grid/Grid";
 import Table from "../../elements/Table/Table";
 import { useHistory } from "react-router-dom";
 import useLibraries from "../../../common/queries/useLibraries";
 import useAdminLibraries from "../../../common/queries/useAdminLibraries";
 import { useSeeOthersState } from "../../../common/providers/SeeOthersProvider";
+import { useNotification } from "../../atoms/Snackbar/Snackbar";
 
 export default () => {
   const { checked } = useSeeOthersState();
-  const { data: libraries, isLoading, isSuccess, error } = useLibraries();
+  const {
+    data: libraries,
+    isLoading,
+    isSuccess,
+    error,
+    refetch,
+  } = useLibraries();
   const samData = useAdminLibraries("sam");
   const jimData = useAdminLibraries("jim");
+  const { setSuccess, setError } = useNotification();
+
+  console.log({ libraries });
 
   const history = useHistory();
 
@@ -45,7 +55,13 @@ export default () => {
         <Grid container justify="center">
           <Grid item xs={11}>
             <Card variant="outlined">
-              <Table libraries={otherLibs} onEdit={routeToLibraryDetail} />
+              <Table
+                libraries={otherLibs}
+                onEdit={routeToLibraryDetail}
+                refetch={refetch}
+                setSuccess={setSuccess}
+                setError={setError}
+              />
             </Card>
           </Grid>
         </Grid>
