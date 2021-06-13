@@ -17,23 +17,22 @@ import { dateNowIso, readableDate } from "../../../utils/dateUtil";
 import UserDAO from "../../../model/userDAO";
 import { useUserPouch } from "../../../common/hooks/UsePouch";
 import { useNotification } from "../Snackbar/Snackbar";
-import useAuth from "../../../common/hooks/Auth/useAuth";
 import AdminCheckboxes from "../../elements/AdminCheckboxes/AdminCheckboxes";
 
 interface Props {
   initialEvents: any[];
+  updateUser(user: UserDAO): void;
+  currentUser: UserDAO;
 }
 
 // todo - fix this
-export default function ({ initialEvents }: Props) {
+export default function ({ initialEvents, updateUser, currentUser }: Props) {
   const [weekendsVisible, setWeekendsVisible] = useState<boolean>(true);
   const [_, setCurrentEvents] = useState<EventApi[]>([]);
   const [selectedDates, setSelectedDates] = useState<DateSelectArg>();
   const { setSuccess, setError } = useNotification();
 
   const [isOpen, setOpen] = React.useState<boolean>(false);
-  const { authenticate, getAuthenticatedUser } = useAuth();
-  const { updateUser } = useUserPouch();
   const calRef = useRef<FullCalendar>();
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -62,7 +61,6 @@ export default function ({ initialEvents }: Props) {
   const handleSubmit = async ({ appointmentTitle }: DateDialogReturn) => {
     console.log({ appointmentTitle });
     //// add to calendar events
-    // @ts-ignore - todo, better way to tell this isn't undefined, possibly pass in as parameter?
     const { calendar } = selectedDates.view;
     calendar.unselect(); // clear date selection
 
@@ -85,19 +83,22 @@ export default function ({ initialEvents }: Props) {
         dateUpdated: now,
       };
 
-      const currentUser: UserDAO = await getAuthenticatedUser();
+      const editedUser = { ...currentUser };
+      editedUser.events = [...currentUser.events, newEvent];
+
+      updateUser(editedUser);
 
       try {
         // todo - replace this with reactQuery?
-        const response = await updateUser(currentUser);
-        currentUser._rev = response.rev;
-        currentUser.events.push(newEvent);
-        authenticate(currentUser);
+        // currentUser._rev = response.rev;
+        // currentUser.events.push(newEvent);
+        // authenticate(currentUser);
         setSuccess(`Successfully added event for: ${readableDate(startDate)}`);
       } catch (e) {
         setError(`Unable to add appointment: ${e}`);
       }
 
+      // todo - update this only on success
       calendar.addEvent({
         id: newId,
         title: appointmentTitle,
