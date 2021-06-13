@@ -69,13 +69,10 @@ export default () => {
     },
     onSettled: (response) => {
       console.log("settled");
-      // if (response) {
-      //   console.log(
-      //     `invalidated: ${userKey(response.id)} and ${allLibrariesKey}`
-      //   );
-      //   queryClient.invalidateQueries(userKey(response.id));
-      //   queryClient.invalidateQueries(allLibrariesKey);
-      // }
+      if (response) {
+        console.log(`invalidated: ${allUsersKey}`);
+        queryClient.invalidateQueries(allUsersKey);
+      }
     },
   });
 };

@@ -23,8 +23,7 @@ export default () => {
   const { mutate } = useSaveUsers();
   const currentUser = getAuthenticatedUser();
   let fromRQ;
-  if (data && data.rows) {
-    console.log("is data.rows defined", data.rows);
+  if (data && data.rows && !fromRQ) {
     fromRQ = getUserData(currentUser?.username, data);
   }
 

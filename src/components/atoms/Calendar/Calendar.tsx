@@ -63,7 +63,7 @@ export default function ({ initialEvents, updateUser, currentUser }: Props) {
     const { calendar } = selectedDates.view;
     calendar.unselect(); // clear date selection
 
-    if (selectedDates) {
+    if (selectedDates && currentUser) {
       console.log({ selectedDates });
 
       const newId = uuidv4();
@@ -82,6 +82,7 @@ export default function ({ initialEvents, updateUser, currentUser }: Props) {
         dateUpdated: now,
       };
 
+      console.log("is currentUser defined", currentUser);
       const editedUser = { ...currentUser };
       editedUser.events = [...currentUser.events, newEvent];
       updateUser(editedUser);
