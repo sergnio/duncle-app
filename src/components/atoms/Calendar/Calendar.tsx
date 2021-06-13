@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import FullCalendar, {
   DateSelectArg,
   EventApi,
@@ -20,8 +20,12 @@ import { useNotification } from "../Snackbar/Snackbar";
 import useAuth from "../../../common/hooks/Auth/useAuth";
 import AdminCheckboxes from "../../elements/AdminCheckboxes/AdminCheckboxes";
 
+interface Props {
+  initialEvents: any[];
+}
+
 // todo - fix this
-export default function ({ initialEvents }: any) {
+export default function ({ initialEvents }: Props) {
   const [weekendsVisible, setWeekendsVisible] = useState<boolean>(true);
   const [_, setCurrentEvents] = useState<EventApi[]>([]);
   const [selectedDates, setSelectedDates] = useState<DateSelectArg>();
@@ -30,6 +34,21 @@ export default function ({ initialEvents }: any) {
   const [isOpen, setOpen] = React.useState<boolean>(false);
   const { authenticate, getAuthenticatedUser } = useAuth();
   const { updateUser } = useUserPouch();
+  const calRef = useRef<FullCalendar>();
+
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  useEffect(() => {
+    initialEvents.forEach(() => {
+      if (calRef != null && calRef.current != null) {
+        const api = calRef.current.getApi();
+        api.removeAllEvents();
+
+        initialEvents.forEach((ev) => {
+          api.addEvent(ev);
+        });
+      }
+    });
+  }, [initialEvents]);
 
   const handleWeekendsToggle = () => {
     setWeekendsVisible(!weekendsVisible);
@@ -121,6 +140,7 @@ export default function ({ initialEvents }: any) {
       <div className="demo-app-main">
         <AdminCheckboxes />
         <FullCalendar
+          ref={calRef}
           plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
           headerToolbar={{
             left: "prev,next today",
@@ -133,7 +153,6 @@ export default function ({ initialEvents }: any) {
           selectMirror={true}
           dayMaxEvents={true}
           weekends={weekendsVisible}
-          initialEvents={initialEvents} // alternatively, use the `events` setting to fetch from a feed
           select={handleDateSelect}
           eventContent={renderEventContent} // custom render function
           eventClick={handleEventClick}

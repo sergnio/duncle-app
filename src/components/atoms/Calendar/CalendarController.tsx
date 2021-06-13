@@ -3,12 +3,21 @@ import Calendar from "./Calendar";
 import event, { TrimmedEvent } from "../../../model/event";
 import useAuth from "../../../common/hooks/Auth/useAuth";
 import useUsersQuery from "../../../common/queries/useUsersQuery";
+import { useSeeOthersState } from "../../../common/providers/SeeOthersProvider";
+
+const todayStr = new Date().toISOString().replace(/T.*$/, ""); // YYYY-MM-DD of today
+let eventGuid = 0;
+
+export function createEventId() {
+  return String(eventGuid++);
+}
 
 export default () => {
   const INITIAL_EVENT_STATE: TrimmedEvent[] = [];
   const [events, setEvents] = useState<TrimmedEvent[]>(INITIAL_EVENT_STATE);
   const { getAuthenticatedUser } = useAuth();
-  const { data } = useUsersQuery();
+  // const { data } = useUsersQuery();
+  const { checked } = useSeeOthersState();
 
   // todo - why does this need to be in a useEffect?
   useEffect(() => {
@@ -26,8 +35,22 @@ export default () => {
     } else {
       console.log("No events were present");
     }
+
+    console.log("triggering");
+    if (checked.checkedSam) {
+      console.log("checked sam");
+      const nw = [
+        {
+          id: createEventId(),
+          title: "All-day event",
+          start: todayStr,
+        },
+      ];
+      allEvents = [...allEvents, ...nw];
+    }
+
     setEvents(allEvents);
-  }, []);
+  }, [checked]);
 
   return (
     <>
