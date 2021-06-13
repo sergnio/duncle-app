@@ -85,12 +85,10 @@ export default function ({ initialEvents }: Props) {
         dateUpdated: now,
       };
 
-      // @ts-ignore
       const currentUser: UserDAO = await getAuthenticatedUser();
 
-      // todo - find out how to reuse this code (see ViewLibrary.tsx:146)
-      //  calling hooks inside a service function is a no-no :(
       try {
+        // todo - replace this with reactQuery?
         const response = await updateUser(currentUser);
         currentUser._rev = response.rev;
         currentUser.events.push(newEvent);

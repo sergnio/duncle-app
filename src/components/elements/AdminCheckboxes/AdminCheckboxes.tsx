@@ -1,5 +1,11 @@
 import React from "react";
-import { Checkbox, FormControlLabel, FormGroup } from "@material-ui/core";
+import {
+  Checkbox,
+  FormControl,
+  FormControlLabel,
+  FormGroup,
+  FormHelperText,
+} from "@material-ui/core";
 import styled from "styled-components";
 import { useSeeOthersState } from "../../../common/providers/SeeOthersProvider";
 import useAuth from "../../../common/hooks/Auth/useAuth";
@@ -13,6 +19,11 @@ export default () => {
   const { checked, setChecked } = useSeeOthersState();
   const { getAuthenticatedUser } = useAuth();
   const isAdmin = getAuthenticatedUser()?.role === "admin";
+
+  const { checkedTerry, checkedSam, checkedJim } = checked;
+  const error =
+    [checkedTerry, checkedSam, checkedJim].filter((v) => v).length < 1;
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     /** When this changes, we should add/remove some data from the table
      */
@@ -23,37 +34,44 @@ export default () => {
     <>
       {isAdmin && (
         <FlexGroup row>
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={checked.checkedTerry}
-                onChange={handleChange}
-                name="checkedTerry"
-                color="primary"
+          <FormControl required error={error}>
+            <FlexGroup row>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={checked.checkedTerry}
+                    onChange={handleChange}
+                    name="checkedTerry"
+                    color="primary"
+                  />
+                }
+                label="Terry"
               />
-            }
-            label="Terry"
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={checked.checkedSam}
-                onChange={handleChange}
-                name="checkedSam"
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={checked.checkedSam}
+                    onChange={handleChange}
+                    name="checkedSam"
+                  />
+                }
+                label="Sam"
               />
-            }
-            label="Sam"
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={checked.checkedJim}
-                onChange={handleChange}
-                name="checkedJim"
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={checked.checkedJim}
+                    onChange={handleChange}
+                    name="checkedJim"
+                  />
+                }
+                label="Jim"
               />
-            }
-            label="Jim"
-          />
+            </FlexGroup>
+            <FlexGroup row>
+              <FormHelperText>Please select at least one option</FormHelperText>
+            </FlexGroup>
+          </FormControl>
         </FlexGroup>
       )}
     </>

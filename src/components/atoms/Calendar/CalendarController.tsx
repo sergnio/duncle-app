@@ -23,8 +23,6 @@ export default () => {
   // todo - why does this need to be in a useEffect?
   useEffect(() => {
     const user = getAuthenticatedUser();
-
-    // eslint-disable-next-line
     let allEvents: TrimmedEvent[] = [];
 
     if (data && checked.checkedTerry && user?.username != null) {
@@ -49,18 +47,5 @@ export default () => {
     setEvents(allEvents);
   }, [checked, data]);
 
-  return (
-    <>
-      {/*
-        todo - this seems really bad..
-          since we're making an "api" call to grab the events +
-          using initial events seems to only render the calendar once,
-          events list will be empty the first time we render this calendar (normally).
-          Because of this, we only render it with an empty list, and not after we've retrieved our data.
-       */}
-      {events === INITIAL_EVENT_STATE ? null : (
-        <Calendar initialEvents={events} />
-      )}
-    </>
-  );
+  return <Calendar initialEvents={events} />;
 };
