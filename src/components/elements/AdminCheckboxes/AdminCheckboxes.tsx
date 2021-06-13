@@ -18,7 +18,8 @@ const FlexGroup = styled(FormGroup)`
 export default () => {
   const { checked, setChecked } = useSeeOthersState();
   const { getAuthenticatedUser } = useAuth();
-  const isAdmin = getAuthenticatedUser()?.role === "admin";
+  const user = getAuthenticatedUser();
+  const isAdmin = user?.role === "admin";
 
   const { checkedTerry, checkedSam, checkedJim } = checked;
   const error =
@@ -45,7 +46,7 @@ export default () => {
                     color="primary"
                   />
                 }
-                label="Terry"
+                label={user.firstName}
               />
               <FormControlLabel
                 control={
