@@ -1,16 +1,14 @@
-import { isEmpty, isEqual } from "lodash";
+import { isEmpty } from "lodash";
 import { createDatabaseWithUser } from "../hooks/UsePouch";
 import { useMutation, useQueryClient } from "react-query";
 import { useNotification } from "../../components/atoms/Snackbar/Snackbar";
-import useAuth from "../hooks/Auth/useAuth";
 import { allUsersKey, saveUserKey } from "../constants/queryKeys";
 import PouchDB from "pouchdb";
 import UserDAO from "../../model/userDAO";
-import { getUserData, PouchResponse, PouchRow } from "./queriesUtils";
+import { PouchResponse } from "./queriesUtils";
 
 export default () => {
-  const { getAuthenticatedUser } = useAuth();
-  const { setSuccess, setError, setInfo } = useNotification();
+  const { setError } = useNotification();
   const queryClient = useQueryClient();
 
   const localPouch = createDatabaseWithUser("user");
@@ -52,13 +50,10 @@ export default () => {
 
         const oldData: PouchResponse<UserDAO[]> =
           queryClient.getQueryData<PouchResponse<UserDAO[]>>(allUsersKey);
-        // console.log({ oldData });
-        // console.log({ updatedUser });
 
         const newData = oldData.rows.map(
           (obj) => updatedUser.find((o) => o._id === obj.id) || obj
         );
-        // console.log({ newData });
 
         queryClient.setQueryData(allUsersKey, newData);
       }
