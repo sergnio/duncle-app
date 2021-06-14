@@ -6,4 +6,4 @@ export default {
   title: "Elements/Table",
 };
 
-export const Default = () => <Table libraries={[newLibrary, newLibrary2]} />;
+// export const Default = () => <Table libraries={[newLibrary, newLibrary2]} />;

@@ -5,4 +5,4 @@ export default {
   title: "Atoms/Calendar",
 };
 
-export const Default = () => <FullCalendar initialEvents={[]} />;
+// export const Default = () => <FullCalendar initialEvents={[]}  />;
