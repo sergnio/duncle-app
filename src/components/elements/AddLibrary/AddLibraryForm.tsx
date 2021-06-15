@@ -4,6 +4,13 @@ import Grid from "@material-ui/core/Grid/Grid";
 import { Typography } from "@material-ui/core";
 import useStyles from "../../../global-styles";
 import FormSubmitButton from "../../atoms/Button/FormSubmitButton";
+import styled from "styled-components";
+
+const Flex = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  margin: 20px 40px;
+`;
 
 export default function (props: any) {
   const { user } = props;
@@ -11,19 +18,26 @@ export default function (props: any) {
   const { paddingRight, form } = useStyles();
   const isRequired = true;
 
-  const librarianFields = [
+  const personalFields = [
+    // personal info
     { label: "Library Name", isRequired },
     { label: "Librarian", isRequired },
     { label: "Assistant" },
     { label: "Email", isRequired },
     { label: "Phone Number", isRequired },
     { label: "Extension" },
+  ];
+  const addressFields = [
+    // address
     { label: "Street", isRequired },
     { label: "City", isRequired },
     { label: "County", isRequired },
     { label: "District", isRequired },
     { label: "Zip", isRequired },
     { label: "State", isRequired },
+  ];
+  const otherFields = [
+    // other
     { label: "Level" },
     { label: "Size" },
   ];
@@ -36,11 +50,35 @@ export default function (props: any) {
         </Typography>
       </Grid>
       <Grid container justify="center">
-        {librarianFields.map(({ label, isRequired }) => (
-          <Grid item xs={3} key={label} className={paddingRight}>
-            <CustomTextField key={label} name={label} isRequired={isRequired} />
-          </Grid>
-        ))}
+        <Flex>
+          {personalFields.map(({ label, isRequired }) => (
+            <Grid item xs={3} md={2} key={label} className={paddingRight}>
+              <CustomTextField
+                key={label}
+                name={label}
+                isRequired={isRequired}
+              />
+            </Grid>
+          ))}
+        </Flex>
+        <Flex>
+          {addressFields.map(({ label, isRequired }) => (
+            <Grid item xs={3} md={2} key={label} className={paddingRight}>
+              <CustomTextField
+                key={label}
+                name={label}
+                isRequired={isRequired}
+              />
+            </Grid>
+          ))}
+        </Flex>
+        <Flex>
+          {otherFields.map(({ label }) => (
+            <Grid item xs={6} key={label} className={paddingRight}>
+              <CustomTextField key={label} name={label} />
+            </Grid>
+          ))}
+        </Flex>
       </Grid>
       <FormSubmitButton DisplayText="Create Library" />
     </form>

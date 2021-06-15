@@ -110,8 +110,6 @@ export default function ({ initialEvents, updateUser, currentUser }: Props) {
 
   const handleEventClick = (clickInfo: EventClickArg) => {
     if (
-      // @ts-ignore
-      // eslint-disable-next-line
       confirm(
         `Are you sure you want to delete the event '${clickInfo.event.title}'`
       )
