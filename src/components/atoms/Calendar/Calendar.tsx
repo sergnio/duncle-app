@@ -116,6 +116,12 @@ export default function ({ initialEvents, updateUser, currentUser }: Props) {
         `Are you sure you want to delete the event '${clickInfo.event.title}'`
       )
     ) {
+      const editedUser = { ...currentUser };
+      editedUser.events = editedUser.events.filter(
+        (e) => e.title !== clickInfo.event.title
+      );
+      updateUser(editedUser);
+
       clickInfo.event.remove();
     }
   };
