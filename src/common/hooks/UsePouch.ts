@@ -5,6 +5,7 @@ import User from "../../model/user";
 import NewLibrary from "../../model/newLibrary";
 import { isEmpty } from "lodash";
 import useAuth from "./Auth/useAuth";
+import { createUserDatabase } from "../../services/userPouchService";
 
 export interface UseUserReturnProps {
   addUser(props: User): Promise<PouchDB.Core.Response | Error>;
@@ -17,7 +18,7 @@ const USER_ID_PREFIX = "org.duncle.";
 export const USER_DB_PREFIX = "user_";
 
 export function useUserPouch(): UseUserReturnProps {
-  const localPouch = createDatabaseWithUser("user");
+  const localPouch = createUserDatabase();
 
   async function fetchUser(inputEmail: string): Promise<UserDAO> {
     console.log(`Finding username: ${inputEmail}`);

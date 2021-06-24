@@ -18,6 +18,8 @@ export default () => {
     error,
     refetch,
   } = useLibraries();
+
+  // fyi this also runs on non admins..
   const samData = useAdminLibraries("sam");
   const jimData = useAdminLibraries("jim");
   const { setSuccess, setError } = useNotification();
