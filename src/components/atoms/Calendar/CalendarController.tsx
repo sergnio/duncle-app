@@ -5,10 +5,7 @@ import useAuth from "../../../hooks/Auth/useAuth";
 import useUsersQuery from "../../../queries/useUsersQuery";
 import useSaveUsers from "../../../queries/useSaveUsersMutation";
 import { useSeeOthersState } from "../../../providers/SeeOthersProvider";
-import {
-  getUserData,
-  getUserEvents,
-} from "../../../queries/queriesUtils";
+import { getUserData, getUserEvents } from "../../../queries/queriesUtils";
 
 export default () => {
   const INITIAL_EVENT_STATE: TrimmedEvent[] = [];
@@ -29,7 +26,7 @@ export default () => {
   useEffect(() => {
     let allEvents: TrimmedEvent[] = [];
 
-    if (data && checked.checkedTerry && fromRQ?.username != null) {
+    if (data && checked.checkedUser && fromRQ?.username != null) {
       const currentUserEvents = getUserEvents(fromRQ.username, data);
       allEvents = [...allEvents, ...currentUserEvents];
     } else {

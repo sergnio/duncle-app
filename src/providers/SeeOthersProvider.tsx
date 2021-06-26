@@ -9,7 +9,7 @@ import React, {
 } from "react";
 
 export interface CheckboxesState {
-  checkedTerry: boolean;
+  checkedUser: boolean;
   checkedSam: boolean;
   checkedJim: boolean;
 }
@@ -25,7 +25,7 @@ export const SeeOthersContext = createContext<
 
 const SeeOthersProvider = ({ children }: PropsWithChildren<any>) => {
   const [checked, setChecked] = useState<CheckboxesState>({
-    checkedTerry: true,
+    checkedUser: true,
     checkedSam: false,
     checkedJim: false,
   });

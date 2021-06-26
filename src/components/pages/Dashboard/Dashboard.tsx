@@ -5,7 +5,6 @@ import Grid from "@material-ui/core/Grid/Grid";
 import Table from "../../elements/Table/Table";
 import { useHistory } from "react-router-dom";
 import useLibraries from "../../../queries/useLibraries";
-import useAdminLibraries from "../../../queries/useAdminLibraries";
 import { useSeeOthersState } from "../../../providers/SeeOthersProvider";
 import { useNotification } from "../../atoms/Snackbar/Snackbar";
 
@@ -19,9 +18,6 @@ export default () => {
     refetch,
   } = useLibraries();
 
-  // fyi this also runs on non admins..
-  const samData = useAdminLibraries("sam");
-  const jimData = useAdminLibraries("jim");
   const { setSuccess, setError } = useNotification();
 
   console.log({ libraries });
@@ -31,16 +27,8 @@ export default () => {
   const otherLibs: Library[] = [];
 
   /** default, Terry libraries */
-  if (isSuccess && libraries && checked.checkedTerry) {
+  if (isSuccess && libraries && checked.checkedUser) {
     otherLibs.push(...libraries);
-  }
-
-  if (samData?.isSuccess && samData?.data && checked.checkedSam) {
-    otherLibs.push(...samData.data);
-  }
-
-  if (jimData?.isSuccess && jimData?.data && checked.checkedJim) {
-    otherLibs.push(...jimData.data);
   }
 
   if (isLoading) return <h1>Loading...</h1>;

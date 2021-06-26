@@ -21,9 +21,9 @@ export default () => {
   const user = getAuthenticatedUser();
   const isAdmin = user?.role === "admin";
 
-  const { checkedTerry, checkedSam, checkedJim } = checked;
+  const { checkedUser, checkedSam, checkedJim } = checked;
   const error =
-    [checkedTerry, checkedSam, checkedJim].filter((v) => v).length < 1;
+    [checkedUser, checkedSam, checkedJim].filter((v) => v).length < 1;
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     /** When this changes, we should add/remove some data from the table
@@ -40,9 +40,9 @@ export default () => {
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={checked.checkedTerry}
+                    checked={checked.checkedUser}
                     onChange={handleChange}
-                    name="checkedTerry"
+                    name="checkedUser"
                     color="primary"
                   />
                 }
