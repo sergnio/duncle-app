@@ -17,7 +17,7 @@ const navbarTabs: NavbarProps[] = [
   { name: "Add Library", route: "/library/new" },
   { name: "Manage Territories", route: "/territories", adminOnly: true },
 ];
-const DEFAULT_NAVBAR = 0;
+const DEFAULT_NAVBAR = -1;
 
 export default function Navbar() {
   const { pathname } = useLocation<Location>();
