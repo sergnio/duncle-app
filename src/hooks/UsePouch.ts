@@ -1,11 +1,11 @@
 import PouchDB from "pouchdb";
-import UserDAO from "../../model/userDAO";
-import Library from "../../model/library";
-import User from "../../model/user";
-import NewLibrary from "../../model/newLibrary";
+import UserDAO from "../model/userDAO";
+import Library from "../model/library";
+import User from "../model/user";
+import NewLibrary from "../model/newLibrary";
 import { isEmpty } from "lodash";
 import useAuth from "./Auth/useAuth";
-import { createUserDatabase } from "../../services/userPouchService";
+import { createUserDatabase } from "../services/userPouchService";
 
 export interface UseUserReturnProps {
   addUser(props: User): Promise<PouchDB.Core.Response | Error>;

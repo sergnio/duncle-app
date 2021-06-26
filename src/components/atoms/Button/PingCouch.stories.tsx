@@ -1,6 +1,6 @@
 import React from "react";
 import PingAnything from "./PingAnything";
-import { useLibraryPouch } from "../../../common/hooks/UsePouch";
+import { useLibraryPouch } from "../../../hooks/UsePouch";
 
 export default {
   title: "Atoms/Test/PingCouch",

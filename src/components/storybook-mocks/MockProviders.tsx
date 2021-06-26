@@ -3,8 +3,8 @@ import React, { PropsWithChildren } from "react";
 // @ts-ignore
 import { LocalStorageMock } from "@react-mock/localstorage";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { NotificationProvider } from "../../common/providers/NotificationProvider";
-import { LibraryProvider } from "../../common/providers/LibraryProvider";
+import { NotificationProvider } from "../../providers/NotificationProvider";
+import { LibraryProvider } from "../../providers/LibraryProvider";
 import { BrowserRouter } from "react-router-dom";
 
 export const LocalStorageMockProvider = ({

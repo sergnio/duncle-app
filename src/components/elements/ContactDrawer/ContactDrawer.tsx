@@ -11,7 +11,7 @@ import { cloneDeep, isEmpty, isEqual } from "lodash";
 import { readableDate } from "../../../utils/dateUtil";
 import Typography from "@material-ui/core/Typography";
 import { useNotification } from "../../atoms/Snackbar/Snackbar";
-import { useLibraryPouch } from "../../../common/hooks/UsePouch";
+import { useLibraryPouch } from "../../../hooks/UsePouch";
 import ScheduleNext from "../ScheduleNext";
 import styled from "styled-components";
 import { formatContactType } from "../../../utils/textFormatUtils";

@@ -1,6 +1,6 @@
 // src/mocks/handlers.js
 import { rest } from "msw";
-import { PouchResponse } from "../common/queries/queriesUtils";
+import { PouchResponse } from "../queries/queriesUtils";
 import { listOfLibrariesResponse } from "../components/storybook-mocks/constants";
 
 const ONE_SECOND = 1000;

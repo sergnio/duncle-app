@@ -14,7 +14,7 @@ import AddLibrary from "../pages/AddLibrary/AddLibrary";
 import ViewLibrary from "../pages/ViewLibrary/ViewLibrary";
 import EditLibraryController from "../pages/EditLibrary/EditLibraryController";
 import Unauthorized from "./Unauthorized/Unauthorized";
-import SeeOthersProvider from "../../common/providers/SeeOthersProvider";
+import SeeOthersProvider from "../../providers/SeeOthersProvider";
 
 export default ({ children }: PropsWithChildren<any>) => (
   <Router>

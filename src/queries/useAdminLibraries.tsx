@@ -3,8 +3,8 @@ import { useQuery } from "react-query";
 import { allLibrariesKey } from "../constants/queryKeys";
 import { createDatabaseWithUser, USER_DB_PREFIX } from "../hooks/UsePouch";
 import { PouchResponse, parseToLibraries } from "./queriesUtils";
-import Library from "../../model/library";
-import { useNotification } from "../../components/atoms/Snackbar/Snackbar";
+import Library from "../model/library";
+import { useNotification } from "../components/atoms/Snackbar/Snackbar";
 
 export default (user: string) => {
   const { setError } = useNotification();

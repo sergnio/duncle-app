@@ -3,7 +3,7 @@ import { AppBar, Tab, Tabs } from "@material-ui/core";
 import { Location } from "history";
 import { useHistory, useLocation } from "react-router-dom";
 import Profile from "../Profile/Profile";
-import useAuth from "../../../common/hooks/Auth/useAuth";
+import useAuth from "../../../hooks/Auth/useAuth";
 
 type NavbarProps = {
   name: string;

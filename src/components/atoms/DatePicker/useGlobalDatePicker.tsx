@@ -1,7 +1,7 @@
-import { useGlobalDatePickerState } from "../../../common/providers/GlobalDatePickerProvider";
+import { useGlobalDatePickerState } from "../../../providers/GlobalDatePickerProvider";
 import { LastContactType } from "../../../model/newLibrary";
-import { useLibraryState } from "../../../common/providers/LibraryProvider";
-import useSaveLibraryQuery from "../../../common/queries/useSaveLibraryQuery";
+import { useLibraryState } from "../../../providers/LibraryProvider";
+import useSaveLibraryQuery from "../../../queries/useSaveLibraryQuery";
 import Library from "../../../model/library";
 import { useEffect, useState } from "react";
 import { dateNowIso } from "../../../utils/dateUtil";

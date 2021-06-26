@@ -3,7 +3,7 @@ import Drawer from "./ContactDrawer";
 import { newLibrary } from "../../storybook-mocks/constants";
 import MockForm from "../../storybook-mocks/MockForm";
 import { action } from "@storybook/addon-actions";
-import GlobalProvider from "../../../common/providers/GlobalProvider";
+import GlobalProvider from "../../../providers/GlobalProvider";
 
 export default {
   title: "Elements/Drawer",

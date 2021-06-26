@@ -4,9 +4,9 @@ import Card from "@material-ui/core/Card";
 import Grid from "@material-ui/core/Grid/Grid";
 import Table from "../../elements/Table/Table";
 import { useHistory } from "react-router-dom";
-import useLibraries from "../../../common/queries/useLibraries";
-import useAdminLibraries from "../../../common/queries/useAdminLibraries";
-import { useSeeOthersState } from "../../../common/providers/SeeOthersProvider";
+import useLibraries from "../../../queries/useLibraries";
+import useAdminLibraries from "../../../queries/useAdminLibraries";
+import { useSeeOthersState } from "../../../providers/SeeOthersProvider";
 import { useNotification } from "../../atoms/Snackbar/Snackbar";
 
 export default () => {

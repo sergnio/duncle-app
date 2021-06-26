@@ -1,10 +1,10 @@
 import { createDatabaseWithUser } from "../hooks/UsePouch";
 import { useQuery } from "react-query";
-import { useNotification } from "../../components/atoms/Snackbar/Snackbar";
+import { useNotification } from "../components/atoms/Snackbar/Snackbar";
 import { allUsersKey } from "../constants/queryKeys";
 import PouchDB from "pouchdb";
 import { PouchResponse } from "./queriesUtils";
-import UserDAO from "../../model/userDAO";
+import UserDAO from "../model/userDAO";
 
 export default () => {
   const { setError } = useNotification();

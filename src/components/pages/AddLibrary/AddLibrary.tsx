@@ -2,12 +2,12 @@ import React from "react";
 import { Form } from "react-final-form";
 import AddLibraryForm from "../../elements/AddLibrary/AddLibraryForm";
 import NewLibrary from "../../../model/newLibrary";
-import { useLibraryPouch } from "../../../common/hooks/UsePouch";
+import { useLibraryPouch } from "../../../hooks/UsePouch";
 import { dateNowIso } from "../../../utils/dateUtil";
 import { v4 as uuidv4 } from "uuid";
 import { useNotification } from "../../atoms/Snackbar/Snackbar";
 import { useHistory } from "react-router-dom";
-import useAuth from "../../../common/hooks/Auth/useAuth";
+import useAuth from "../../../hooks/Auth/useAuth";
 
 function addDefaults(library: NewLibrary, rep: string) {
   library._id = uuidv4();

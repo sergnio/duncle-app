@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import GlobalProvider from "./common/providers/GlobalProvider";
+import GlobalProvider from "./providers/GlobalProvider";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { ReactQueryDevtools } from "react-query/devtools";
 import Routes from "./components/elements/Routes";

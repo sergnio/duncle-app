@@ -3,7 +3,7 @@ import { dateNowIso, readableDate } from "../../utils/dateUtil";
 import NoteDAO from "../../model/noteDAO";
 import UserDAO from "../../model/userDAO";
 import event from "../../model/event";
-import { PouchResponse } from "../../common/queries/queriesUtils";
+import { PouchResponse } from "../../queries/queriesUtils";
 
 export const newNotes: NoteDAO[] = [
   {

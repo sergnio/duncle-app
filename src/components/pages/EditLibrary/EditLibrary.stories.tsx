@@ -2,7 +2,7 @@ import React from "react";
 import { newLibrary } from "../../storybook-mocks/constants";
 import MockForm from "../../storybook-mocks/MockForm";
 import EditLibraryController from "./EditLibraryController";
-import { LibraryProvider } from "../../../common/providers/LibraryProvider";
+import { LibraryProvider } from "../../../providers/LibraryProvider";
 
 export default {
   title: "Pages/EditLibrary",

@@ -5,7 +5,7 @@ import { isEqual } from "lodash";
 import {
   useNotificationState,
   initialState as initialMessageState,
-} from "../../../common/providers/NotificationProvider";
+} from "../../../providers/NotificationProvider";
 
 export function useNotification() {
   const { setMessage } = useNotificationState();

@@ -1,7 +1,7 @@
 import React from "react";
 import useStyles from "../../global-styles";
 import Typography from "@material-ui/core/Typography";
-import Form from "../../common/Form";
+import Form from "./Form";
 import DatePicker from "../atoms/DatePicker/DatePicker";
 import DefaultButton from "../atoms/Button/DefaultButton";
 

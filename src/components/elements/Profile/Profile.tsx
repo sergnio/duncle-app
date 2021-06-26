@@ -2,7 +2,7 @@ import MUIButton from "@material-ui/core/Button";
 import React from "react";
 import styled from "styled-components";
 import NavigationLink from "../../styles/NavigationLink";
-import useAuth from "../../../common/hooks/Auth/useAuth";
+import useAuth from "../../../hooks/Auth/useAuth";
 
 const Container = styled.div`
   position: absolute;

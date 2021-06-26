@@ -1,10 +1,10 @@
 import { isEmpty } from "lodash";
 import { createDatabaseWithUser } from "../hooks/UsePouch";
 import { useMutation, useQueryClient } from "react-query";
-import { useNotification } from "../../components/atoms/Snackbar/Snackbar";
+import { useNotification } from "../components/atoms/Snackbar/Snackbar";
 import { allUsersKey, saveUserKey } from "../constants/queryKeys";
 import PouchDB from "pouchdb";
-import UserDAO from "../../model/userDAO";
+import UserDAO from "../model/userDAO";
 import { PouchResponse } from "./queriesUtils";
 
 export default () => {

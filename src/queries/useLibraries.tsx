@@ -1,9 +1,9 @@
 import { createDatabaseWithUser, USER_DB_PREFIX } from "../hooks/UsePouch";
 import { useQuery } from "react-query";
-import { useNotification } from "../../components/atoms/Snackbar/Snackbar";
+import { useNotification } from "../components/atoms/Snackbar/Snackbar";
 import useAuth from "../hooks/Auth/useAuth";
 import { allLibrariesKey } from "../constants/queryKeys";
-import Library from "../../model/library";
+import Library from "../model/library";
 import { PouchResponse, parseToLibraries } from "./queriesUtils";
 
 export default () => {

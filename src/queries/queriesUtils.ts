@@ -1,8 +1,8 @@
-import { Library } from "../../model";
+import { Library } from "../model";
 import { allLibrariesKey } from "../constants/queryKeys";
 import { QueryClient } from "react-query";
-import UserDAO from "../../model/userDAO";
-import User from "../../model/user";
+import UserDAO from "../model/userDAO";
+import User from "../model/user";
 
 export type PouchResponse<T = Library> = {
   rows: PouchRow<T>[];

@@ -7,8 +7,8 @@ import SalesArea from "../../atoms/Sales/SalesArea";
 import NewNote from "../../elements/Note/NewNote";
 import { Grid } from "@material-ui/core";
 import DefaultButton from "../../atoms/Button/DefaultButton";
-import useUpdateLibrary from "../../../common/hooks/useUpdateLibrary";
-import useLibraryQuery from "../../../common/queries/useLibraryQuery";
+import useUpdateLibrary from "../../../hooks/useUpdateLibrary";
+import useLibraryQuery from "../../../queries/useLibraryQuery";
 import PersonalNotes from "../../elements/PersonalNotes/PersonalNotes";
 
 export default () => {

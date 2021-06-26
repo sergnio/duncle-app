@@ -7,10 +7,10 @@ import Button from "@material-ui/core/Button";
 import { DateTimePicker } from "@material-ui/pickers";
 import DatePickerWrapper from "./DatePickerWrapper";
 import useGlobalDatePicker from "./useGlobalDatePicker";
-import { useGlobalDatePickerState } from "../../../common/providers/GlobalDatePickerProvider";
+import { useGlobalDatePickerState } from "../../../providers/GlobalDatePickerProvider";
 import camelize from "../../../utils/camelize";
 import { dateNowIso } from "../../../utils/dateUtil";
-import useUpdateLibrary from "../../../common/hooks/useUpdateLibrary";
+import useUpdateLibrary from "../../../hooks/useUpdateLibrary";
 import { useNotification } from "../Snackbar/Snackbar";
 
 export default () => {

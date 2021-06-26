@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Calendar from "./Calendar";
 import { TrimmedEvent } from "../../../model/event";
-import useAuth from "../../../common/hooks/Auth/useAuth";
-import useUsersQuery from "../../../common/queries/useUsersQuery";
-import useSaveUsers from "../../../common/queries/useSaveUsersMutation";
-import { useSeeOthersState } from "../../../common/providers/SeeOthersProvider";
+import useAuth from "../../../hooks/Auth/useAuth";
+import useUsersQuery from "../../../queries/useUsersQuery";
+import useSaveUsers from "../../../queries/useSaveUsersMutation";
+import { useSeeOthersState } from "../../../providers/SeeOthersProvider";
 import {
   getUserData,
   getUserEvents,
-} from "../../../common/queries/queriesUtils";
+} from "../../../queries/queriesUtils";
 
 export default () => {
   const INITIAL_EVENT_STATE: TrimmedEvent[] = [];

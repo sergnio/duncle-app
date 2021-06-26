@@ -7,8 +7,8 @@ import {
   FormHelperText,
 } from "@material-ui/core";
 import styled from "styled-components";
-import { useSeeOthersState } from "../../../common/providers/SeeOthersProvider";
-import useAuth from "../../../common/hooks/Auth/useAuth";
+import { useSeeOthersState } from "../../../providers/SeeOthersProvider";
+import useAuth from "../../../hooks/Auth/useAuth";
 
 const FlexGroup = styled(FormGroup)`
   display: flex;

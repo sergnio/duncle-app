@@ -12,7 +12,7 @@ import UserDAO from "../../../model/userDAO";
 import User from "../../../model/user";
 import { useHistory } from "react-router-dom";
 import { useNotification } from "../../atoms/Snackbar/Snackbar";
-import useAuth from "../../../common/hooks/Auth/useAuth";
+import useAuth from "../../../hooks/Auth/useAuth";
 import useLogin from "../../../services/useLogin";
 
 export default function Login() {

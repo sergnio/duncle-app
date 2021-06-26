@@ -1,18 +1,18 @@
-import NoteDAO from "../../model/noteDAO";
-import Library from "../../model/library";
-import userDAO from "../../model/userDAO";
-import UserDAO from "../../model/userDAO";
-import { newLibrary2 } from "../../components/storybook-mocks/constants";
-import { dateNowIso, readableDate } from "../../utils/dateUtil";
+import NoteDAO from "../model/noteDAO";
+import Library from "../model/library";
+import userDAO from "../model/userDAO";
+import UserDAO from "../model/userDAO";
+import { newLibrary2 } from "../components/storybook-mocks/constants";
+import { dateNowIso, readableDate } from "../utils/dateUtil";
 import { v4 as uuidv4 } from "uuid";
 import moment from "moment";
-import event from "../../model/event";
+import event from "../model/event";
 import useAuth from "./Auth/useAuth";
 import { useUserPouch } from "./UsePouch";
-import { useNotification } from "../../components/atoms/Snackbar/Snackbar";
+import { useNotification } from "../components/atoms/Snackbar/Snackbar";
 import useSaveLibraryQuery from "../queries/useSaveLibraryQuery";
 import { useLibraryState } from "../providers/LibraryProvider";
-import { createNewNote } from "../../utils/noteUtils";
+import { createNewNote } from "../utils/noteUtils";
 
 interface SubmitProps {
   newNote: string;
