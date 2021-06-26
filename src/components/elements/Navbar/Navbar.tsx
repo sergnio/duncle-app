@@ -17,11 +17,10 @@ const navbarTabs: NavbarProps[] = [
   { name: "Add Library", route: "/library/new" },
   { name: "Manage Territories", route: "/territories", adminOnly: true },
 ];
-const DEFAULT_NAVBAR = -1;
+const DEFAULT_NAVBAR = 0;
 
-export default function Navbar() {
+export default () => {
   const { pathname } = useLocation<Location>();
-
   const [currentTab, setCurrentTab] = useState(DEFAULT_NAVBAR);
   const history = useHistory();
   const { isAdmin } = useAuth();
@@ -31,7 +30,6 @@ export default function Navbar() {
       ({ route }) => route === pathname
     );
     const indexNotFound = matchingIndex === -1;
-
     setCurrentTab(indexNotFound ? DEFAULT_NAVBAR : matchingIndex);
   }, [pathname, setCurrentTab]);
 
@@ -43,7 +41,7 @@ export default function Navbar() {
     <AppBar position="static">
       <Tabs value={currentTab} onChange={handleChange} centered>
         {navbarTabs
-          .filter(({ adminOnly }) => !adminOnly || (adminOnly && isAdmin))
+          .filter(({ adminOnly }) => !adminOnly || isAdmin)
           .map(({ name }) => (
             <Tab key={name} label={name} />
           ))}
@@ -51,4 +49,4 @@ export default function Navbar() {
       </Tabs>
     </AppBar>
   );
-}
+};
