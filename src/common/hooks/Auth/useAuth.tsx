@@ -1,6 +1,13 @@
-import React, {Dispatch, SetStateAction, useCallback, useState} from "react";
-import {useHistory} from "react-router-dom";
+import React, {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useMemo,
+  useState,
+} from "react";
+import { useHistory, useLocation } from "react-router-dom";
 import UserDAO from "../../../model/userDAO";
+import { Location } from "history";
 
 export type useAuthReturn = {
   isAuthenticated: boolean;
@@ -20,6 +27,7 @@ export default function useAuth() {
   const TOKEN_ID = "authCredentials";
   const history = useHistory();
   const [_, setIsLoggedIn] = useState<boolean>(false);
+  const { pathname } = useLocation<Location>();
 
   function isValidToken(): boolean {
     return (
@@ -47,25 +55,28 @@ export default function useAuth() {
   function signOut(): void {
     localStorage.removeItem(TOKEN_ID);
     if (history) {
-      history.push("/");
+      history.push("/login");
     }
     setIsLoggedIn(false);
   }
+
+  const getAuthenticatedUser = () => {
+    const token: UserDAO | null = getWithExpiry(TOKEN_ID);
+    if (token === null && pathname !== "/login") {
+      console.warn(`There is currently no user set. Token is ${token}`);
+      history.push("/login");
+    } else {
+      return token;
+    }
+  };
 
   return {
     // todo - return a state object containing this, rather than calling the isValidToken function
     //  everytime to get the state?
     //  downsides - it re-renders every single time rather than just calling the local storage.
     isAuthenticated: (): boolean => isValidToken(),
-    getAuthenticatedUser: () => {
-      const token: UserDAO | null = getWithExpiry(TOKEN_ID);
-      if (token === null) {
-        console.warn(`There is currently no user set. Token is ${token}`);
-        history.push("/");
-      } else {
-        return token;
-      }
-    },
+    getAuthenticatedUser,
+    isAdmin: getWithExpiry(TOKEN_ID)?.role === "admin",
     authenticate: useCallback((user: UserDAO) => {
       setUserToken(user);
       setIsLoggedIn(true);
