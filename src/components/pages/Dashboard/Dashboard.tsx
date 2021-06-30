@@ -10,7 +10,7 @@ import { useNotification } from "../../atoms/Snackbar/Snackbar";
 
 export default () => {
   // 1. strings of ids, pass this into
-  const { checked } = useSeeOthersState();
+  const { selectedUsers } = useSeeOthersState();
 
   const {
     data: libraries,
@@ -30,7 +30,7 @@ export default () => {
   const otherLibs: Library[] = [];
 
   /** default, Terry libraries */
-  if (isSuccess && libraries && checked) {
+  if (isSuccess && libraries && selectedUsers) {
     otherLibs.push(...libraries);
   }
 

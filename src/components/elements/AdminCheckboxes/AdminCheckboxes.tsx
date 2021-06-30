@@ -20,11 +20,11 @@ export default () => {
   const { getAuthenticatedUser } = useAuth();
   const user = getAuthenticatedUser();
   // todo - rename to filters?
-  const { checked, toggleCheckbox } = useSeeOthersState();
+  const { selectedUsers, toggleCheckbox } = useSeeOthersState();
   const isAdmin = user?.role === "admin";
   const { data, isLoading, isSuccess, isError } = useUsersQuery();
 
-  const error = checked.length < 1;
+  const error = selectedUsers.length < 1;
 
   return (
     <>
@@ -38,7 +38,7 @@ export default () => {
                   key={_id}
                   control={
                     <Checkbox
-                      checked={checked.includes(_id)}
+                      checked={selectedUsers.includes(_id)}
                       onChange={toggleCheckbox}
                       name={_id}
                       color="primary"

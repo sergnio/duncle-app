@@ -8,7 +8,7 @@ import useAuth from "../hooks/Auth/useAuth";
 import without from "lodash/without";
 
 interface SeeOthersContextState {
-  checked: string[];
+  selectedUsers: string[];
   toggleCheckbox(event: React.ChangeEvent<HTMLInputElement>): void;
 }
 
@@ -19,24 +19,24 @@ export const SeeOthersContext = createContext<
 const SeeOthersProvider = ({ children }: PropsWithChildren<any>) => {
   const { getAuthenticatedUser } = useAuth();
   const user = getAuthenticatedUser();
-  const [checked, setChecked] = useState<string[]>([user?._id]);
+  const [selectedUsers, setSelectedUsers] = useState<string[]>([user?._id]);
 
   const toggleCheckbox = (event: React.ChangeEvent<HTMLInputElement>) => {
     const checkboxValue = event.target.name;
-    const value = checked.find((e) => e === checkboxValue);
+    const value = selectedUsers.find((e) => e === checkboxValue);
 
     /** When this changes, we should add/remove some data from the table */
     const newList = value
-      ? without(checked, value)
-      : [checkboxValue, ...checked];
+      ? without(selectedUsers, value)
+      : [checkboxValue, ...selectedUsers];
     console.log({ newList });
-    setChecked(newList);
+    setSelectedUsers(newList);
   };
 
   return (
     <SeeOthersContext.Provider
       value={{
-        checked,
+        selectedUsers,
         toggleCheckbox,
       }}
     >

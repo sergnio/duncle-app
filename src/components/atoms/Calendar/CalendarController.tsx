@@ -11,7 +11,7 @@ export default () => {
   const INITIAL_EVENT_STATE: TrimmedEvent[] = [];
   const [events, setEvents] = useState<TrimmedEvent[]>(INITIAL_EVENT_STATE);
   const { getAuthenticatedUser } = useAuth();
-  const { checked } = useSeeOthersState();
+  const { selectedUsers } = useSeeOthersState();
   // step 1, get from reactQuery
   const { data } = useUsersQuery();
   // step 2, todo save using reactQuery
@@ -29,7 +29,7 @@ export default () => {
     let allEvents: TrimmedEvent[] = [];
 
     //  @ts-ignore todo - fix this
-    if (data && checked.checkedUser && fromRQ?.username != null) {
+    if (data && selectedUsers.checkedUser && fromRQ?.username != null) {
       //  @ts-ignore todo - fix this
       const currentUserEvents = getUserEvents(fromRQ.username, data);
       allEvents = [...allEvents, ...currentUserEvents];
@@ -38,14 +38,14 @@ export default () => {
     }
 
     //  @ts-ignore todo - fix this
-    if (checked.checkedSam) {
+    if (selectedUsers.checkedSam) {
       //  @ts-ignore todo - fix this
       const samEvents = getUserEvents("sam", data);
       allEvents = [...allEvents, ...samEvents];
     }
 
     //  @ts-ignore todo - fix this
-    if (checked.checkedJim) {
+    if (selectedUsers.checkedJim) {
       //  @ts-ignore todo - fix this
       const jimEvents = getUserEvents("jim", data);
       console.log({ jimEvents });
@@ -53,7 +53,7 @@ export default () => {
     }
 
     setEvents(allEvents);
-  }, [checked, data]);
+  }, [selectedUsers, data]);
 
   return (
     <Calendar initialEvents={events} updateUser={mutate} currentUser={fromRQ} />
