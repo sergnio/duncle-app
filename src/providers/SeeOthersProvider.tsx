@@ -21,15 +21,15 @@ const SeeOthersProvider = ({ children }: PropsWithChildren<any>) => {
   const user = getAuthenticatedUser();
   const [selectedUsers, setSelectedUsers] = useState<string[]>([user?._id]);
 
-  const toggleCheckbox = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const checkboxValue = event.target.name;
-    const value = selectedUsers.find((e) => e === checkboxValue);
+  const toggleCheckbox = ({
+    target: { name },
+  }: React.ChangeEvent<HTMLInputElement>) => {
+    const value = selectedUsers.find((e) => e === name);
 
     /** When this changes, we should add/remove some data from the table */
     const newList = value
       ? without(selectedUsers, value)
-      : [checkboxValue, ...selectedUsers];
-    console.log({ newList });
+      : [name, ...selectedUsers];
     setSelectedUsers(newList);
   };
 
