@@ -3,7 +3,7 @@ import { useQuery } from "react-query";
 import { useNotification } from "../components/atoms/Snackbar/Snackbar";
 import { allUsersKey } from "../constants/queryKeys";
 import PouchDB from "pouchdb";
-import { PouchResponse } from "./queriesUtils";
+import { parseFromPouchResponse, PouchResponse } from "./queriesUtils";
 import UserDAO from "../model/userDAO";
 
 export default () => {
@@ -16,6 +16,8 @@ export default () => {
     localPouch.allDocs({ include_docs: true });
 
   return useQuery(allUsersKey, fetchAll, {
+    select: (response: PouchResponse<UserDAO>): UserDAO[] =>
+      parseFromPouchResponse<UserDAO>(response),
     onError: (err: PouchDB.Core.Error): PouchDB.Core.Error => {
       setError(`Couldn't find users for database: ${database}`);
       return err;

@@ -1,22 +1,15 @@
 import React, {
   createContext,
-  Dispatch,
   PropsWithChildren,
-  ReactNode,
-  SetStateAction,
   useContext,
   useState,
 } from "react";
-
-export interface CheckboxesState {
-  checkedUser: boolean;
-  checkedSam: boolean;
-  checkedJim: boolean;
-}
+import useAuth from "../hooks/Auth/useAuth";
+import { addOrRemove } from "../utils/arrays";
 
 interface SeeOthersContextState {
-  checked: CheckboxesState;
-  setChecked: Dispatch<SetStateAction<CheckboxesState>>;
+  checked: string[];
+  toggleCheckbox(event: React.ChangeEvent<HTMLInputElement>): void;
 }
 
 export const SeeOthersContext = createContext<
@@ -24,17 +17,21 @@ export const SeeOthersContext = createContext<
 >(undefined);
 
 const SeeOthersProvider = ({ children }: PropsWithChildren<any>) => {
-  const [checked, setChecked] = useState<CheckboxesState>({
-    checkedUser: true,
-    checkedSam: false,
-    checkedJim: false,
-  });
+  const { getAuthenticatedUser } = useAuth();
+  const user = getAuthenticatedUser();
+  const [checked, setChecked] = useState<string[]>([user?._id]);
+
+  const toggleCheckbox = (event: React.ChangeEvent<HTMLInputElement>) => {
+    /** When this changes, we should add/remove some data from the table */
+    console.log(addOrRemove(checked, event.target.name));
+    setChecked(addOrRemove(checked, event.target.name));
+  };
 
   return (
     <SeeOthersContext.Provider
       value={{
         checked,
-        setChecked,
+        toggleCheckbox,
       }}
     >
       {children}

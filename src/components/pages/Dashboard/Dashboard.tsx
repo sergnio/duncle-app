@@ -9,13 +9,16 @@ import { useSeeOthersState } from "../../../providers/SeeOthersProvider";
 import { useNotification } from "../../atoms/Snackbar/Snackbar";
 
 export default () => {
+  // 1. strings of ids, pass this into
   const { checked } = useSeeOthersState();
+
   const {
     data: libraries,
     isLoading,
     isSuccess,
     error,
     refetch,
+    // 2. pass that into here
   } = useLibraries();
 
   const { setSuccess, setError } = useNotification();
@@ -27,7 +30,7 @@ export default () => {
   const otherLibs: Library[] = [];
 
   /** default, Terry libraries */
-  if (isSuccess && libraries && checked.checkedUser) {
+  if (isSuccess && libraries && checked) {
     otherLibs.push(...libraries);
   }
 

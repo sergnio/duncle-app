@@ -17,8 +17,9 @@ export type PouchRow<T = Library> = {
     deleted?: boolean;
   };
 };
-export const parseToLibraries = (response: PouchResponse) =>
-  response.rows.map(({ doc }: PouchRow) => doc);
+export const parseFromPouchResponse = <T = Library>(
+  response: PouchResponse<T>
+) => response.rows.map(({ doc }: PouchRow<T>) => doc);
 
 export const updateAllLibrariesQuery = (
   updatedLibrary: Library,
@@ -27,7 +28,7 @@ export const updateAllLibrariesQuery = (
   if (queryClient.getQueryData(allLibrariesKey)) {
     queryClient.setQueryData(allLibrariesKey, (old) => {
       // @ts-ignore
-      const previousLibraries = parseToLibraries(old);
+      const previousLibraries = parseFromPouchResponse(old);
       previousLibraries.map((d) =>
         d._id === updatedLibrary._id ? updatedLibrary : d
       );

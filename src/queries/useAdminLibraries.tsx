@@ -2,7 +2,7 @@ import React from "react";
 import { useQuery } from "react-query";
 import { allLibrariesKey } from "../constants/queryKeys";
 import { createDatabaseWithUser, USER_DB_PREFIX } from "../hooks/UsePouch";
-import { PouchResponse, parseToLibraries } from "./queriesUtils";
+import { PouchResponse, parseFromPouchResponse } from "./queriesUtils";
 import Library from "../model/library";
 import { useNotification } from "../components/atoms/Snackbar/Snackbar";
 
@@ -16,7 +16,8 @@ export default (user: string) => {
     localPouch.allDocs({ include_docs: true });
 
   return useQuery([allLibrariesKey, user], fetchAllLibraries, {
-    select: (response: PouchResponse): Library[] => parseToLibraries(response),
+    select: (response: PouchResponse): Library[] =>
+      parseFromPouchResponse(response),
     onError: () => {
       setError(`Failed to get list of all libraries for ${user}.`);
     },

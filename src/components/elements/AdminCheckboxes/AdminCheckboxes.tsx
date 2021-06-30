@@ -9,6 +9,7 @@ import {
 import styled from "styled-components";
 import { useSeeOthersState } from "../../../providers/SeeOthersProvider";
 import useAuth from "../../../hooks/Auth/useAuth";
+import useUsersQuery from "../../../queries/useUsersQuery";
 
 const FlexGroup = styled(FormGroup)`
   display: flex;
@@ -16,58 +17,37 @@ const FlexGroup = styled(FormGroup)`
 `;
 
 export default () => {
-  const { checked, setChecked } = useSeeOthersState();
   const { getAuthenticatedUser } = useAuth();
   const user = getAuthenticatedUser();
+  // todo - rename to filters?
+  const { checked, toggleCheckbox } = useSeeOthersState();
   const isAdmin = user?.role === "admin";
+  const { data, isLoading, isSuccess, isError } = useUsersQuery();
 
-  const { checkedUser, checkedSam, checkedJim } = checked;
-  const error =
-    [checkedUser, checkedSam, checkedJim].filter((v) => v).length < 1;
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    /** When this changes, we should add/remove some data from the table
-     */
-    setChecked({ ...checked, [event.target.name]: event.target.checked });
-  };
+  const error = checked.length < 1;
 
   return (
     <>
-      {isAdmin && (
+      {isLoading && <p>Loading...</p>}
+      {isError && <p>Error loading...</p>}
+      {data && isSuccess && isAdmin && (
         <FlexGroup row>
           <FormControl required error={error}>
             <FlexGroup row>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={checked.checkedUser}
-                    onChange={handleChange}
-                    name="checkedUser"
-                    color="primary"
-                  />
-                }
-                label={user.firstName}
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={checked.checkedSam}
-                    onChange={handleChange}
-                    name="checkedSam"
-                  />
-                }
-                label="Sam"
-              />
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={checked.checkedJim}
-                    onChange={handleChange}
-                    name="checkedJim"
-                  />
-                }
-                label="Jim"
-              />
+              {data.map(({ _id, firstName }) => (
+                <FormControlLabel
+                  key={_id}
+                  control={
+                    <Checkbox
+                      checked={checked.includes(_id)}
+                      onChange={toggleCheckbox}
+                      name={_id}
+                      color="primary"
+                    />
+                  }
+                  label={firstName}
+                />
+              ))}
             </FlexGroup>
             <FlexGroup row>
               <FormHelperText>Please select at least one option</FormHelperText>
