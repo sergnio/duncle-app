@@ -9,7 +9,6 @@ import { useSeeOthersState } from "../../../providers/SeeOthersProvider";
 import { useNotification } from "../../atoms/Snackbar/Snackbar";
 
 export default () => {
-  // 1. strings of ids, pass this into
   const { selectedUsers } = useSeeOthersState();
 
   const {
@@ -18,7 +17,6 @@ export default () => {
     isSuccess,
     error,
     refetch,
-    // 2. pass that into here
   } = useLibraries(selectedUsers);
 
   const { setSuccess, setError } = useNotification();

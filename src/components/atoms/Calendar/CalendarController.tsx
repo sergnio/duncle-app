@@ -17,45 +17,26 @@ export default () => {
   // step 2, todo save using reactQuery
   const { mutate } = useSaveUsers();
   const currentUser = getAuthenticatedUser();
-  let fromRQ;
-  //  @ts-ignore todo - fix this
-  if (data && data.rows && !fromRQ) {
-    //  @ts-ignore todo - fix this
-    fromRQ = getUserData(currentUser?.username, data);
-  }
 
   // todo - why does this need to be in a useEffect?
   useEffect(() => {
     let allEvents: TrimmedEvent[] = [];
 
-    //  @ts-ignore todo - fix this
-    if (data && selectedUsers.checkedUser && fromRQ?.username != null) {
-      //  @ts-ignore todo - fix this
-      const currentUserEvents = getUserEvents(fromRQ.username, data);
+    if (data && currentUser?.username != null) {
+      const currentUserEvents = getUserEvents(currentUser.username, data);
       allEvents = [...allEvents, ...currentUserEvents];
     } else {
       console.warn("No events were present");
     }
 
-    //  @ts-ignore todo - fix this
-    if (selectedUsers.checkedSam) {
-      //  @ts-ignore todo - fix this
-      const samEvents = getUserEvents("sam", data);
-      allEvents = [...allEvents, ...samEvents];
-    }
-
-    //  @ts-ignore todo - fix this
-    if (selectedUsers.checkedJim) {
-      //  @ts-ignore todo - fix this
-      const jimEvents = getUserEvents("jim", data);
-      console.log({ jimEvents });
-      allEvents = [...allEvents, ...jimEvents];
-    }
-
     setEvents(allEvents);
-  }, [selectedUsers, data]);
+  }, [selectedUsers, data, currentUser.username]);
 
   return (
-    <Calendar initialEvents={events} updateUser={mutate} currentUser={fromRQ} />
+    <Calendar
+      initialEvents={events}
+      updateUser={mutate}
+      currentUser={currentUser}
+    />
   );
 };

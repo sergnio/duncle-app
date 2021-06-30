@@ -38,10 +38,10 @@ export const updateAllLibrariesQuery = (
 
 export const getUserData = (
   user: "jim" | "sam" | string,
-  userData: PouchResponse<UserDAO>
-): UserDAO => userData.rows.filter((d) => d.doc.username === user)[0].doc;
+  userData: UserDAO[]
+): UserDAO => userData.filter((d) => d.username === user)[0];
 
 export const getUserEvents = (
   user: "jim" | "sam" | string,
-  userData: PouchResponse<UserDAO>
+  userData: UserDAO[]
 ) => getUserData(user, userData).events;

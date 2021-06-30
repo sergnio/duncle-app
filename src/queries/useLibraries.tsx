@@ -11,7 +11,6 @@ export default (userIds: string[] = []) => {
   const { setError } = useNotification();
 
   const user = getAuthenticatedUser();
-  const currentUser = user?.username;
   const userId = user._id;
 
   const localPouch = createLibraryDatabase();
@@ -19,7 +18,7 @@ export default (userIds: string[] = []) => {
   const fetchAllLibraries = (): PouchResponse =>
     localPouch.allDocs({ include_docs: true });
 
-  return useQuery([allLibrariesKey, currentUser], fetchAllLibraries, {
+  return useQuery(allLibrariesKey, fetchAllLibraries, {
     select: (response: PouchResponse): Library[] =>
       isAdmin
         ? parseFromPouchResponse(response).filter((l) =>
