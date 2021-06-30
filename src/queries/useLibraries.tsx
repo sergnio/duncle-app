@@ -1,4 +1,4 @@
-import { useQuery } from "react-query";
+import {useQueries, useQuery} from "react-query";
 import { useNotification } from "../components/atoms/Snackbar/Snackbar";
 import useAuth from "../hooks/Auth/useAuth";
 import { allLibrariesKey } from "../constants/queryKeys";
@@ -6,7 +6,11 @@ import Library from "../model/library";
 import { parseFromPouchResponse, PouchResponse } from "./queriesUtils";
 import { createLibraryDatabase } from "../services/librariesPouchService";
 
-export default () => {
+interface Props {
+  userIds?: string[]
+}
+
+export default ({userIds}: Props) => {
   const { getAuthenticatedUser, isAdmin } = useAuth();
   const { setError } = useNotification();
 
@@ -14,12 +18,22 @@ export default () => {
   const currentUser = user?.username;
   const userId = user._id;
 
+  const users: string[] = userIds && userIds.length > 0 ? userIds : [userId]
+
   const localPouch = createLibraryDatabase();
 
   const fetchAllLibraries = (): PouchResponse =>
     isAdmin
       ? localPouch.allDocs({ include_docs: true })
       : localPouch.allDocs({ include_docs: true });
+
+  useQueries(users.map(userId => {
+    return {
+      queryKey: ['userLibrary', userId],
+      queryFn: () => fetchAllLibraries(userId),
+    }
+  })
+)
 
   return useQuery([allLibrariesKey, currentUser], fetchAllLibraries, {
     select: (response: PouchResponse): Library[] =>

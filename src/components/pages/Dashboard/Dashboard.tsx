@@ -23,8 +23,6 @@ export default () => {
 
   const { setSuccess, setError } = useNotification();
 
-  console.log({ libraries });
-
   const history = useHistory();
 
   const otherLibs: Library[] = [];
