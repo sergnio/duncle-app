@@ -19,7 +19,7 @@ export default () => {
     error,
     refetch,
     // 2. pass that into here
-  } = useLibraries();
+  } = useLibraries(selectedUsers);
 
   const { setSuccess, setError } = useNotification();
 
