@@ -5,7 +5,6 @@ import useAuth from "../../../hooks/Auth/useAuth";
 import useUsersQuery from "../../../queries/useUsersQuery";
 import useSaveUsers from "../../../queries/useSaveUsersMutation";
 import { useSeeOthersState } from "../../../providers/SeeOthersProvider";
-import { getUserData, getUserEvents } from "../../../queries/queriesUtils";
 
 export default () => {
   const INITIAL_EVENT_STATE: TrimmedEvent[] = [];
@@ -13,7 +12,7 @@ export default () => {
   const { getAuthenticatedUser } = useAuth();
   const { selectedUsers } = useSeeOthersState();
   // step 1, get from reactQuery
-  const { data } = useUsersQuery();
+  const { data } = useUsersQuery(false, selectedUsers);
   // step 2, todo save using reactQuery
   const { mutate } = useSaveUsers();
   const currentUser = getAuthenticatedUser();
@@ -23,8 +22,10 @@ export default () => {
     let allEvents: TrimmedEvent[] = [];
 
     if (data && currentUser?.username != null) {
-      const currentUserEvents = getUserEvents(currentUser.username, data);
-      allEvents = [...allEvents, ...currentUserEvents];
+      data.forEach((user) => {
+        const currentUserEvents = user.events;
+        allEvents = [...allEvents, ...currentUserEvents];
+      });
     } else {
       console.warn("No events were present");
     }

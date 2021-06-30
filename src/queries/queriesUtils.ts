@@ -41,7 +41,7 @@ export const getUserData = (
   userData: UserDAO[]
 ): UserDAO => userData.filter((d) => d.username === user)[0];
 
-export const getUserEvents = (
+export const getEventsFromUser = (
   user: "jim" | "sam" | string,
   userData: UserDAO[]
 ) => getUserData(user, userData).events;
