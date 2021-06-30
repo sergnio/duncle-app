@@ -18,7 +18,9 @@ export default () => {
   const { mutate } = useSaveUsers();
   const currentUser = getAuthenticatedUser();
   let fromRQ;
+  //  @ts-ignore todo - fix this
   if (data && data.rows && !fromRQ) {
+    //  @ts-ignore todo - fix this
     fromRQ = getUserData(currentUser?.username, data);
   }
 
@@ -26,19 +28,25 @@ export default () => {
   useEffect(() => {
     let allEvents: TrimmedEvent[] = [];
 
+    //  @ts-ignore todo - fix this
     if (data && checked.checkedUser && fromRQ?.username != null) {
+      //  @ts-ignore todo - fix this
       const currentUserEvents = getUserEvents(fromRQ.username, data);
       allEvents = [...allEvents, ...currentUserEvents];
     } else {
       console.warn("No events were present");
     }
 
+    //  @ts-ignore todo - fix this
     if (checked.checkedSam) {
+      //  @ts-ignore todo - fix this
       const samEvents = getUserEvents("sam", data);
       allEvents = [...allEvents, ...samEvents];
     }
 
+    //  @ts-ignore todo - fix this
     if (checked.checkedJim) {
+      //  @ts-ignore todo - fix this
       const jimEvents = getUserEvents("jim", data);
       console.log({ jimEvents });
       allEvents = [...allEvents, ...jimEvents];

@@ -29,7 +29,6 @@ export default () => {
   return (
     <>
       {isLoading && <p>Loading...</p>}
-      {isError && <p>Error loading...</p>}
       {data && isSuccess && isAdmin && (
         <FlexGroup row>
           <FormControl required error={error}>
@@ -55,6 +54,7 @@ export default () => {
           </FormControl>
         </FlexGroup>
       )}
+      {isError && <p>Error loading...</p>}
     </>
   );
 };

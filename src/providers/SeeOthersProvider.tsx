@@ -5,7 +5,7 @@ import React, {
   useState,
 } from "react";
 import useAuth from "../hooks/Auth/useAuth";
-import { addOrRemove } from "../utils/arrays";
+import without from "lodash/without";
 
 interface SeeOthersContextState {
   checked: string[];
@@ -22,9 +22,15 @@ const SeeOthersProvider = ({ children }: PropsWithChildren<any>) => {
   const [checked, setChecked] = useState<string[]>([user?._id]);
 
   const toggleCheckbox = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const checkboxValue = event.target.name;
+    const value = checked.find((e) => e === checkboxValue);
+
     /** When this changes, we should add/remove some data from the table */
-    console.log(addOrRemove(checked, event.target.name));
-    setChecked(addOrRemove(checked, event.target.name));
+    const newList = value
+      ? without(checked, value)
+      : [checkboxValue, ...checked];
+    console.log({ newList });
+    setChecked(newList);
   };
 
   return (
