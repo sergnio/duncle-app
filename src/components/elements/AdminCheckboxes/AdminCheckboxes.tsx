@@ -22,7 +22,7 @@ export default () => {
   // todo - rename to filters?
   const { selectedUsers, toggleCheckbox } = useSeeOthersState();
   const isAdmin = user?.role === "admin";
-  const { data, isLoading, isSuccess, isError } = useUsersQuery(true);
+  const { data, isLoading, isSuccess, isError } = useUsersQuery();
 
   const error = selectedUsers.length < 1;
 

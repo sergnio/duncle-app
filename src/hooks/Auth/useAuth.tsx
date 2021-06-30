@@ -26,7 +26,6 @@ interface localStorageItem {
 export default function useAuth() {
   const TOKEN_ID = "authCredentials";
   const history = useHistory();
-  const [_, setIsLoggedIn] = useState<boolean>(false);
   const { pathname } = useLocation<Location>();
 
   function isValidToken(): boolean {
@@ -57,7 +56,6 @@ export default function useAuth() {
     if (history) {
       history.push("/login");
     }
-    setIsLoggedIn(false);
   }
 
   const getAuthenticatedUser = () => {
@@ -79,7 +77,6 @@ export default function useAuth() {
     isAdmin: getWithExpiry(TOKEN_ID)?.role === "admin",
     authenticate: useCallback((user: UserDAO) => {
       setUserToken(user);
-      setIsLoggedIn(true);
     }, []),
     signOut,
   };

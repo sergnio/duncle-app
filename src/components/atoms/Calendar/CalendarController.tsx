@@ -11,9 +11,7 @@ export default () => {
   const [events, setEvents] = useState<TrimmedEvent[]>(INITIAL_EVENT_STATE);
   const { getAuthenticatedUser } = useAuth();
   const { selectedUsers } = useSeeOthersState();
-  // step 1, get from reactQuery
   const { data } = useUsersQuery(false, selectedUsers);
-  // step 2, todo save using reactQuery
   const { mutate } = useSaveUsers();
   const currentUser = getAuthenticatedUser();
 
