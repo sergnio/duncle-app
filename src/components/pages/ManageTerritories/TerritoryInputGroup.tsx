@@ -12,41 +12,34 @@ interface Props {
 }
 
 export default ({ territory: { name, repId }, territoryList }: Props) => {
-  const [value, setValue] = React.useState<string | null>(name);
-  const [inputValue, setInputValue] = React.useState(name);
-
+  const [selectedTerritory, setTerritory] = React.useState<string | null>(name);
   const territoryNames = territoryList.map((t) => t.name);
 
-  const onValueChange = (_, newValue: string | null) => {
-    console.log({ newValue });
-    setValue(newValue);
+  // todo - lookup rep from this id
+  const reps = ["terry", "sam", "someone else"];
+  const [selectedRep, setRep] = React.useState<string | null>(repId);
+
+  const onTerritoryChange = (_, newValue: string | null) => {
+    setTerritory(newValue);
   };
-  const onDisplayChange = (event, newInputValue) => {
-    console.log({ newInputValue });
-    setInputValue(newInputValue);
+  const onRepChange = (_, newValue: string | null) => {
+    setRep(newValue);
   };
 
-  const reps = ["terry", "sam", "someone else"];
   return (
     <FlexCenter>
       <StyledAutocomplete
-        autocompleteValue={value}
-        displayValue={inputValue}
-        onDisplayChange={onDisplayChange}
-        onValueChange={onValueChange}
+        value={selectedTerritory}
+        onChange={onTerritoryChange}
         options={territoryNames}
         label="Territories"
       />
-      <Box padding={3}>
-        <Autocomplete
-          id="assignedRep"
-          options={reps}
-          style={{ width: 300 }}
-          renderInput={(params) => (
-            <TextField {...params} label="Assigned Rep" variant="outlined" />
-          )}
-        />
-      </Box>
+      <StyledAutocomplete
+        value={selectedRep}
+        onChange={onRepChange}
+        options={reps}
+        label="Assigned Rep"
+      />
     </FlexCenter>
   );
 };

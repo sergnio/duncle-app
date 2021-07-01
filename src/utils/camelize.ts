@@ -1,6 +1,6 @@
 /**
  * Takes in a string and converts it to camel case!
- * This removes white space, capetalizes the next letter, joins the words, and leaves the first letter of the entire
+ * This removes white space, capitalizes the next letter, joins the words, and leaves the first letter of the entire
  * string lower case
  * @param str a string you want to turn into camel case
  */
