@@ -1,51 +1,33 @@
 import React from "react";
-import Autocomplete from "@material-ui/lab/Autocomplete";
-import { Card, TextField } from "@material-ui/core";
+import Card from "@material-ui/core/Card";
 import FlexCenter from "../../../styles/FlexCenter";
 import CardContent from "@material-ui/core/CardContent";
-import Box from "@material-ui/core/Box";
+import TerritoryInputGroup from "./TerritoryInputGroup";
+import Territory from "../../../model/territory";
 
 export default () => {
-  const territories = ["East", "West", "North"];
-  const reps = ["terry", "sam", "someone else"];
+  const mockTerritories: Territory[] = [
+    { name: "North", repId: "org.duncle.j" },
+    { name: "East", repId: "org.duncle.sam" },
+    { name: "West", repId: "org.duncle.jim" },
+  ];
   return (
     <>
       <h1>Manage Territories</h1>
-      <Card>
-        <CardContent>
-          <FlexCenter>
-            <Box padding={3}>
-              <Autocomplete
-                id="territories"
-                options={territories}
-                style={{ width: 300 }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label="Territories"
-                    variant="outlined"
-                  />
-                )}
+      <FlexCenter>
+        <Card style={{ maxWidth: "1300px" }}>
+          <CardContent>
+            {mockTerritories.map((t) => (
+              <TerritoryInputGroup
+                // @ts-ignore
+                key={t}
+                territory={t}
+                territoryList={mockTerritories}
               />
-            </Box>
-
-            <div>
-              <Autocomplete
-                id="assignedRep"
-                options={reps}
-                style={{ width: 300 }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label="Assigned Rep"
-                    variant="outlined"
-                  />
-                )}
-              />
-            </div>
-          </FlexCenter>
-        </CardContent>
-      </Card>
+            ))}
+          </CardContent>
+        </Card>
+      </FlexCenter>
     </>
   );
 };
