@@ -1,6 +1,6 @@
 import { createDatabaseWithUser } from "../hooks/UsePouch";
 import { useQuery } from "react-query";
-import { useNotification } from "../../components/atoms/Snackbar/Snackbar";
+import { useNotification } from "../components/atoms/Snackbar/Snackbar";
 import useAuth from "../hooks/Auth/useAuth";
 import { libraryKey } from "../constants/queryKeys";
 import { useLibraryState } from "../providers/LibraryProvider";

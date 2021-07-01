@@ -1,7 +1,7 @@
 import React from "react";
 import { Paper } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
-import Form from "../../../common/Form";
+import Form from "../../elements/Form";
 import NumberTextField from "../TextField/NumberTextField";
 import useStyles from "../../../global-styles";
 import Title from "../../styles/Title";

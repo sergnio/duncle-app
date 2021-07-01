@@ -1,5 +1,5 @@
-import noop from "../../utils/noop";
-import Library from "../../model/library";
+import noop from "../utils/noop";
+import Library from "../model/library";
 import useSaveLibrary from "../queries/useSaveLibraryQuery";
 import { useLibraryState } from "../providers/LibraryProvider";
 

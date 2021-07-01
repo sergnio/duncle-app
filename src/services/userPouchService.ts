@@ -1,4 +1,4 @@
-import { createDatabaseWithUser } from "../common/hooks/UsePouch";
+import { createDatabaseWithUser } from "../hooks/UsePouch";
 import PouchDB from "pouchdb";
 import UserDAO from "../model/userDAO";
 

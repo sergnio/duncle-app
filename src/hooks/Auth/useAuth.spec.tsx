@@ -1,7 +1,7 @@
 import useAuth from "./useAuth";
 import { renderHook, act } from "@testing-library/react-hooks";
-import { dummyUserDAO } from "../../../components/storybook-mocks/constants";
-import noop from "../../../utils/noop";
+import { dummyUserDAO } from "../../components/storybook-mocks/constants";
+import noop from "../../utils/noop";
 
 describe("Auth hooks - authentication flow tests", () => {
   const {

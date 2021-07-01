@@ -12,7 +12,7 @@ import UserDAO from "../../../model/userDAO";
 import { useHistory } from "react-router-dom";
 import { useNotification } from "../../atoms/Snackbar/Snackbar";
 import { isEqual } from "lodash";
-import useAuth from "../../../common/hooks/Auth/useAuth";
+import useAuth from "../../../hooks/Auth/useAuth";
 import useLogin from "../../../services/useLogin";
 import { getUsernameFromEmail } from "../../../utils/textFormatUtils";
 

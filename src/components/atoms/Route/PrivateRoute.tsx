@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
 import { Redirect, Route } from "react-router-dom";
-import useAuth from "../../../common/hooks/Auth/useAuth";
+import useAuth from "../../../hooks/Auth/useAuth";
 
 const DEFAULT_INPUT = "";
 

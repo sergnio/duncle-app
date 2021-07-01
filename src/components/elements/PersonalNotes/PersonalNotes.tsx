@@ -2,7 +2,7 @@ import React from "react";
 import EditableNote from "../Note/EditableNote";
 import NoteDAO from "../../../model/noteDAO";
 import { createNewNote } from "../../../utils/noteUtils";
-import useSaveLibraryQuery from "../../../common/queries/useSaveLibraryQuery";
+import useSaveLibraryQuery from "../../../queries/useSaveLibraryQuery";
 import Library from "../../../model/library";
 import Title from "../../styles/Title";
 

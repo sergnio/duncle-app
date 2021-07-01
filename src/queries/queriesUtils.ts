@@ -1,8 +1,8 @@
-import { Library } from "../../model";
+import { Library } from "../model";
 import { allLibrariesKey } from "../constants/queryKeys";
 import { QueryClient } from "react-query";
-import UserDAO from "../../model/userDAO";
-import User from "../../model/user";
+import UserDAO from "../model/userDAO";
+import User from "../model/user";
 
 export type PouchResponse<T = Library> = {
   rows: PouchRow<T>[];
@@ -17,8 +17,9 @@ export type PouchRow<T = Library> = {
     deleted?: boolean;
   };
 };
-export const parseToLibraries = (response: PouchResponse) =>
-  response.rows.map(({ doc }: PouchRow) => doc);
+export const parseFromPouchResponse = <T = Library>(
+  response: PouchResponse<T>
+) => response.rows.map(({ doc }: PouchRow<T>) => doc);
 
 export const updateAllLibrariesQuery = (
   updatedLibrary: Library,
@@ -27,7 +28,7 @@ export const updateAllLibrariesQuery = (
   if (queryClient.getQueryData(allLibrariesKey)) {
     queryClient.setQueryData(allLibrariesKey, (old) => {
       // @ts-ignore
-      const previousLibraries = parseToLibraries(old);
+      const previousLibraries = parseFromPouchResponse(old);
       previousLibraries.map((d) =>
         d._id === updatedLibrary._id ? updatedLibrary : d
       );
@@ -37,10 +38,10 @@ export const updateAllLibrariesQuery = (
 
 export const getUserData = (
   user: "jim" | "sam" | string,
-  userData: PouchResponse<UserDAO>
-): UserDAO => userData.rows.filter((d) => d.doc.username === user)[0].doc;
+  userData: UserDAO[]
+): UserDAO => userData.filter((d) => d.username === user)[0];
 
-export const getUserEvents = (
+export const getEventsFromUser = (
   user: "jim" | "sam" | string,
-  userData: PouchResponse<UserDAO>
+  userData: UserDAO[]
 ) => getUserData(user, userData).events;

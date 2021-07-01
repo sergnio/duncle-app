@@ -4,43 +4,30 @@ import Card from "@material-ui/core/Card";
 import Grid from "@material-ui/core/Grid/Grid";
 import Table from "../../elements/Table/Table";
 import { useHistory } from "react-router-dom";
-import useLibraries from "../../../common/queries/useLibraries";
-import useAdminLibraries from "../../../common/queries/useAdminLibraries";
-import { useSeeOthersState } from "../../../common/providers/SeeOthersProvider";
+import useLibraries from "../../../queries/useLibraries";
+import { useSeeOthersState } from "../../../providers/SeeOthersProvider";
 import { useNotification } from "../../atoms/Snackbar/Snackbar";
 
 export default () => {
-  const { checked } = useSeeOthersState();
+  const { selectedUsers } = useSeeOthersState();
+
   const {
     data: libraries,
     isLoading,
     isSuccess,
     error,
     refetch,
-  } = useLibraries();
+  } = useLibraries(selectedUsers);
 
-  // fyi this also runs on non admins..
-  const samData = useAdminLibraries("sam");
-  const jimData = useAdminLibraries("jim");
   const { setSuccess, setError } = useNotification();
-
-  console.log({ libraries });
 
   const history = useHistory();
 
   const otherLibs: Library[] = [];
 
   /** default, Terry libraries */
-  if (isSuccess && libraries && checked.checkedTerry) {
+  if (isSuccess && libraries && selectedUsers) {
     otherLibs.push(...libraries);
-  }
-
-  if (samData?.isSuccess && samData?.data && checked.checkedSam) {
-    otherLibs.push(...samData.data);
-  }
-
-  if (jimData?.isSuccess && jimData?.data && checked.checkedJim) {
-    otherLibs.push(...jimData.data);
   }
 
   if (isLoading) return <h1>Loading...</h1>;

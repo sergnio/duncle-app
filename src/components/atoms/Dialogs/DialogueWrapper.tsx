@@ -4,7 +4,7 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import Form from "../../../common/Form";
+import Form from "../../elements/Form";
 
 export interface DialogProps {
   isOpen: boolean;

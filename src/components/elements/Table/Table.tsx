@@ -1,7 +1,7 @@
 import React from "react";
 import MaterialTable from "material-table";
 import { Library } from "../../../model";
-import { tableIcons } from "../../../common/tableIcons";
+import { tableIcons } from "../tableIcons";
 import moment from "moment";
 import { getColor } from "../../../utils/colorUtils";
 import TableHeader from "./TableHeader";

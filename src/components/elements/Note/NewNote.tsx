@@ -1,16 +1,16 @@
 import React, { ChangeEvent } from "react";
-import Form from "../../../common/Form";
+import Form from "../Form";
 import Paper from "@material-ui/core/Paper";
 import TextArea from "../../atoms/TextArea/TextArea";
 import Button from "@material-ui/core/Button";
 import useStyles from "../../../global-styles";
 import PhoneDisabled from "@material-ui/icons/PhoneDisabled";
 import { ContactButtonsRow } from "../../atoms/DatePicker/DPButtons";
-import FlexCenter from "../../../common/styles/FlexCenter";
+import FlexCenter from "../../../styles/FlexCenter";
 import Title from "../../styles/Title";
-import useUpdateLibrary from "../../../common/hooks/useUpdateLibrary";
+import useUpdateLibrary from "../../../hooks/useUpdateLibrary";
 import noop from "../../../utils/noop";
-import { useGlobalDatePickerState } from "../../../common/providers/GlobalDatePickerProvider";
+import { useGlobalDatePickerState } from "../../../providers/GlobalDatePickerProvider";
 
 export default function () {
   const { paddingTwo, longWidth } = useStyles();

@@ -1,8 +1,8 @@
-import { Library } from "../../model";
+import { Library } from "../model";
 import { isEmpty, isEqual } from "lodash";
 import { roundDecimals, createDatabaseWithUser } from "../hooks/UsePouch";
 import { useMutation, useQueryClient } from "react-query";
-import { useNotification } from "../../components/atoms/Snackbar/Snackbar";
+import { useNotification } from "../components/atoms/Snackbar/Snackbar";
 import useAuth from "../hooks/Auth/useAuth";
 import {
   allLibrariesKey,
@@ -10,7 +10,7 @@ import {
   saveLibraryKey,
 } from "../constants/queryKeys";
 import { useLibraryState } from "../providers/LibraryProvider";
-import { NoLibrary as DEFAULT_LIBRARY } from "../../components/storybook-mocks/constants";
+import { NoLibrary as DEFAULT_LIBRARY } from "../components/storybook-mocks/constants";
 import { updateAllLibrariesQuery } from "./queriesUtils";
 import PouchDB from "pouchdb";
 

@@ -1,15 +1,17 @@
 import { isEmpty } from "lodash";
 import { createDatabaseWithUser } from "../hooks/UsePouch";
 import { useMutation, useQueryClient } from "react-query";
-import { useNotification } from "../../components/atoms/Snackbar/Snackbar";
+import { useNotification } from "../components/atoms/Snackbar/Snackbar";
 import { allUsersKey, saveUserKey } from "../constants/queryKeys";
 import PouchDB from "pouchdb";
-import UserDAO from "../../model/userDAO";
+import UserDAO from "../model/userDAO";
 import { PouchResponse } from "./queriesUtils";
+import useAuth from "../hooks/Auth/useAuth";
 
 export default () => {
   const { setError } = useNotification();
   const queryClient = useQueryClient();
+  const { authenticate } = useAuth();
 
   const localPouch = createDatabaseWithUser("user");
 
@@ -37,7 +39,6 @@ export default () => {
   return useMutation(saveUserKey, saveUser, {
     onSuccess: (response, user) => {
       let updatedUser: UserDAO[];
-      console.log("success");
 
       if (response) {
         // update the query for the single user
@@ -56,6 +57,9 @@ export default () => {
         );
 
         queryClient.setQueryData(allUsersKey, newData);
+        // todo - replace with reactQuery handling all the data, and the local storage just holding the
+        //  id / email to reference the queried data.
+        authenticate(updatedUser[0]);
       }
     },
     onError: (e, user) => {

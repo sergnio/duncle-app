@@ -1,6 +1,6 @@
 import React from "react";
 import useGlobalDatePicker from "./useGlobalDatePicker";
-import GlobalProvider from "../../../common/providers/GlobalProvider";
+import GlobalProvider from "../../../providers/GlobalProvider";
 import GlobalDatePicker from "./GlobalDatePicker";
 import { LocalStorageMockProvider } from "../../storybook-mocks/MockProviders";
 

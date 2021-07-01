@@ -1,6 +1,6 @@
 import React from "react";
 import AllLibraries from "./Dashboard";
-import GlobalProvider from "../../../common/providers/GlobalProvider";
+import GlobalProvider from "../../../providers/GlobalProvider";
 import { LocalStorageMockProvider } from "../../storybook-mocks/MockProviders";
 
 export default {

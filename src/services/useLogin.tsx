@@ -1,4 +1,4 @@
-import { useUserPouch } from "../common/hooks/UsePouch";
+import { useUserPouch } from "../hooks/UsePouch";
 import bcrypt from "bcryptjs";
 import UserDAO from "../model/userDAO";
 import User from "../model/user";

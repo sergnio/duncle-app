@@ -6,8 +6,8 @@ import React, {
   useContext,
   useState,
 } from "react";
-import Library from "../../model/library";
-import { NoLibrary } from "../../components/storybook-mocks/constants";
+import Library from "../model/library";
+import { NoLibrary } from "../components/storybook-mocks/constants";
 
 interface LibraryContextState {
   currentLibrary: Library;

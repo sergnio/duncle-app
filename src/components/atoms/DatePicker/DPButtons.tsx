@@ -9,7 +9,7 @@ import useGlobalDatePicker from "./useGlobalDatePicker";
 import {
   GlobalDatePickerContext,
   GlobalDatePickerProvider,
-} from "../../../common/providers/GlobalDatePickerProvider";
+} from "../../../providers/GlobalDatePickerProvider";
 import styled from "styled-components";
 import GlobalDatePicker from "./GlobalDatePicker";
 import { LastContactType } from "../../../model/newLibrary";
