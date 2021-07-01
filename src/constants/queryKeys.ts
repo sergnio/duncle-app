@@ -4,6 +4,8 @@ export const allLibrariesKey = "getLibraries";
 
 export const allTerritoriesKey = "getTerritories";
 
+export const saveTerritoriesKey = "saveTerritories";
+
 export const saveLibraryKey = "saveLibrary";
 
 export const saveUserKey = "saveUser";
