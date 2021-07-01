@@ -7,26 +7,26 @@ import Territory from "../../../model/territory";
 import useTerritoriesQuery from "../../../queries/useTerritoriesQuery";
 
 export default () => {
-  const x = useTerritoriesQuery();
-  const mockTerritories: Territory[] = [
-    { name: "North", repId: "org.duncle.j" },
-    { name: "East", repId: "org.duncle.sam" },
-    { name: "West", repId: "org.duncle.jim" },
-  ];
+  const { data, isLoading, isSuccess, isError } = useTerritoriesQuery();
+
+  if (isLoading) return <h1>Loading...</h1>;
+
   return (
     <>
       <h1>Manage Territories</h1>
       <FlexCenter>
         <Card style={{ maxWidth: "1300px" }}>
           <CardContent>
-            {mockTerritories.map((t) => (
-              <TerritoryInputGroup
-                // @ts-ignore
-                key={t}
-                territory={t}
-                territoryList={mockTerritories}
-              />
-            ))}
+            {isSuccess &&
+              data.map((t) => (
+                <TerritoryInputGroup
+                  // @ts-ignore
+                  key={t}
+                  territory={t}
+                  territoryList={data}
+                />
+              ))}
+            {isError && <h1>Error</h1>}
           </CardContent>
         </Card>
       </FlexCenter>
