@@ -4,8 +4,10 @@ import FlexCenter from "../../../styles/FlexCenter";
 import CardContent from "@material-ui/core/CardContent";
 import TerritoryInputGroup from "./TerritoryInputGroup";
 import Territory from "../../../model/territory";
+import useTerritoriesQuery from "../../../queries/useTerritoriesQuery";
 
 export default () => {
+  const x = useTerritoriesQuery();
   const mockTerritories: Territory[] = [
     { name: "North", repId: "org.duncle.j" },
     { name: "East", repId: "org.duncle.sam" },
