@@ -4,26 +4,36 @@ import TextField from "@material-ui/core/TextField";
 import Box from "@material-ui/core/Box";
 import camelize from "../../../utils/camelize";
 
-interface Props {
+interface Props<T> {
   label: string;
-  value: string;
-  onChange(_, newValue: string | null): void;
-  options: string[];
+  value: T;
+  onChange(_, newValue: T): void;
+  options: T[];
+  getOptionLabel: (option: T) => string;
 }
 
-export default ({ value, onChange, options, label }: Props) => (
-  <Box padding={3}>
-    <Autocomplete
-      value={value}
-      onChange={onChange}
-      inputValue={value}
-      onInputChange={onChange}
-      id={camelize(label)}
-      options={options}
-      style={{ width: 300 }}
-      renderInput={(params) => (
-        <TextField {...params} label={label} variant="outlined" />
-      )}
-    />
-  </Box>
-);
+export default function <Generic>({
+  value,
+  onChange,
+  options,
+  label,
+  ...rest
+}: Props<Generic>) {
+  return (
+    <Box padding={3}>
+      <Autocomplete
+        // @ts-ignore
+        value={value}
+        // @ts-ignore
+        onChange={onChange}
+        id={camelize(label)}
+        options={options}
+        style={{ width: 300 }}
+        renderInput={(params) => (
+          <TextField {...params} label={label} variant="outlined" />
+        )}
+        {...rest}
+      />
+    </Box>
+  );
+}
