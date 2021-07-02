@@ -29,10 +29,9 @@ export default ({ territory, territoryList, repList }: Props) => {
     setRep(newValue);
   };
 
-  console.log({ territoryList });
   return (
     <FlexCenter>
-      <StyledAutocomplete
+      <StyledAutocomplete<Territory>
         key={`${territory._id}-${territory.repId}-1`}
         value={selectedTerritory}
         onChange={onTerritoryChange}
@@ -40,13 +39,15 @@ export default ({ territory, territoryList, repList }: Props) => {
         getOptionLabel={(option: Territory) => option.name}
         label="Territories"
       />
-      {/*<StyledAutocomplete*/}
-      {/*  key={`${_id}-${repId}-2`}*/}
-      {/*  value={selectedRep}*/}
-      {/*  onChange={onRepChange}*/}
-      {/*  options={repList}*/}
-      {/*  label="Assigned Rep"*/}
-      {/*/>*/}
+
+      <StyledAutocomplete<UserDAO>
+        key={`${territory._id}-${territory.repId}-2`}
+        value={selectedRep}
+        onChange={onRepChange}
+        options={repList}
+        getOptionLabel={(option: UserDAO) => option.firstName}
+        label="Assigned Rep"
+      />
     </FlexCenter>
   );
 };
