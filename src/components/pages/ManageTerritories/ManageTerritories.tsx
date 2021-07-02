@@ -3,7 +3,6 @@ import Card from "@material-ui/core/Card";
 import FlexCenter from "../../../styles/FlexCenter";
 import CardContent from "@material-ui/core/CardContent";
 import TerritoryInputGroup from "./TerritoryInputGroup";
-import Territory from "../../../model/territory";
 import useTerritoriesQuery from "../../../queries/useTerritoriesQuery";
 import useUsersQuery from "../../../queries/useUsersQuery";
 
@@ -30,7 +29,7 @@ export default () => {
                   repList={usersData}
                 />
               ))}
-            {isError && <h1>Error</h1>}
+            {isError && !isLoading && <h1>Error</h1>}
           </CardContent>
         </Card>
       </FlexCenter>

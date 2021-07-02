@@ -14,10 +14,8 @@ export default () => {
     localPouch.allDocs({ include_docs: true });
 
   return useQuery(allTerritoriesKey, fetchAll, {
-    select: (response: PouchResponse<Territory>): Territory[] => {
-      console.log(response);
-      return parseFromPouchResponse<Territory>(response);
-    },
+    select: (response: PouchResponse<Territory>): Territory[] =>
+      parseFromPouchResponse<Territory>(response),
     onError: () => {
       setError(`Failed to get list of all territories. Try again`);
     },
