@@ -3,20 +3,24 @@ import FlexCenter from "../../../styles/FlexCenter";
 import Territory from "../../../model/territory";
 import StyledAutocomplete from "../../atoms/TextField/StyledAutocomplete";
 import UserDAO from "../../../model/userDAO";
-import useSaveTerritoryMutation from "../../../queries/useSaveTerritoryMutation";
 import MapTwoToneIcon from "@material-ui/icons/MapTwoTone";
 import CloseIcon from "@material-ui/icons/Close";
 import IconButton from "@material-ui/core/IconButton";
-import CheckIcon from "@material-ui/icons/Check";
+import { Props as SaveProps } from "../../../queries/useSaveTerritoryMutation";
 
 interface Props {
   territory: Territory;
   territoryList: Territory[];
   repList: UserDAO[];
+  saveTerritory(props: SaveProps): void;
 }
 
-export default ({ territory, territoryList, repList }: Props) => {
-  const { mutate: saveTerritory } = useSaveTerritoryMutation();
+export default ({
+  territory,
+  territoryList,
+  repList,
+  saveTerritory,
+}: Props) => {
   const [selectedTerritory, setTerritory] =
     React.useState<Territory>(territory);
   const currentRep = repList.find((r) => r._id === territory.repId);
@@ -34,7 +38,7 @@ export default ({ territory, territoryList, repList }: Props) => {
         name: chosenTerritory.name,
       };
       console.log({ newAssignment });
-      saveTerritory(newAssignment);
+      saveTerritory({ territory: newAssignment });
     }
   };
   const onRepChange = (_, newValue: UserDAO) => {

@@ -10,20 +10,32 @@ import Button from "@material-ui/core/Button";
 import CheckIcon from "@material-ui/icons/Check";
 import FlexStart from "../../../styles/FlexStart";
 import { TextField } from "@material-ui/core";
+import useSaveTerritoryMutation from "../../../queries/useSaveTerritoryMutation";
+import Territory from "../../../model/territory";
+import { v4 as uuidv4 } from "uuid";
 
 export default () => {
   const { data, isLoading, isSuccess, isError } = useTerritoriesQuery();
-  const { data: usersData, isSuccess: userSuccess } = useUsersQuery();
+  const {
+    data: usersData,
+    isSuccess: usersSuccess,
+    isLoading: usersIsLoading,
+  } = useUsersQuery();
+  const { mutate: saveTerritory } = useSaveTerritoryMutation();
+
   const [newTerritory, setNewTerritory] = useState(false);
   const [territoryName, setTerritoryName] = React.useState<string | null>(null);
 
-  if (isLoading) return <h1>Loading...</h1>;
+  if (isLoading || usersIsLoading) return <h1>Loading...</h1>;
 
   const submitNewTerritory = (event) => {
     event.preventDefault();
-    const inputValue = event.target[0].value;
-    // mutate asyc
-    // if success, then toggle the territory
+    const inputValue: string = event.target[0].value;
+    saveTerritory({
+      // this is cheating...
+      territory: { name: inputValue, _id: uuidv4() } as Territory,
+      isExisting: false,
+    });
     setNewTerritory(!newTerritory);
   };
 
@@ -34,6 +46,9 @@ export default () => {
   const addTerritory = () => {
     setNewTerritory(!newTerritory);
   };
+
+  const shouldShowTerritoriesList =
+    isSuccess && usersSuccess && data && usersData;
 
   return (
     <>
@@ -66,7 +81,7 @@ export default () => {
                 </form>
               )}
             </FlexStart>
-            {isSuccess && userSuccess && data ? (
+            {shouldShowTerritoriesList ? (
               data.map((t) => (
                 <TerritoryInputGroup
                   // @ts-ignore
@@ -74,6 +89,7 @@ export default () => {
                   territory={t}
                   territoryList={data}
                   repList={usersData}
+                  saveTerritory={saveTerritory}
                 />
               ))
             ) : (

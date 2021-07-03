@@ -8,6 +8,11 @@ import { useNotification } from "../components/atoms/Snackbar/Snackbar";
 import Territory from "../model/territory";
 import { PouchResponse } from "./queriesUtils";
 
+export interface Props {
+  territory: Territory;
+  isExisting?: boolean;
+}
+
 export default () => {
   const { setError } = useNotification();
   const queryClient = useQueryClient();
@@ -17,19 +22,21 @@ export default () => {
    * Saves a territory
    * @param territory ** IMPORTANT ** make sure you're creating a clone of the territory because we use the existing user
    * as a comparison.
+   * @param isExisting - if the parameter being passed already exists
    */
   // todo - very easily should make this generic
-  const saveTerritory = (
-    territory: Territory
-  ): Promise<PouchDB.Core.Response | void> => {
+  const saveTerritory = ({
+    territory,
+    isExisting = true,
+  }: Props): Promise<PouchDB.Core.Response | void> => {
     console.log("editedTerritory", territory._rev);
 
-    if (isEmpty(territory._rev) || territory._rev === "norev") {
+    if (isExisting && (isEmpty(territory._rev) || territory._rev === "norev")) {
       throw new Error(
         `Error code: 51. _rev is undefined. Cannot save Territory`
       );
     }
-    if (isEmpty(territory._id) || territory._id === "noid") {
+    if (isExisting && (isEmpty(territory._id) || territory._id === "noid")) {
       throw new Error(
         `Error code: 52. _id is undefined. Cannot save Territory`
       );
@@ -40,7 +47,7 @@ export default () => {
   };
 
   return useMutation(saveTerritoriesKey, saveTerritory, {
-    onSuccess: (response, territory) => {
+    onSuccess: (response, { territory }) => {
       let updatedTerritory: Territory[];
 
       if (response) {
@@ -48,6 +55,7 @@ export default () => {
         updatedTerritory = [
           {
             ...territory,
+            _id: response.id,
             _rev: response.rev,
           },
         ];

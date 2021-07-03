@@ -4,3 +4,8 @@ export default interface Territory {
   repId: string;
   name: string;
 }
+
+export interface NewTerritory {
+  name: string;
+  repId: string;
+}
