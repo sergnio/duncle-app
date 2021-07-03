@@ -17,7 +17,6 @@ export default function () {
     <Field name={camelizedName} initialValue={defaultDate}>
       {(props: FieldInputProps<any>) => (
         <DatePickerWrapper>
-          {/*@ ts-ignore */}
           <DateTimePicker
             style={{ minWidth: "200px" }}
             onChange={(momentDate) => {
@@ -25,7 +24,8 @@ export default function () {
                 props.input.onChange(momentDate.format());
               }
             }}
-            defaultValue={defaultDate}
+            // todo - add this back in?
+            // defaultValue={defaultDate}
             name={props.input.label}
             // @ts-ignore - this is literally just a moment date
             labelFunc={(momentDate: Moment) =>

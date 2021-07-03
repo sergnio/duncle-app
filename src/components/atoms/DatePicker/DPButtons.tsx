@@ -6,13 +6,10 @@ import Button from "@material-ui/core/Button";
 import { OverridableComponent } from "@material-ui/core/OverridableComponent";
 import { SvgIconTypeMap } from "@material-ui/core/SvgIcon/SvgIcon";
 import useGlobalDatePicker from "./useGlobalDatePicker";
-import {
-  GlobalDatePickerContext,
-  GlobalDatePickerProvider,
-} from "../../../providers/GlobalDatePickerProvider";
 import styled from "styled-components";
 import GlobalDatePicker from "./GlobalDatePicker";
 import { LastContactType } from "../../../model/newLibrary";
+import Tooltip from "@material-ui/core/Tooltip";
 
 const Flex = styled.div`
   display: flex;
@@ -21,6 +18,7 @@ const Flex = styled.div`
 interface Props {
   Icon: OverridableComponent<SvgIconTypeMap>;
   contactType: LastContactType;
+  disabled: boolean;
 }
 
 /**
@@ -29,37 +27,52 @@ interface Props {
  * @param Icon the icon you want to display on the button
  * @param contactType see LastContactType
  */
-const IconWrapper = ({ Icon, contactType }: Props) => {
+const IconWrapper = ({ Icon, contactType, disabled }: Props) => {
   const { handleOpen } = useGlobalDatePicker();
 
   return (
-    <>
+    <Tooltip
+      title={
+        disabled
+          ? "Please type a note first"
+          : `Last contacted by: ${contactType}`
+      }
+    >
       <Button
         variant="outlined"
         onClick={() => handleOpen(contactType)}
         type="button"
+        disabled={disabled}
       >
         <Icon />
       </Button>
-    </>
+    </Tooltip>
   );
 };
 
-const ContactedByEmail = () => (
-  <IconWrapper Icon={ComputerIcon} contactType="email" />
+interface ButtonProps {
+  disabled: boolean;
+}
+
+const ContactedByEmail = ({ disabled }: ButtonProps) => (
+  <IconWrapper disabled={disabled} Icon={ComputerIcon} contactType="email" />
 );
-const ContactedInPerson = () => (
-  <IconWrapper Icon={GroupIcon} contactType="inPerson" />
+const ContactedInPerson = ({ disabled }: ButtonProps) => (
+  <IconWrapper disabled={disabled} Icon={GroupIcon} contactType="inPerson" />
 );
-const ContactedByPhone = () => (
-  <IconWrapper Icon={PhoneForwardedIcon} contactType="phone" />
+const ContactedByPhone = ({ disabled }: ButtonProps) => (
+  <IconWrapper
+    disabled={disabled}
+    Icon={PhoneForwardedIcon}
+    contactType="phone"
+  />
 );
 
-export const ContactButtonsRow = () => (
+export const ContactButtonsRow = ({ disabled }: ButtonProps) => (
   <Flex>
     <GlobalDatePicker />
-    <ContactedByPhone />
-    <ContactedByEmail />
-    <ContactedInPerson />
+    <ContactedByPhone disabled={disabled} />
+    <ContactedByEmail disabled={disabled} />
+    <ContactedInPerson disabled={disabled} />
   </Flex>
 );
