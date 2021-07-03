@@ -47,8 +47,14 @@ export default ({
     setName(name);
   };
   const onRepChange = (_, newValue: UserDAO) => {
-    console.log({ newValue });
-    setRep(newValue);
+    if (newValue != null) {
+      saveTerritory({
+        territory: {
+          ...territory,
+          repId: newValue._id,
+        },
+      });
+    }
   };
 
   return (

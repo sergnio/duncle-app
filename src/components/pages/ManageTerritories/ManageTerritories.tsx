@@ -32,7 +32,7 @@ export default () => {
     event.preventDefault();
     const inputValue: string = event.target[0].value;
     saveTerritory({
-      // this is cheating...
+      // this casting is cheating...
       territory: { name: inputValue, _id: uuidv4() } as Territory,
       isExisting: false,
     });
