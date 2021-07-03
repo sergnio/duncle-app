@@ -9,6 +9,7 @@ import IconButton from "@material-ui/core/IconButton";
 import { Props as SaveProps } from "../../../queries/useSaveTerritoryMutation";
 import { TextField } from "@material-ui/core";
 import useDebounce from "../../../hooks/useDebounce";
+import useDeleteTerritoryMutation from "../../../queries/useDeleteTerritoryMutation";
 
 interface Props {
   territory: Territory;
@@ -23,6 +24,7 @@ export default ({
   repList,
   saveTerritory,
 }: Props) => {
+  const { mutate: deleteTerritory } = useDeleteTerritoryMutation();
   const [territoryName, setName] = useState<string>(territory.name);
   const currentRep = repList.find((r) => r._id === territory.repId);
   console.log({ territory });
@@ -59,7 +61,10 @@ export default ({
 
   return (
     <FlexCenter>
-      <IconButton aria-label="delete territory">
+      <IconButton
+        aria-label="delete territory"
+        onClick={() => deleteTerritory(territory)}
+      >
         <CloseIcon style={{ color: "red" }} fontSize="small" />
       </IconButton>
       <MapTwoToneIcon />

@@ -6,6 +6,8 @@ export const allTerritoriesKey = "getTerritories";
 
 export const saveTerritoriesKey = "saveTerritories";
 
+export const deleteTerritoryKey = "deleteTerritories";
+
 export const saveLibraryKey = "saveLibrary";
 
 export const saveUserKey = "saveUser";
