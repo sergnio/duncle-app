@@ -1,25 +1,29 @@
-import { createDatabaseWithUser } from "../hooks/UsePouch";
 import { useQuery } from "react-query";
 import { useNotification } from "../components/atoms/Snackbar/Snackbar";
-import useAuth from "../hooks/Auth/useAuth";
 import { libraryKey } from "../constants/queryKeys";
 import { useLibraryState } from "../providers/LibraryProvider";
 import PouchDB from "pouchdb";
+import { createLibraryDatabase } from "../services/librariesPouchService";
+import { parseFromPouchResponse, PouchResponse } from "./queriesUtils";
+import { Library } from "../model";
 
 export default (uuid: string) => {
-  const { getAuthenticatedUser } = useAuth();
   const { setCurrentLibrary } = useLibraryState();
   const { setError } = useNotification();
 
-  const USER_DB_PREFIX = "user_";
-  const localPouch = createDatabaseWithUser(
-    `${USER_DB_PREFIX}${getAuthenticatedUser()?.username}`
-  );
+  const localPouch = createLibraryDatabase();
 
-  const fetchSingleDoc = () => localPouch.get(uuid);
+  const fetchAll = (): PouchResponse =>
+    localPouch.allDocs({ include_docs: true });
 
-  return useQuery(libraryKey(uuid), fetchSingleDoc, {
+  return useQuery(libraryKey(uuid), fetchAll, {
+    select: (response: PouchResponse) =>
+      // todo - refactor this into generic method like getUserData from queriesUtils.ts
+      parseFromPouchResponse<Library>(response).filter(
+        (l) => l._id === uuid
+      )[0],
     onSuccess: (library) => {
+      console.log({ library });
       setCurrentLibrary(library);
       return library;
     },
