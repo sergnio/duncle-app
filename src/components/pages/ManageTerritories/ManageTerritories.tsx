@@ -15,7 +15,8 @@ import Territory from "../../../model/territory";
 import { v4 as uuidv4 } from "uuid";
 
 export default () => {
-  const { data, isLoading, isSuccess, isError } = useTerritoriesQuery();
+  const { data, isLoading, isSuccess, isError, isFetchedAfterMount } =
+    useTerritoriesQuery();
   const {
     data: usersData,
     isSuccess: usersSuccess,
@@ -26,7 +27,8 @@ export default () => {
   const [newTerritory, setNewTerritory] = useState(false);
   const [territoryName, setTerritoryName] = React.useState<string | null>(null);
 
-  if (isLoading || usersIsLoading) return <h1>Loading...</h1>;
+  if (!isFetchedAfterMount && (isLoading || usersIsLoading))
+    return <h1>Loading...</h1>;
 
   const submitNewTerritory = (event) => {
     event.preventDefault();
@@ -47,8 +49,7 @@ export default () => {
     setNewTerritory(!newTerritory);
   };
 
-  const shouldShowTerritoriesList =
-    isSuccess && usersSuccess && data && usersData;
+  const shouldShowTerritoriesList = data && usersData;
 
   return (
     <>
@@ -81,7 +82,7 @@ export default () => {
                 </form>
               )}
             </FlexStart>
-            {shouldShowTerritoriesList ? (
+            {shouldShowTerritoriesList &&
               data.map((t) => (
                 <TerritoryInputGroup
                   // @ts-ignore
@@ -91,11 +92,8 @@ export default () => {
                   repList={usersData}
                   saveTerritory={saveTerritory}
                 />
-              ))
-            ) : (
-              <h1>Add a new territory!</h1>
-            )}
-            {isError && !isLoading && <h1>Error</h1>}
+              ))}
+            {isError && <h1>Error</h1>}
           </CardContent>
         </Card>
       </FlexCenter>
