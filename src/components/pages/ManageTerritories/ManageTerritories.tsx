@@ -5,6 +5,9 @@ import CardContent from "@material-ui/core/CardContent";
 import TerritoryInputGroup from "./TerritoryInputGroup";
 import useTerritoriesQuery from "../../../queries/useTerritoriesQuery";
 import useUsersQuery from "../../../queries/useUsersQuery";
+import Add from "@material-ui/icons/Add";
+import Button from "@material-ui/core/Button";
+import FlexStart from "../../../styles/FlexStart";
 
 export default () => {
   const { data, isLoading, isSuccess, isError } = useTerritoriesQuery();
@@ -18,6 +21,11 @@ export default () => {
       <FlexCenter>
         <Card style={{ maxWidth: "1300px" }}>
           <CardContent>
+            <FlexStart>
+              <Button size="small">
+                <Add style={{ color: "green" }} /> Add territory
+              </Button>
+            </FlexStart>
             {isSuccess &&
               userSuccess &&
               data.map((t) => (

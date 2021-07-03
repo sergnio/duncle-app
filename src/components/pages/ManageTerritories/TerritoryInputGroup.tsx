@@ -5,6 +5,9 @@ import StyledAutocomplete from "../../atoms/TextField/StyledAutocomplete";
 import UserDAO from "../../../model/userDAO";
 import useSaveTerritoryMutation from "../../../queries/useSaveTerritoryMutation";
 import MapTwoToneIcon from "@material-ui/icons/MapTwoTone";
+import CloseIcon from "@material-ui/icons/Close";
+import IconButton from "@material-ui/core/IconButton";
+import CheckIcon from "@material-ui/icons/Check";
 
 interface Props {
   territory: Territory;
@@ -41,6 +44,9 @@ export default ({ territory, territoryList, repList }: Props) => {
 
   return (
     <FlexCenter>
+      <IconButton aria-label="delete territory">
+        <CloseIcon style={{ color: "red" }} fontSize="small" />
+      </IconButton>
       <MapTwoToneIcon />
       <h2>{territory.name}</h2>
       <StyledAutocomplete
