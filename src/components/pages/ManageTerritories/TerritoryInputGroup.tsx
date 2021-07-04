@@ -11,6 +11,7 @@ import { TextField } from "@material-ui/core";
 import useDebounce from "../../../hooks/useDebounce";
 import useDeleteTerritoryMutation from "../../../queries/useDeleteTerritoryMutation";
 import ConfirmCloseDialog from "../../atoms/Dialogs/ConfirmCloseDialog";
+import useConfirmDialog from "../../atoms/Dialogs/useConfirmDialog";
 
 interface Props {
   territory: Territory;
@@ -23,9 +24,8 @@ export default ({ territory, repList, saveTerritory }: Props) => {
   const { mutate: deleteTerritory } = useDeleteTerritoryMutation();
   const [territoryName, setName] = useState<string>(territory.name);
   const currentRep = repList.find((r) => r._id === territory.repId);
-  console.log({ territory });
+  const { open, handleOpen, handleClose } = useConfirmDialog();
   const debouncedName = useDebounce<string>(territoryName, 2000);
-  const [open, setOpen] = useState<boolean>(false);
 
   useEffect(() => {
     if (debouncedName !== territory.name && debouncedName != null) {
@@ -55,10 +55,6 @@ export default ({ territory, repList, saveTerritory }: Props) => {
     }
   };
 
-  const handleDelete = () => {
-    setOpen(true);
-  };
-
   const onOk = () => {
     deleteTerritory(territory);
   };
@@ -69,9 +65,9 @@ export default ({ territory, repList, saveTerritory }: Props) => {
         open={open}
         message={`Are you sure you want to delete the Territory ${territory.name}?`}
         onConfirm={onOk}
-        onCancel={() => setOpen(false)}
+        onCancel={handleClose}
       />
-      <IconButton aria-label="delete territory" onClick={handleDelete}>
+      <IconButton aria-label="delete territory" onClick={handleOpen}>
         <CloseIcon style={{ color: "red" }} fontSize="small" />
       </IconButton>
       <MapTwoToneIcon />
