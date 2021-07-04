@@ -9,9 +9,11 @@ import useTableColumns from "./useTableColumns";
 import IconButton from "@material-ui/core/IconButton";
 import RefreshIcon from "@material-ui/icons/Refresh";
 import Tooltip from "@material-ui/core/Tooltip";
+import Territory from "../../../model/territory";
 
 type TableProps = {
   libraries: Library[];
+  territories?: Territory[];
   onEdit?(library: Library): void;
   refetch(): void;
   setSuccess(message: string): void;
@@ -19,6 +21,7 @@ type TableProps = {
 };
 export default ({
   libraries,
+  territories,
   onEdit,
   refetch,
   setSuccess,
@@ -56,7 +59,7 @@ export default ({
           // todo - might have to revisit this.. probably better to do 100 page size, with pagination options
           //  see docs - https://material-table.com/#/docs/all-props
           paging: false,
-          rowStyle: ({ dateNextContact, libraryName }: Library) => {
+          rowStyle: ({ dateNextContact }: Library) => {
             let nextDate;
             if (dateNextContact) {
               nextDate = moment(dateNextContact).toDate();
