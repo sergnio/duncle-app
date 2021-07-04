@@ -2,7 +2,6 @@ import NoteDAO from "../model/noteDAO";
 import Library from "../model/library";
 import userDAO from "../model/userDAO";
 import UserDAO from "../model/userDAO";
-import { newLibrary2 } from "../components/storybook-mocks/constants";
 import { dateNowIso, readableDate } from "../utils/dateUtil";
 import { v4 as uuidv4 } from "uuid";
 import moment from "moment";
@@ -163,14 +162,16 @@ export default () => {
     const withShippingAndHandling: number = newSale * 0.93;
     const withNewSale: number = library.totalSales + withShippingAndHandling;
 
-    library.lastSale = withShippingAndHandling;
-    library.totalSales = withNewSale;
+    const updatedLib = {
+      ...library,
+      lastSale: withShippingAndHandling,
+      totalSales: withNewSale,
+    };
 
     console.log({ library });
-    saveLibrary(library);
+    saveLibrary(updatedLib);
+    // todo - move to onSuccess?
     setSuccess(`Success! The total after S&H is ${withShippingAndHandling}`);
-
-    // todo - add "undo last sale" button?
   };
 
   return {

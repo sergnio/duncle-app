@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent, useState } from "react";
 import Form from "../Form";
 import Paper from "@material-ui/core/Paper";
 import TextArea from "../../atoms/TextArea/TextArea";
@@ -16,11 +16,18 @@ export default function () {
   const { paddingTwo, longWidth } = useStyles();
   const { submitNewNote } = useUpdateLibrary();
   const { noteMessage } = useGlobalDatePickerState();
+  const [buttonsDisabled, setButtonsDisabled] = useState<boolean>(true);
 
   const onNoAnswer = () => submitNewNote({ newNote: "Called, but no answer." });
 
   const onTextAreaChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    noteMessage.current = event.target.value;
+    const note = event.target.value;
+    noteMessage.current = note;
+    if (note != null && note !== "") {
+      setButtonsDisabled(false);
+    } else {
+      setButtonsDisabled(true);
+    }
   };
 
   return (
@@ -36,8 +43,12 @@ export default function () {
         />
         <FlexCenter>
           <div className={paddingTwo}>
-            <ContactButtonsRow />
-            <Button variant="outlined" onClick={onNoAnswer}>
+            <ContactButtonsRow disabled={buttonsDisabled} />
+            <Button
+              variant="outlined"
+              onClick={onNoAnswer}
+              disabled={buttonsDisabled}
+            >
               No Answer{" "}
               <PhoneDisabled style={{ color: "red", paddingLeft: ".1em" }} />
             </Button>

@@ -15,13 +15,9 @@ import Territory from "../../../model/territory";
 import { v4 as uuidv4 } from "uuid";
 
 export default () => {
-  const { data, isLoading, isSuccess, isError, isFetchedAfterMount } =
+  const { data, isLoading, isError, isFetchedAfterMount } =
     useTerritoriesQuery();
-  const {
-    data: usersData,
-    isSuccess: usersSuccess,
-    isLoading: usersIsLoading,
-  } = useUsersQuery();
+  const { data: usersData, isLoading: usersIsLoading } = useUsersQuery();
   const { mutate: saveTerritory } = useSaveTerritoryMutation();
 
   const [newTerritory, setNewTerritory] = useState(false);

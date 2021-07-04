@@ -13,17 +13,14 @@ import { useLibraryState } from "../providers/LibraryProvider";
 import { NoLibrary as DEFAULT_LIBRARY } from "../components/storybook-mocks/constants";
 import { updateAllLibrariesQuery } from "./queriesUtils";
 import PouchDB from "pouchdb";
+import { createLibraryDatabase } from "../services/librariesPouchService";
 
 export default () => {
   const { currentLibrary } = useLibraryState();
-  const { getAuthenticatedUser } = useAuth();
   const { setSuccess, setError, setInfo } = useNotification();
   const queryClient = useQueryClient();
 
-  const USER_DB_PREFIX = "user_";
-  const localPouch = createDatabaseWithUser(
-    `${USER_DB_PREFIX}${getAuthenticatedUser()?.username}`
-  );
+  const localPouch = createLibraryDatabase();
 
   /**
    * Saves a library

@@ -2,20 +2,24 @@ import useAuth from "./useAuth";
 import { renderHook, act } from "@testing-library/react-hooks";
 import { dummyUserDAO } from "../../components/storybook-mocks/constants";
 import noop from "../../utils/noop";
+import { useLocation, MemoryRouter } from "react-router-dom";
+import { FC } from "react";
 
 describe("Auth hooks - authentication flow tests", () => {
+  const wrapper: FC = ({ children }) => (
+    // eslint-disable-next-line react/react-in-jsx-scope
+    <MemoryRouter initialEntries={["home"]}>{children}</MemoryRouter>
+  );
+
   const {
     result: { current },
-  } = renderHook(() => useAuth());
-  const {
-    isAuthenticated,
-    signOut,
-    getAuthenticatedUser,
-    authenticate,
-  } = current;
+  } = renderHook(() => useAuth(), { wrapper });
+  const { isAuthenticated, signOut, getAuthenticatedUser, authenticate } =
+    current;
 
   function testAuthentication(
     title: string,
+    // eslint-disable-next-line @typescript-eslint/ban-types
     callbackFunction: Function,
     expectedResult: any
   ) {

@@ -13,16 +13,32 @@ import generateEditLibraryFormLabels, {
 } from "./generateEditLibraryFormLabels";
 import useLibraryQuery from "../../../queries/useLibraryQuery";
 import { useLibraryState } from "../../../providers/LibraryProvider";
+import Button from "@material-ui/core/Button";
+import FlexCenter from "../../../styles/FlexCenter";
+import styled from "styled-components";
+import ConfirmCloseDialog from "../../atoms/Dialogs/ConfirmCloseDialog";
+import useConfirmDialog from "../../atoms/Dialogs/useConfirmDialog";
+import useAuth from "../../../hooks/Auth/useAuth";
+
+const StyledButton = styled(Button)`
+  color: red;
+  margin: 24px 8px 16px;
+`;
 
 export default function EditLibraryController() {
   const { setCurrentLibrary } = useLibraryState();
   const { libraryId } = useParams<{ libraryId: string }>();
-  const { data: library, isLoading, isSuccess, isError } = useLibraryQuery(
-    libraryId
-  );
+  const {
+    data: library,
+    isLoading,
+    isSuccess,
+    isError,
+  } = useLibraryQuery(libraryId);
   const { mutate: saveLibrary, isSuccess: saveSuccess } = useSaveLibrary();
   const history = useHistory();
   const { content, editLibrary } = useStyles();
+  const { open, handleOpen, handleClose } = useConfirmDialog();
+  const { isAdmin } = useAuth();
 
   if (saveSuccess) {
     history.goBack();
@@ -37,15 +53,23 @@ export default function EditLibraryController() {
     formLabels = generateEditLibraryFormLabels(library);
   }
 
+  const handleDelete = () => console.log("deleted");
+
   return (
     <>
       {isError && <p>Error, try again</p>}
       {isSuccess && (
         <Paper className={content}>
+          <ConfirmCloseDialog
+            onConfirm={handleDelete}
+            open={open}
+            onCancel={handleClose}
+            message={`Are you sure you want to delete Library ${library.libraryName}? This has irreversible consequences`}
+          />
           <Form
             onSubmit={(editedLibrary: Library) => saveLibrary(editedLibrary)}
           >
-            <Grid container>
+            <Grid container justify="center">
               {formLabels.map(({ label, currentValue, isRequired }, index) => (
                 <Grid xs={6} className={editLibrary} key={`${label}-${index}`}>
                   <CustomTextField
@@ -59,7 +83,12 @@ export default function EditLibraryController() {
                 </Grid>
               ))}
             </Grid>
-            <FormSubmitButton DisplayText="Save Library" />
+            <FlexCenter>
+              <FormSubmitButton DisplayText="Save Library" />
+              {isAdmin && (
+                <StyledButton onClick={handleOpen}>Delete Library</StyledButton>
+              )}
+            </FlexCenter>
           </Form>
         </Paper>
       )}
