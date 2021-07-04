@@ -10,14 +10,14 @@ import Territory from "../../../model/territory";
 const getTerritoryDisplayName = (
   territoryId: string,
   territories: Territory[]
-) => {
+): string => {
   const defaultName = {
     name: "No Territory",
   };
   const display = territoryId
     ? territories?.find((t) => t._id === territoryId) ?? defaultName
     : defaultName;
-  return display;
+  return display.name;
 };
 
 export default (): Column<Library>[] => {
@@ -36,10 +36,9 @@ export default (): Column<Library>[] => {
     {
       title: "Territory",
       field: "territoryId",
-      render: ({ territoryId }: Library) => {
-        const display = getTerritoryDisplayName(territoryId, territories);
-        return <p>{display.name}</p>;
-      },
+      render: ({ territoryId }: Library) => (
+        <p>{getTerritoryDisplayName(territoryId, territories)}</p>
+      ),
     },
     {
       title: "Phone / Email",
