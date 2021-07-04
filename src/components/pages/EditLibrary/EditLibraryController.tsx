@@ -20,6 +20,7 @@ import ConfirmCloseDialog from "../../atoms/Dialogs/ConfirmCloseDialog";
 import useConfirmDialog from "../../atoms/Dialogs/useConfirmDialog";
 import useAuth from "../../../hooks/Auth/useAuth";
 import TerritoryDropdown from "../../atoms/Dropdown/TerritoryDropdown";
+import useTerritoriesQuery from "../../../queries/useTerritoriesQuery";
 
 const StyledButton = styled(Button)`
   color: red;
@@ -35,6 +36,7 @@ export default function EditLibraryController() {
     isSuccess,
     isError,
   } = useLibraryQuery(libraryId);
+  const { data: territories, isLoading: tIsLoading } = useTerritoriesQuery();
   const { mutate: saveLibrary, isSuccess: saveSuccess } = useSaveLibrary();
   const history = useHistory();
   const { content, editLibrary } = useStyles();
