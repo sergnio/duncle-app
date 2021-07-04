@@ -35,7 +35,6 @@ export default function CustomTextField({
       `If alsoInitialValue is specified, defaultValue must exist. field: ${name}, defaultValue: ${defaultValue}`
     );
   }
-  const { menuButton } = useStyles();
 
   return (
     <Field

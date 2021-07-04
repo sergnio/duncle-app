@@ -19,6 +19,7 @@ import styled from "styled-components";
 import ConfirmCloseDialog from "../../atoms/Dialogs/ConfirmCloseDialog";
 import useConfirmDialog from "../../atoms/Dialogs/useConfirmDialog";
 import useAuth from "../../../hooks/Auth/useAuth";
+import TerritoryDropdown from "../../atoms/Dropdown/TerritoryDropdown";
 
 const StyledButton = styled(Button)`
   color: red;
@@ -82,6 +83,9 @@ export default function EditLibraryController() {
                   />
                 </Grid>
               ))}
+              <Grid xs={6} className={editLibrary}>
+                <TerritoryDropdown />
+              </Grid>
             </Grid>
             <FlexCenter>
               <FormSubmitButton DisplayText="Save Library" />
