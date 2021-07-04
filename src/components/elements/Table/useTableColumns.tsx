@@ -7,6 +7,7 @@ import { formatContactType } from "../../../utils/textFormatUtils";
 import useTerritoriesQuery from "../../../queries/useTerritoriesQuery";
 import Territory from "../../../model/territory";
 
+// todo - this should just be a component which does this...
 const getTerritoryDisplayName = (
   territoryId: string,
   territories: Territory[]
