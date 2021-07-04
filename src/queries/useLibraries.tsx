@@ -11,7 +11,7 @@ export default (userIds: string[] = []) => {
   const { setError } = useNotification();
 
   const user = getAuthenticatedUser();
-  const userId = user._id;
+  const userId = user?._id;
 
   const localPouch = createLibraryDatabase();
 

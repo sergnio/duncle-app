@@ -23,13 +23,6 @@ export default () => {
 
   const history = useHistory();
 
-  const otherLibs: Library[] = [];
-
-  /** default, Terry libraries */
-  if (isSuccess && libraries && selectedUsers) {
-    otherLibs.push(...libraries);
-  }
-
   if (isLoading) return <h1>Loading...</h1>;
 
   function routeToLibraryDetail(library: Library): void {
@@ -45,7 +38,7 @@ export default () => {
           <Grid item xs={11}>
             <Card variant="outlined">
               <Table
-                libraries={otherLibs}
+                libraries={libraries}
                 onEdit={routeToLibraryDetail}
                 refetch={refetch}
                 setSuccess={setSuccess}

@@ -10,6 +10,7 @@ import { Props as SaveProps } from "../../../queries/useSaveTerritoryMutation";
 import { TextField } from "@material-ui/core";
 import useDebounce from "../../../hooks/useDebounce";
 import useDeleteTerritoryMutation from "../../../queries/useDeleteTerritoryMutation";
+import ConfirmCloseDialog from "../../atoms/Dialogs/ConfirmCloseDialog";
 
 interface Props {
   territory: Territory;
@@ -18,18 +19,13 @@ interface Props {
   saveTerritory(props: SaveProps): void;
 }
 
-export default ({
-  territory,
-  territoryList,
-  repList,
-  saveTerritory,
-}: Props) => {
+export default ({ territory, repList, saveTerritory }: Props) => {
   const { mutate: deleteTerritory } = useDeleteTerritoryMutation();
   const [territoryName, setName] = useState<string>(territory.name);
   const currentRep = repList.find((r) => r._id === territory.repId);
   console.log({ territory });
-  const [selectedRep, setRep] = React.useState<UserDAO>(currentRep);
   const debouncedName = useDebounce<string>(territoryName, 2000);
+  const [open, setOpen] = useState<boolean>(false);
 
   useEffect(() => {
     if (debouncedName !== territory.name && debouncedName != null) {
@@ -59,12 +55,23 @@ export default ({
     }
   };
 
+  const handleDelete = () => {
+    setOpen(true);
+  };
+
+  const onOk = () => {
+    deleteTerritory(territory);
+  };
+
   return (
     <FlexCenter>
-      <IconButton
-        aria-label="delete territory"
-        onClick={() => deleteTerritory(territory)}
-      >
+      <ConfirmCloseDialog
+        open={open}
+        message={`Are you sure you want to delete the Territory ${territory.name}?`}
+        onConfirm={onOk}
+        onCancel={() => setOpen(false)}
+      />
+      <IconButton aria-label="delete territory" onClick={handleDelete}>
         <CloseIcon style={{ color: "red" }} fontSize="small" />
       </IconButton>
       <MapTwoToneIcon />
@@ -77,7 +84,7 @@ export default ({
       />
       <StyledAutocomplete
         key={`${territory._id}-${territory.repId}`}
-        value={selectedRep}
+        value={currentRep}
         onChange={onRepChange}
         options={repList}
         getOptionLabel={(option: UserDAO) => option.firstName}

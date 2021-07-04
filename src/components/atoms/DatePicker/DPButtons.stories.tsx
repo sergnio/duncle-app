@@ -10,7 +10,7 @@ export default {
 export const Default = () => (
   <GlobalProvider>
     <LocalStorageMockProvider>
-      <ContactButtonsRow />
+      <ContactButtonsRow disabled={false} />
     </LocalStorageMockProvider>
   </GlobalProvider>
 );
