@@ -18,6 +18,7 @@ export default interface NewLibrary {
   assignedRep: string;
   totalSales: number;
   lastSale: number;
+  territoryId: string;
   personalNotes?: NoteDAO;
   level?: string;
   size?: number;
