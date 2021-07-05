@@ -10,6 +10,7 @@ import DefaultButton from "../../atoms/Button/DefaultButton";
 import useUpdateLibrary from "../../../hooks/useUpdateLibrary";
 import useLibraryQuery from "../../../queries/useLibraryQuery";
 import PersonalNotes from "../../elements/PersonalNotes/PersonalNotes";
+import BackButton from "../../atoms/Button/BackButton";
 
 export default () => {
   const { content, alignToDrawer, paddingOne, paddingTopTiny } = useStyles();
@@ -23,11 +24,8 @@ export default () => {
     isFetching,
   } = useLibraryQuery(libraryId);
 
-  const {
-    handleNewAppointment,
-    addSale,
-    submitNewEditableNote,
-  } = useUpdateLibrary();
+  const { handleNewAppointment, addSale, submitNewEditableNote } =
+    useUpdateLibrary();
 
   const history = useHistory();
 
@@ -51,7 +49,7 @@ export default () => {
       {isSuccess && (
         <>
           <div className={paddingTopTiny}>
-            <DefaultButton onClick={onBack}>Back</DefaultButton>
+            <BackButton />
             <DefaultButton onClick={() => onEdit(libraryId)}>
               Edit
             </DefaultButton>

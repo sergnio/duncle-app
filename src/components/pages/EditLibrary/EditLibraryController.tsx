@@ -21,6 +21,7 @@ import useConfirmDialog from "../../atoms/Dialogs/useConfirmDialog";
 import useAuth from "../../../hooks/Auth/useAuth";
 import useTerritoriesQuery from "../../../queries/useTerritoriesQuery";
 import TerritoryDropdownFF from "../../atoms/Dropdown/TerritoryDropdownFF";
+import BackButton from "../../atoms/Button/BackButton";
 
 const StyledButton = styled(Button)`
   color: red;
@@ -71,6 +72,7 @@ export default function EditLibraryController() {
             onCancel={handleClose}
             message={`Are you sure you want to delete Library ${library.libraryName}? This has irreversible consequences`}
           />
+          <BackButton />
           <Form
             onSubmit={(editedLibrary: Library) => saveLibrary(editedLibrary)}
           >
