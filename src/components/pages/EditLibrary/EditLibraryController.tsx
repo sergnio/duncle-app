@@ -21,8 +21,6 @@ import useConfirmDialog from "../../atoms/Dialogs/useConfirmDialog";
 import useAuth from "../../../hooks/Auth/useAuth";
 import useTerritoriesQuery from "../../../queries/useTerritoriesQuery";
 import TerritoryDropdownFF from "../../atoms/Dropdown/TerritoryDropdownFF";
-import { getTerritoryDisplayName } from "../../elements/Table/useTableColumns";
-import TerritoryDropdown from "../../atoms/Dropdown/TerritoryDropdown";
 
 const StyledButton = styled(Button)`
   color: red;
@@ -38,7 +36,7 @@ export default function EditLibraryController() {
     isSuccess,
     isError,
   } = useLibraryQuery(libraryId);
-  const { data: territories, isLoading: tIsLoading } = useTerritoriesQuery();
+  const { data: territories, isSuccess: tIsSuccess } = useTerritoriesQuery();
   const { mutate: saveLibrary, isSuccess: saveSuccess } = useSaveLibrary();
   const history = useHistory();
   const { content, editLibrary } = useStyles();
@@ -59,7 +57,6 @@ export default function EditLibraryController() {
   }
 
   const handleDelete = () => console.log("deleted");
-
   const x = territories?.find((t) => t._id === library?.territoryId);
   console.log({ x });
 
@@ -91,13 +88,12 @@ export default function EditLibraryController() {
                 </Grid>
               ))}
               <Grid xs={6} className={editLibrary}>
-                <TerritoryDropdownFF
-                  // onChange={({ target: { value } }) => {
-                  //   console.log({ value });
-                  // }}
-                  options={territories ?? []}
-                  currentValue={x}
-                />
+                {tIsSuccess && (
+                  <TerritoryDropdownFF
+                    options={territories ?? []}
+                    currentValue={x?._id}
+                  />
+                )}
               </Grid>
             </Grid>
             <FlexCenter>

@@ -7,16 +7,15 @@ import TerritoryDropdown from "./TerritoryDropdown";
 
 interface Props {
   options: Territory[];
-  currentValue: Territory;
+  currentValue: string;
 }
 
-// feed data into here, display it, push it back onto the form
 export default ({ currentValue, options }: Props) => (
   <Field name="territoryId" initialValue={currentValue}>
-    {(props: FieldInputProps<any>) => (
+    {({ input: { onChange, value } }: FieldInputProps<Territory>) => (
       <TerritoryDropdown
-        onChange={props.input.onChange}
-        currentValue={currentValue}
+        onChange={onChange}
+        currentValue={value}
         options={options}
       />
     )}
