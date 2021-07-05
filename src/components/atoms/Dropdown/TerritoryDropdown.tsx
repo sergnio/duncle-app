@@ -10,21 +10,24 @@ interface Props {
 }
 
 // feed data into here, display it, push it back onto the form
-export default ({ options, currentValue, onChange }: Props) => (
-  <TextField
-    id="territory-dropdown"
-    select
-    label="Territory"
-    fullWidth={true}
-    margin="normal"
-    value={currentValue}
-    onChange={onChange}
-    variant="outlined"
-  >
-    {options.map((option) => (
-      <MenuItem key={option.name} value={option.name}>
-        {option.name}
-      </MenuItem>
-    ))}
-  </TextField>
-);
+export default ({ options, currentValue, onChange }: Props) => {
+  return (
+    <TextField
+      id="territory-dropdown"
+      select
+      label="Territory"
+      fullWidth={true}
+      margin="normal"
+      value={currentValue}
+      onChange={onChange}
+      variant="outlined"
+    >
+      {options.map((option) => (
+        // @ts-ignore - "value" should technically only be a string|number, but oh well..
+        <MenuItem key={option.name} value={option}>
+          {option.name}
+        </MenuItem>
+      ))}
+    </TextField>
+  );
+};

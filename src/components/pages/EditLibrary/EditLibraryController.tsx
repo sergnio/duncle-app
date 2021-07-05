@@ -19,8 +19,10 @@ import styled from "styled-components";
 import ConfirmCloseDialog from "../../atoms/Dialogs/ConfirmCloseDialog";
 import useConfirmDialog from "../../atoms/Dialogs/useConfirmDialog";
 import useAuth from "../../../hooks/Auth/useAuth";
-import TerritoryDropdown from "../../atoms/Dropdown/TerritoryDropdown";
 import useTerritoriesQuery from "../../../queries/useTerritoriesQuery";
+import TerritoryDropdownFF from "../../atoms/Dropdown/TerritoryDropdownFF";
+import { getTerritoryDisplayName } from "../../elements/Table/useTableColumns";
+import TerritoryDropdown from "../../atoms/Dropdown/TerritoryDropdown";
 
 const StyledButton = styled(Button)`
   color: red;
@@ -58,6 +60,9 @@ export default function EditLibraryController() {
 
   const handleDelete = () => console.log("deleted");
 
+  const x = territories?.find((t) => t._id === library?.territoryId);
+  console.log({ x });
+
   return (
     <>
       {isError && <p>Error, try again</p>}
@@ -86,7 +91,13 @@ export default function EditLibraryController() {
                 </Grid>
               ))}
               <Grid xs={6} className={editLibrary}>
-                <TerritoryDropdown />
+                <TerritoryDropdownFF
+                  // onChange={({ target: { value } }) => {
+                  //   console.log({ value });
+                  // }}
+                  options={territories ?? []}
+                  currentValue={x}
+                />
               </Grid>
             </Grid>
             <FlexCenter>
