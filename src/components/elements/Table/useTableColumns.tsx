@@ -21,6 +21,17 @@ export const getTerritoryDisplayName = (
   return display.name;
 };
 
+const searchHasMatch = (term: string, value: string | number | undefined) => {
+  if (!value) return false;
+
+  const formattedValue =
+    typeof value === "number"
+      ? value.toString().toLowerCase()
+      : value.toLowerCase();
+
+  return formattedValue.indexOf(term.toLowerCase()) != -1;
+};
+
 export default (): Column<Library>[] => {
   const { data: territories } = useTerritoriesQuery();
 
@@ -30,6 +41,10 @@ export default (): Column<Library>[] => {
     {
       title: "Contact / Aide",
       field: "contactName",
+      customFilterAndSearch: (
+        term: string,
+        { librarian, assistant }: Library
+      ) => searchHasMatch(term, librarian) || searchHasMatch(term, assistant),
       render: ({ librarian, assistant }: Library) => (
         <StackedField top={librarian} bottom={assistant} />
       ),
@@ -38,12 +53,8 @@ export default (): Column<Library>[] => {
       title: "Territory",
       field: "territoryId",
       customFilterAndSearch: (term: string, { territoryId }: Library) => {
-        const territory = getTerritoryDisplayName(
-          territoryId,
-          territories
-        ).toLowerCase();
-
-        return territory.indexOf(term.toLowerCase()) != -1;
+        const territory = getTerritoryDisplayName(territoryId, territories);
+        return searchHasMatch(term, territory);
       },
       render: ({ territoryId }: Library) => (
         <p>{getTerritoryDisplayName(territoryId, territories)}</p>
@@ -52,6 +63,8 @@ export default (): Column<Library>[] => {
     {
       title: "Phone / Email",
       field: "contactInfo",
+      customFilterAndSearch: (term: string, { phoneNumber, email }: Library) =>
+        searchHasMatch(term, phoneNumber) || searchHasMatch(term, email),
       render: ({ phoneNumber, email }: Library) => (
         <StackedField top={phoneNumber} bottom={email} />
       ),
@@ -59,6 +72,10 @@ export default (): Column<Library>[] => {
     {
       title: "Last Sale / Date",
       field: "lastSaleInfo",
+      customFilterAndSearch: (
+        term: string,
+        { lastSale, dateLastSale }: Library
+      ) => searchHasMatch(term, lastSale) || searchHasMatch(term, dateLastSale),
       render: ({ lastSale, dateLastSale }: Library) => {
         const formatter = new Intl.NumberFormat("en-US", {
           style: "currency",
