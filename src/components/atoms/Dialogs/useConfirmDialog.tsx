@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 
-export default () => {
+interface Props {
+  open: boolean;
+  handleOpen(): void;
+  handleClose(): void;
+}
+
+export default (): Props => {
   const [open, setOpen] = useState<boolean>(false);
 
   const handleOpen = () => {

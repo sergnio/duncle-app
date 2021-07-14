@@ -1,25 +1,12 @@
 import React, { PropsWithChildren } from "react";
-import {
-  AppBar,
-  Dialog,
-  DialogActions,
-  ListItem,
-  ListItemText,
-  Slide,
-} from "@material-ui/core";
+import { AppBar, Dialog, DialogActions, Slide } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-import List from "@material-ui/core/List";
-import Divider from "@material-ui/core/Divider";
 import { TransitionProps } from "@material-ui/core/transitions";
 import Toolbar from "@material-ui/core/Toolbar";
 import styled from "styled-components";
-
-const StyledAppBar = styled(AppBar)`
-  position: relative;
-`;
 
 const StyledTypography = styled(Typography)`
   margin-left: 1em;
@@ -29,23 +16,17 @@ const StyledTypography = styled(Typography)`
 interface Props {
   fullScreen?: boolean;
   title: string;
+  open: boolean;
+  handleClose(): void;
 }
 
 export default ({
   fullScreen = false,
   children,
   title,
+  open,
+  handleClose,
 }: PropsWithChildren<Props>) => {
-  const [open, setOpen] = React.useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
   const Transition = React.forwardRef(function Transition(
     props: TransitionProps & { children?: React.ReactElement },
     ref: React.Ref<unknown>
@@ -55,16 +36,13 @@ export default ({
 
   return (
     <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Open full-screen dialog
-      </Button>
       <Dialog
         fullScreen={fullScreen}
         open={open}
         onClose={handleClose}
         TransitionComponent={Transition}
       >
-        <StyledAppBar>
+        <AppBar style={{ position: "relative" }}>
           <Toolbar>
             <IconButton
               edge="start"
@@ -74,12 +52,12 @@ export default ({
             >
               <CloseIcon />
             </IconButton>
-            <StyledTypography variant="h6">{title}</StyledTypography>
+            <StyledTypography>{title}</StyledTypography>
             <Button autoFocus color="inherit" onClick={handleClose}>
               Close
             </Button>
           </Toolbar>
-        </StyledAppBar>
+        </AppBar>
         {fullScreen ? (
           <>{children}</>
         ) : (
