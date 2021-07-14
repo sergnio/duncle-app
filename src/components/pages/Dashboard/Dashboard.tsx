@@ -8,7 +8,11 @@ import useLibraries from "../../../queries/useLibraries";
 import { useSeeOthersState } from "../../../providers/SeeOthersProvider";
 import { useNotification } from "../../atoms/Snackbar/Snackbar";
 
-export default () => {
+interface Props {
+  manageTerritories: boolean;
+}
+
+export default ({ manageTerritories = false }: Props) => {
   const { selectedUsers } = useSeeOthersState();
 
   const {
@@ -43,6 +47,7 @@ export default () => {
                 refetch={refetch}
                 setSuccess={setSuccess}
                 setError={setError}
+                manageTerritories={manageTerritories}
               />
             </Card>
           </Grid>

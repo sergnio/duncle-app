@@ -5,6 +5,8 @@ import { Typography } from "@material-ui/core";
 import useStyles from "../../../global-styles";
 import FormSubmitButton from "../../atoms/Button/FormSubmitButton";
 import styled from "styled-components";
+import TerritoryDropdownFF from "../../atoms/Dropdown/TerritoryDropdownFF";
+import useTerritoriesQuery from "../../../queries/useTerritoriesQuery";
 
 const Flex = styled.div`
   display: flex;
@@ -17,6 +19,7 @@ export default function (props: any) {
   const { handleSubmit } = props;
   const { paddingRight, form } = useStyles();
   const isRequired = true;
+  const { data: territories, isSuccess: tIsSuccess } = useTerritoriesQuery();
 
   const personalFields = [
     // personal info
@@ -78,6 +81,9 @@ export default function (props: any) {
               <CustomTextField key={label} name={label} />
             </Grid>
           ))}
+          <Grid item xs={6} className={paddingRight}>
+            {tIsSuccess && <TerritoryDropdownFF options={territories ?? []} />}
+          </Grid>
         </Flex>
       </Grid>
       <FormSubmitButton DisplayText="Create Library" />

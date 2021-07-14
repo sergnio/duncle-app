@@ -9,23 +9,22 @@ import useTableColumns from "./useTableColumns";
 import IconButton from "@material-ui/core/IconButton";
 import RefreshIcon from "@material-ui/icons/Refresh";
 import Tooltip from "@material-ui/core/Tooltip";
-import Territory from "../../../model/territory";
 
 type TableProps = {
   libraries: Library[];
-  territories?: Territory[];
-  onEdit?(library: Library): void;
   refetch(): void;
   setSuccess(message: string): void;
   setError(message: string): void;
+  onEdit?(library: Library): void;
+  manageTerritories: boolean;
 };
 export default ({
   libraries,
-  territories,
   onEdit,
   refetch,
   setSuccess,
   setError,
+  manageTerritories,
 }: TableProps) => {
   const tableColumns = useTableColumns();
 
@@ -70,6 +69,7 @@ export default ({
           },
         }}
         actions={[
+          // todo - if it's manageTerritories, then show the territory dropdown
           {
             // @ts-ignore
             icon: tableIcons.Create,

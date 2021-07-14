@@ -40,7 +40,8 @@ export default ({
         fullScreen={fullScreen}
         open={open}
         onClose={handleClose}
-        TransitionComponent={Transition}
+        // 7/14/21 - a bit buggy, can only click on the button once.. I think something gets leftover
+        // TransitionComponent={Transition}
       >
         <AppBar style={{ position: "relative" }}>
           <Toolbar>
