@@ -37,6 +37,14 @@ export default (): Column<Library>[] => {
     {
       title: "Territory",
       field: "territoryId",
+      customFilterAndSearch: (term: string, { territoryId }: Library) => {
+        const territory = getTerritoryDisplayName(
+          territoryId,
+          territories
+        ).toLowerCase();
+
+        return territory.indexOf(term.toLowerCase()) != -1;
+      },
       render: ({ territoryId }: Library) => (
         <p>{getTerritoryDisplayName(territoryId, territories)}</p>
       ),
