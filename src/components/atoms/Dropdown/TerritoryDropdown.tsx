@@ -9,7 +9,7 @@ interface Props {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export default ({ options, currentValue, onChange }: Props) => (
+export default ({ options, currentValue, onChange, ...rest }: Props) => (
   <TextField
     id="territory-dropdown"
     select
@@ -19,6 +19,7 @@ export default ({ options, currentValue, onChange }: Props) => (
     value={currentValue}
     onChange={onChange}
     variant="outlined"
+    {...rest}
   >
     {options.map((option) => (
       <MenuItem key={option.name} value={option._id}>
