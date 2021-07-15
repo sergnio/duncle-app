@@ -35,7 +35,7 @@ export default ({ children }: PropsWithChildren<any>) => (
         path="/dashboard"
         component={() => (
           <SeeOthersProvider>
-            <AllLibraries />
+            <AllLibraries manageTerritories={false} />
           </SeeOthersProvider>
         )}
       />

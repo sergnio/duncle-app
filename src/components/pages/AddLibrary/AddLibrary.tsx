@@ -9,10 +9,10 @@ import { useNotification } from "../../atoms/Snackbar/Snackbar";
 import { useHistory } from "react-router-dom";
 import useAuth from "../../../hooks/Auth/useAuth";
 
-function addDefaults(library: NewLibrary, rep: string) {
+function addDefaults(library: NewLibrary, repId: string) {
   library._id = uuidv4();
   library.notes = [];
-  library.assignedRep = rep;
+  library.assignedRep = repId;
   library.dateUpdated = dateNowIso();
   library.totalSales = 0;
   library.lastSale = 0;
@@ -28,7 +28,7 @@ export default function AddLibrary() {
   const user = getAuthenticatedUser();
 
   async function submitForm(library: NewLibrary) {
-    const updatedLibrary: NewLibrary = addDefaults(library, user.username);
+    const updatedLibrary: NewLibrary = addDefaults(library, user._id);
     try {
       await addNewLibrary(updatedLibrary);
       setSuccess("Successfully saved library");

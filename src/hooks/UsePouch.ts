@@ -4,8 +4,8 @@ import Library from "../model/library";
 import User from "../model/user";
 import NewLibrary from "../model/newLibrary";
 import { isEmpty } from "lodash";
-import useAuth from "./Auth/useAuth";
 import { createUserDatabase } from "../services/userPouchService";
+import { createLibraryDatabase } from "../services/librariesPouchService";
 
 export interface UseUserReturnProps {
   addUser(props: User): Promise<PouchDB.Core.Response | Error>;
@@ -81,13 +81,7 @@ export function roundDecimals(library: Library | NewLibrary) {
 }
 
 export function useLibraryPouch(): useLibraryPouchReturn {
-  // value.username
-  const { getAuthenticatedUser } = useAuth();
-
-  const USER_DB_PREFIX = "user_";
-  const localPouch = createDatabaseWithUser(
-    `${USER_DB_PREFIX}${getAuthenticatedUser()?.username}`
-  );
+  const localPouch = createLibraryDatabase();
 
   async function getAll(): Promise<PouchDB.Core.AllDocsResponse<Library>> {
     try {

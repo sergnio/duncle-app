@@ -1,7 +1,9 @@
 import React from "react";
-import AllLibraries from "./Dashboard";
+import Dashboard from "./Dashboard";
 import GlobalProvider from "../../../providers/GlobalProvider";
 import { LocalStorageMockProvider } from "../../storybook-mocks/MockProviders";
+import SeeOthersProvider from "../../../providers/SeeOthersProvider";
+import { MemoryRouter } from "react-router-dom";
 
 export default {
   title: "Pages/Dashboard",
@@ -10,7 +12,11 @@ export default {
 export const Default = () => (
   <GlobalProvider>
     <LocalStorageMockProvider>
-      <AllLibraries />
+      <SeeOthersProvider>
+        <MemoryRouter initialEntries={["/"]}>
+          <Dashboard manageTerritories={false} />
+        </MemoryRouter>
+      </SeeOthersProvider>
     </LocalStorageMockProvider>
   </GlobalProvider>
 );

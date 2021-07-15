@@ -1,4 +1,4 @@
-import React from "react";
+import React, { BaseSyntheticEvent, useEffect, useRef } from "react";
 import MaterialTable from "material-table";
 import { Library } from "../../../model";
 import { tableIcons } from "../tableIcons";
@@ -9,25 +9,42 @@ import useTableColumns from "./useTableColumns";
 import IconButton from "@material-ui/core/IconButton";
 import RefreshIcon from "@material-ui/icons/Refresh";
 import Tooltip from "@material-ui/core/Tooltip";
-import Territory from "../../../model/territory";
+import TerritoryDropdown from "../../atoms/Dropdown/TerritoryDropdown";
+import useTerritoriesQuery from "../../../queries/useTerritoriesQuery";
+import useSaveLibraryQuery from "../../../queries/useSaveLibraryQuery";
 
 type TableProps = {
   libraries: Library[];
-  territories?: Territory[];
-  onEdit?(library: Library): void;
   refetch(): void;
   setSuccess(message: string): void;
   setError(message: string): void;
+  onEdit?(library: Library): void;
+  manageTerritories: boolean;
 };
 export default ({
   libraries,
-  territories,
   onEdit,
   refetch,
   setSuccess,
   setError,
+  manageTerritories,
 }: TableProps) => {
   const tableColumns = useTableColumns();
+  const { data } = useTerritoriesQuery();
+  const selectedId = useRef<string>();
+  const { mutate: saveLibrary, isSuccess, reset } = useSaveLibraryQuery();
+
+  console.log({ isSuccess });
+  useEffect(() => {
+    if (isSuccess) {
+      console.log("calling reset");
+      reset();
+    }
+  }, [isSuccess, reset]);
+
+  const onTerritoryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    selectedId.current = event.target.value;
+  };
 
   const onRefresh = async () => {
     try {
@@ -46,13 +63,48 @@ export default ({
     </IconButton>
   );
 
+  const availableActions = manageTerritories
+    ? [
+        {
+          position: "auto",
+          icon: () => (
+            // show dropdown here
+            <TerritoryDropdown
+              onChange={onTerritoryChange}
+              options={data ?? []}
+              currentValue={selectedId.current}
+              // @ts-ignore
+              style={{ minWidth: "150px" }}
+            />
+          ),
+          onClick: (event: BaseSyntheticEvent, rowData: Library[]) => {
+            rowData.forEach((lib) => {
+              const updatedLib = { ...lib, territoryId: selectedId.current };
+              saveLibrary(updatedLib);
+            });
+          },
+        },
+      ]
+    : [
+        {
+          // @ts-ignore
+          icon: tableIcons.Create,
+          tooltip: "Edit this library",
+          // @ts-ignore
+          onClick: (event, rowData) => onEdit(rowData),
+        },
+      ];
   return (
     <>
       <TableHeader />
       <MaterialTable
         title={RefreshIconButton}
         columns={tableColumns}
-        data={libraries}
+        // maybe map through each of these, if success then set ONLY .checked to true??
+        data={libraries?.map((lib) => ({
+          ...lib,
+          tableData: { checked: false },
+        }))}
         // @ts-ignore
         icons={tableIcons}
         options={{
@@ -68,16 +120,10 @@ export default ({
             const backgroundColor: string = getColor(nextDate);
             return { backgroundColor };
           },
+          selection: manageTerritories,
         }}
-        actions={[
-          {
-            // @ts-ignore
-            icon: tableIcons.Create,
-            tooltip: "Edit UserDAO",
-            // @ts-ignore
-            onClick: (event, rowData) => onEdit(rowData),
-          },
-        ]}
+        // @ts-ignore
+        actions={availableActions}
       />
     </>
   );
