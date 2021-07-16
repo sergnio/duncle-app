@@ -34,7 +34,6 @@ export default ({
   const selectedId = useRef<string>();
   const { mutate: saveLibrary, isSuccess, reset } = useSaveLibraryQuery();
 
-  console.log({ isSuccess });
   useEffect(() => {
     if (isSuccess) {
       console.log("calling reset");
@@ -110,7 +109,9 @@ export default ({
         options={{
           // todo - might have to revisit this.. probably better to do 100 page size, with pagination options
           //  see docs - https://material-table.com/#/docs/all-props
-          paging: false,
+          paging: true,
+          pageSize: 50,
+          pageSizeOptions: [15, 25, 50, 100],
           rowStyle: ({ dateNextContact }: Library) => {
             let nextDate;
             if (dateNextContact) {

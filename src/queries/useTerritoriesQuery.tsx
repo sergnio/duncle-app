@@ -22,5 +22,6 @@ export default () => {
     onError: () => {
       setError(`Failed to get list of all territories. Try again`);
     },
+    staleTime: Infinity,
   });
 };

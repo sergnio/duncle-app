@@ -34,6 +34,8 @@ export default ({ manageTerritories = false }: Props) => {
     history.push(`/library/${library._id}`);
   }
 
+  console.log("count", libraries?.length);
+
   return (
     <div>
       {error && <p>Error: {error}</p>}
