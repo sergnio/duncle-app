@@ -1,4 +1,4 @@
-import React, { BaseSyntheticEvent, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import MaterialTable, { MTableToolbar } from "material-table";
 import { Library } from "../../../model";
 import { tableIcons } from "../tableIcons";
@@ -45,18 +45,18 @@ export default ({ libraries, onEdit, manageTerritories }: TableProps) => {
 
   const onSave = () => {
     if (selectedLibs.current?.length === 0) {
-      setError("Please select some libraries to transfer!");
+      return setError("Please select some libraries to transfer!");
     }
     if (!selectedId.current) {
-      setError("Please select a territory to move these to!");
+      return setError("Please select a territory to move these to!");
     }
     console.log({ length: selectedLibs.current?.length });
 
-    selectedLibs.current?.map((lib) => {
+    selectedLibs.current?.map(async (lib) => {
       const updatedLib = { ...lib, territoryId: selectedId.current };
       if (updatedLib.tableData) delete updatedLib.tableData;
-      console.log({ updatedLib });
-      // saveLibrary(updatedLib);
+      await saveLibrary(updatedLib);
+      selectedLibs.current = [];
     });
   };
 
