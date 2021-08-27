@@ -13,6 +13,14 @@ import useDeleteTerritoryMutation from "../../../queries/useDeleteTerritoryMutat
 import ConfirmCloseDialog from "../../atoms/Dialogs/ConfirmCloseDialog";
 import useConfirmDialog from "../../atoms/Dialogs/useConfirmDialog";
 import ManageTerritoryDialog from "../../atoms/Dialogs/ManageTerritoryDialog";
+import styled from "styled-components";
+
+const Flex = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  flex-basis: 6em;
+`;
 
 interface Props {
   territory: Territory;
@@ -77,12 +85,21 @@ export default ({ territory, repList, saveTerritory }: Props) => {
         onConfirm={onOk}
         onCancel={handleClose}
       />
-      <IconButton aria-label="delete territory" onClick={handleOpen}>
-        <CloseIcon style={{ color: "red" }} fontSize="small" />
-      </IconButton>
-      <IconButton aria-label="manage all territories" onClick={openTerritories}>
-        <MapTwoToneIcon />
-      </IconButton>
+      <Flex>
+        <IconButton aria-label="delete territory" onClick={handleOpen}>
+          <CloseIcon style={{ color: "red" }} fontSize="small" height="48px" />
+        </IconButton>
+        <div>Delete</div>
+      </Flex>
+      <Flex>
+        <IconButton
+          aria-label="manage all territories"
+          onClick={openTerritories}
+        >
+          <MapTwoToneIcon fontSize="small" />
+        </IconButton>
+        <div>Transfer</div>
+      </Flex>
       <TextField
         id="edit-territory"
         label="Territory Name"

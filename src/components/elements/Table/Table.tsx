@@ -6,32 +6,22 @@ import moment from "moment";
 import { getColor } from "../../../utils/colorUtils";
 import TableHeader from "./TableHeader";
 import useTableColumns from "./useTableColumns";
-import IconButton from "@material-ui/core/IconButton";
-import RefreshIcon from "@material-ui/icons/Refresh";
-import Tooltip from "@material-ui/core/Tooltip";
 import TerritoryDropdown from "../../atoms/Dropdown/TerritoryDropdown";
 import useTerritoriesQuery from "../../../queries/useTerritoriesQuery";
 import useSaveLibraryQuery from "../../../queries/useSaveLibraryQuery";
+import without from "lodash/without";
+import Button from "@material-ui/core/Button";
 
 type TableProps = {
   libraries: Library[];
-  refetch(): void;
-  setSuccess(message: string): void;
-  setError(message: string): void;
   onEdit?(library: Library): void;
   manageTerritories: boolean;
 };
-export default ({
-  libraries,
-  onEdit,
-  refetch,
-  setSuccess,
-  setError,
-  manageTerritories,
-}: TableProps) => {
+export default ({ libraries, onEdit, manageTerritories }: TableProps) => {
   const tableColumns = useTableColumns();
   const { data } = useTerritoriesQuery();
   const selectedId = useRef<string>();
+  const selectedLibs = useRef<Library[]>([]);
   const { mutate: saveLibrary, isSuccess, reset } = useSaveLibraryQuery();
 
   useEffect(() => {
@@ -45,22 +35,13 @@ export default ({
     selectedId.current = event.target.value;
   };
 
-  const onRefresh = async () => {
-    try {
-      await refetch();
-      setSuccess("Successfully refreshed libraries");
-    } catch (e) {
-      setError(`Failed to refresh libraries: ${e}`);
-    }
+  const onSave = () => {
+    selectedLibs.current?.map((lib) => {
+      const updatedLib = { ...lib, territoryId: selectedId.current };
+      console.log({ updatedLib });
+      // saveLibrary(updatedLib);
+    });
   };
-
-  const RefreshIconButton = (
-    <IconButton onClick={onRefresh}>
-      <Tooltip title="Manually refresh list of libraries" placement="bottom">
-        <RefreshIcon />
-      </Tooltip>
-    </IconButton>
-  );
 
   const availableActions = manageTerritories
     ? [
@@ -68,20 +49,17 @@ export default ({
           position: "auto",
           icon: () => (
             // show dropdown here
-            <TerritoryDropdown
-              onChange={onTerritoryChange}
-              options={data ?? []}
-              currentValue={selectedId.current}
-              // @ts-ignore
-              style={{ minWidth: "150px" }}
-            />
+            <>
+              <TerritoryDropdown
+                onChange={onTerritoryChange}
+                options={data ?? []}
+                currentValue={selectedId.current}
+                // @ts-ignore
+                style={{ minWidth: "150px" }}
+              />
+              <Button onClick={onSave}>Save</Button>
+            </>
           ),
-          onClick: (event: BaseSyntheticEvent, rowData: Library[]) => {
-            rowData.forEach((lib) => {
-              const updatedLib = { ...lib, territoryId: selectedId.current };
-              saveLibrary(updatedLib);
-            });
-          },
         },
       ]
     : [
@@ -97,7 +75,7 @@ export default ({
     <>
       <TableHeader />
       <MaterialTable
-        title={RefreshIconButton}
+        title=""
         columns={tableColumns}
         // maybe map through each of these, if success then set ONLY .checked to true??
         data={libraries?.map((lib) => ({
@@ -123,8 +101,17 @@ export default ({
           },
           selection: manageTerritories,
         }}
+        // TODO - this is money const updatedLib = { ...lib, territoryId: selectedId.current };
         // @ts-ignore
         actions={availableActions}
+        onSelectionChange={(data: Library[]) => {
+          data.map((lib) => {
+            // @ts-ignore = this sneaks in here sometimes
+            if (lib.tableData) delete lib.tableData;
+            return lib;
+          });
+          selectedLibs.current = data;
+        }}
       />
     </>
   );

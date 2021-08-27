@@ -2,6 +2,7 @@ import React from "react";
 import GenericDialog from "./GenericDialog";
 import DashboardView from "../../pages/Dashboard/Dashboard";
 import SeeOthersProvider from "../../../providers/SeeOthersProvider";
+import RefreshData from "../Button/RefreshData";
 
 interface Props {
   handleClose(): void;

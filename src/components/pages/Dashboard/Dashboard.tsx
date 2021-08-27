@@ -7,6 +7,7 @@ import { useHistory } from "react-router-dom";
 import useLibraries from "../../../queries/useLibraries";
 import { useSeeOthersState } from "../../../providers/SeeOthersProvider";
 import { useNotification } from "../../atoms/Snackbar/Snackbar";
+import { useQueryClient } from "react-query";
 
 interface Props {
   manageTerritories: boolean;
@@ -14,17 +15,12 @@ interface Props {
 
 export default ({ manageTerritories = false }: Props) => {
   const { selectedUsers } = useSeeOthersState();
-
   const {
     data: libraries,
     isLoading,
     isSuccess,
     error,
-    refetch,
   } = useLibraries(selectedUsers);
-
-  const { setSuccess, setError } = useNotification();
-
   const history = useHistory();
 
   if (isLoading) return <h1>Loading...</h1>;
@@ -33,8 +29,6 @@ export default ({ manageTerritories = false }: Props) => {
     // todo - add a ? with the rep name to denote which DB to look in?
     history.push(`/library/${library._id}`);
   }
-
-  console.log("count", libraries?.length);
 
   return (
     <div>
@@ -46,9 +40,6 @@ export default ({ manageTerritories = false }: Props) => {
               <Table
                 libraries={libraries}
                 onEdit={routeToLibraryDetail}
-                refetch={refetch}
-                setSuccess={setSuccess}
-                setError={setError}
                 manageTerritories={manageTerritories}
               />
             </Card>
