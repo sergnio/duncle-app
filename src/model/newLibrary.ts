@@ -21,6 +21,7 @@ export default interface NewLibrary {
   territoryId?: string;
   personalNotes?: NoteDAO;
   level?: string;
+  tableData?: any;
   size?: number;
   assistant?: string;
   extension?: string;
