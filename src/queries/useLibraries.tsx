@@ -6,6 +6,7 @@ import Library from "../model/library";
 import { parseFromPouchResponse, PouchResponse } from "./queriesUtils";
 import { createLibraryDatabase } from "../services/librariesPouchService";
 import Territory from "../model/territory";
+import { unassignedLabel } from "../components/elements/AdminCheckboxes/AdminCheckboxes";
 
 export default (userIds: string[] = []) => {
   const { getAuthenticatedUser, isAdmin } = useAuth();
@@ -36,10 +37,20 @@ export default (userIds: string[] = []) => {
             // then return JUST the id
             .map((t) => t._id);
         }
+        let adminLibraries = parseFromPouchResponse(response).filter((l) =>
+          validTerritories.includes(l.territoryId)
+        );
+
+        // get unassigned libs if the checkbox is checked
+        if (userIds.includes(unassignedLabel)) {
+          const unassignedLibs = parseFromPouchResponse(response).filter(
+            (l) => l.territoryId == null
+          );
+          adminLibraries = [...unassignedLibs, ...adminLibraries];
+        }
+
         return isAdmin
-          ? parseFromPouchResponse(response).filter((l) =>
-              validTerritories.includes(l.territoryId)
-            )
+          ? adminLibraries
           : parseFromPouchResponse(response).filter(
               (l) => l.assignedRep === userId
             );

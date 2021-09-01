@@ -16,6 +16,8 @@ const FlexGroup = styled(FormGroup)`
   justify-content: center;
 `;
 
+export const unassignedLabel = "Unassigned";
+
 export default () => {
   const { getAuthenticatedUser } = useAuth();
   const user = getAuthenticatedUser();
@@ -47,6 +49,17 @@ export default () => {
                   label={firstName}
                 />
               ))}
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={selectedUsers.includes(unassignedLabel)}
+                    onChange={toggleCheckbox}
+                    name={unassignedLabel}
+                    color="primary"
+                  />
+                }
+                label={unassignedLabel}
+              />
             </FlexGroup>
             <FlexGroup row>
               <FormHelperText>Please select at least one option</FormHelperText>
