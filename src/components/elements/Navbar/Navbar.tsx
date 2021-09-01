@@ -4,6 +4,7 @@ import { Location } from "history";
 import { useHistory, useLocation } from "react-router-dom";
 import Profile from "../Profile/Profile";
 import useAuth from "../../../hooks/Auth/useAuth";
+import RefreshData from "../../atoms/Button/RefreshData";
 
 type NavbarProps = {
   name: string;
@@ -45,6 +46,7 @@ export default () => {
           .map(({ name }) => (
             <Tab key={name} label={name} />
           ))}
+        <RefreshData />
         <Profile />
       </Tabs>
     </AppBar>
