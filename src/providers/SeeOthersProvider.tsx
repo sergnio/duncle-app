@@ -6,6 +6,7 @@ import React, {
 } from "react";
 import useAuth from "../hooks/Auth/useAuth";
 import without from "lodash/without";
+import useLocalStorage from "../hooks/useLocalStorage";
 
 interface SeeOthersContextState {
   selectedUsers: string[];
@@ -19,7 +20,8 @@ export const SeeOthersContext = createContext<
 const SeeOthersProvider = ({ children }: PropsWithChildren<any>) => {
   const { getAuthenticatedUser } = useAuth();
   const user = getAuthenticatedUser();
-  const [selectedUsers, setSelectedUsers] = useState<string[]>([user?._id]);
+  const { storedValue: selectedUsers, setValue: setSelectedUsers } =
+    useLocalStorage<string[]>("checkboxes", [user?._id]);
 
   const toggleCheckbox = ({
     target: { name },

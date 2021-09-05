@@ -22,7 +22,6 @@ export default (currentLibrary: Library): LabelProps[] => {
     email,
     phoneNumber,
     assistant,
-    assignedRep,
     extension,
   } = currentLibrary;
 
@@ -39,7 +38,6 @@ export default (currentLibrary: Library): LabelProps[] => {
     { label: "Email", currentValue: email, isRequired },
     { label: "Phone Number", currentValue: phoneNumber, isRequired },
     { label: "extension", currentValue: extension, isRequired: false },
-    { label: "Assigned Rep", currentValue: assignedRep, isRequired },
     { label: "Level", currentValue: level, isRequired: false },
     { label: "Size", currentValue: size, isRequired: false },
   ];

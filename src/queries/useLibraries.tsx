@@ -7,9 +7,11 @@ import { parseFromPouchResponse, PouchResponse } from "./queriesUtils";
 import { createLibraryDatabase } from "../services/librariesPouchService";
 import Territory from "../model/territory";
 import { unassignedLabel } from "../components/elements/AdminCheckboxes/AdminCheckboxes";
+import useTerritoriesQuery from "./useTerritoriesQuery";
 
 export default (userIds: string[] = []) => {
   const { getAuthenticatedUser, isAdmin } = useAuth();
+  const { data: territoriesResponse, isSuccess } = useTerritoriesQuery();
   const { setError } = useNotification();
   const qc = useQueryClient();
 
@@ -22,21 +24,18 @@ export default (userIds: string[] = []) => {
     allLibrariesKey,
     (): PouchResponse => localPouch.allDocs({ include_docs: true }),
     {
+      // wait until territories is done
+      enabled: isSuccess,
       select: (response: PouchResponse): Library[] => {
         let validTerritories: string[] = [];
-        const territoriesResponse: PouchResponse<Territory> =
-          qc.getQueryData(allTerritoriesKey);
 
-        if (territoriesResponse) {
-          const parsedTerritories = parseFromPouchResponse(territoriesResponse);
-          // if the passed in user ID matches the userId for the lib territoryId, then return
+        // if the passed in user ID matches the userId for the lib territoryId, then return
 
-          validTerritories = parsedTerritories
-            // only get the territories that match the passed in userIds
-            .filter((t) => userIds.includes(t.repId))
-            // then return JUST the id
-            .map((t) => t._id);
-        }
+        validTerritories = territoriesResponse
+          // only get the territories that match the passed in userIds
+          .filter((t) => userIds.includes(t.repId))
+          // then return JUST the id
+          .map((t) => t._id);
         let adminLibraries = parseFromPouchResponse(response).filter((l) =>
           validTerritories.includes(l.territoryId)
         );

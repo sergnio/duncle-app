@@ -25,6 +25,8 @@ export default ({ manageTerritories = false }: Props) => {
 
   if (isLoading) return <h1>Loading...</h1>;
 
+  console.log({ libraries });
+
   function routeToLibraryDetail(library: Library): void {
     // todo - add a ? with the rep name to denote which DB to look in?
     history.push(`/library/${library._id}`);

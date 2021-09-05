@@ -168,7 +168,6 @@ export default () => {
       totalSales: withNewSale,
     };
 
-    console.log({ library });
     saveLibrary(updatedLib);
     // todo - move to onSuccess?
     setSuccess(`Success! The total after S&H is ${withShippingAndHandling}`);

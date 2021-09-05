@@ -23,7 +23,6 @@ export default (uuid: string) => {
         (l) => l._id === uuid
       )[0],
     onSuccess: (library) => {
-      console.log({ library });
       setCurrentLibrary(library);
       return library;
     },

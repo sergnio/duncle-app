@@ -14,7 +14,7 @@ export interface UseUserReturnProps {
   fetchUser(props: any): any;
 }
 
-const USER_ID_PREFIX = "org.duncle.";
+export const USER_ID_PREFIX = "org.duncle.";
 export const USER_DB_PREFIX = "user_";
 
 export function useUserPouch(): UseUserReturnProps {
@@ -158,11 +158,33 @@ export function createDatabaseWithUser(database: string): any {
       live: true,
       retry: true,
     })
-    .on("change", function () {
-      // console.log('db changed');
+    .on("change", function (change) {
+      console.log({ change });
     })
-    .on("error", function () {
-      // console.log('sync error');
+    .on("error", function (err) {
+      console.log({ err });
+    });
+
+  localPouch
+    .changes({
+      since: "now",
+    })
+    .on("change", function (change) {
+      console.log({ local: true, change });
+    })
+    .on("error", function (err) {
+      console.log({ err });
+    });
+
+  remoteDatabase
+    .changes({
+      since: "now",
+    })
+    .on("change", function (change) {
+      console.log({ remote: true, change });
+    })
+    .on("error", function (err) {
+      console.log({ err });
     });
 
   return localPouch;

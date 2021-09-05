@@ -51,9 +51,6 @@ export default () => {
     roundDecimals(library);
 
     if (!isEqual(currentLibrary, library)) {
-      console.log("doing a put");
-      console.log({ currentLibrary });
-      console.log({ library });
       return localPouch.put(library);
     } else {
       console.warn("noop");

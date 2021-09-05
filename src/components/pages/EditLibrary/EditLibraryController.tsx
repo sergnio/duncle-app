@@ -59,7 +59,6 @@ export default function EditLibraryController() {
 
   const handleDelete = () => console.log("deleted");
   const x = territories?.find((t) => t._id === library?.territoryId);
-  console.log({ x });
 
   return (
     <>
