@@ -7,7 +7,7 @@
 Populate your app with these variables with an .env file at the root.
 
 ```
-REACT_APP_DATABASE_URL=
+REACT_APP_DATABASE_URL= # might want to use 3.22.75.56 instead of api.sn.com
 REACT_APP_DATABASE_USERNAME=
 REACT_APP_DATABASE_PASSWORD=
 
